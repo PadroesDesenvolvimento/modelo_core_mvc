@@ -67,8 +67,8 @@ namespace modelo_core_mvc
             #endregion
 
             services.AddTransient<IdentityConfig>();
-            services.AddTransient<AzureUtil>();
             services.AddHttpClient<ProjetosApiClient>();
+            services.AddTransient<AzureUtil>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
