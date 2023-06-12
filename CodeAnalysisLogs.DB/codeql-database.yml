@@ -1,0 +1,28 @@
+---
+sourceLocationPrefix: "D:\\Source\\Padroes_Desenvolvimento\\modelo_core_mvc"
+unicodeNewlines: false
+columnKind: "utf16"
+primaryLanguage: "csharp"
+inProgress:
+  primaryLanguage: "csharp"
+  installedExtractors:
+    cpp:
+    - "file:///D:/codeql/cpp/"
+    csharp:
+    - "file:///D:/codeql/csharp/"
+    csv:
+    - "file:///D:/codeql/csv/"
+    go:
+    - "file:///D:/codeql/go/"
+    html:
+    - "file:///D:/codeql/html/"
+    java:
+    - "file:///D:/codeql/java/"
+    javascript:
+    - "file:///D:/codeql/javascript/"
+    properties:
+    - "file:///D:/codeql/properties/"
+    python:
+    - "file:///D:/codeql/python/"
+    xml:
+    - "file:///D:/codeql/xml/"
