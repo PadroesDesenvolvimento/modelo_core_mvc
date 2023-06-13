@@ -106,3 +106,21 @@ mgt-person {
     --person-card-nav-back-arrow-hover-color: #00ff00;
     --person-card-nav-back-arrow-color: #ff0000;
 }
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+}
+
+.foto-usuario {
+    margin-right: 15px;
+}
+
+.foto-usuario img {
+    margin-right: 10px; /* Espaço entre a foto e o texto */
+    width: 30%;
+}
+
+.texto-usuario {
+    text-align: left;
+}

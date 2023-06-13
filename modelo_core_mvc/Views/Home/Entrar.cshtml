@@ -8,6 +8,8 @@
 
 @{
     var nomeExibicao = "Não autenticado";
+    var foto = "";
+    System.Uri fotoURL = null;
     if (User.Identity.IsAuthenticated)
     {
         nomeExibicao = @User.Identity.Name.Split(":")[0];
@@ -17,6 +19,7 @@
             {
                 Usuario usuario = await azureUtil.GetUserAsync();
                 nomeExibicao = usuario.nomeCompleto;
+                foto = usuario.foto;
             }
             catch { }
         }
@@ -25,20 +28,27 @@
 
 <section>
     <h1>Usuário autenticado:</h1>
-    @if (Configuration["identity:type"] == "azuread")
-    {
-        <div>
-            @Html.Raw(@ViewData["html"])
-        </div>
-    }
-    else
-    {
-        <div>
-            <h2>@nomeExibicao </h2>
-            <p>Login: @ViewData["Login"]</p>
-            <p>Cpf: @ViewData["Cpf"]</p>
-            <p>Nascimento: @ViewData["Nascimento"]</p>
-        </div>
-    }
-
+    <div class="usuario-info">
+        @if (Configuration["identity:type"] == "azuread")
+        {
+            @if (!string.IsNullOrEmpty(foto))
+            {
+                <div class="foto-usuario">
+                    <img src="data:image;base64,@foto" alt="Foto do usuário" />
+                </div>
+            }
+            <div class="texto-usuario">
+                @Html.Raw(@ViewData["html"])
+            </div>
+        }
+        else
+        {
+            <div>
+                <h2>@nomeExibicao </h2>
+                <p>Login: @ViewData["Login"]</p>
+                <p>Cpf: @ViewData["Cpf"]</p>
+                <p>Nascimento: @ViewData["Nascimento"]</p>
+            </div>
+        }
+    </div>
 </section>

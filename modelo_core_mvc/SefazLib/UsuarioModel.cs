@@ -3,8 +3,10 @@ using AdaptiveCards.Rendering.Html;
 using AdaptiveCards.Templating;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 
@@ -64,58 +66,14 @@ namespace SefazLib.usuarios
 
         public RenderedAdaptiveCard GetAdaptiveCard()
         {
-            var templateJson = @"
-                                 {
-                                     ""type"": ""AdaptiveCard"",
-                                     ""body"": [
-                                         {
-                                             ""type"": ""TextBlock"",
-                                             ""size"": ""large"",
-                                             ""weight"": ""bolder"",
-                                             ""text"": ""${nomecompleto}""
-                                         },
-                                         {
-                                             ""type"": ""FactSet"",
-                                             ""facts"": [
-                                                 {
-                                                     ""title"": ""Nome"",
-                                                     ""value"": ""${nome}""
-                                                 },
-                                                 {
-                                                     ""title"": ""Nome completo"",
-                                                     ""value"": ""${nomecompleto}""
-                                                 },
-                                                 {
-                                                     ""title"": ""Cargo"",
-                                                     ""value"": ""${cargo}""
-                                                 },
-                                                 {
-                                                     ""title"": ""Login"",
-                                                     ""value"": ""${login}""
-                                                 },
-                                                 {
-                                                     ""title"": ""email"",
-                                                     ""value"": ""${email}""
-                                                 },
-                                                 {
-                                                     ""title"": ""id"",
-                                                     ""value"": ""${id}""
-                                                 }
-                                             ]
-                                         }
-                                     ],
-                                     ""$schema"": ""http://adaptivecards.io/schemas/adaptive-card.json"",
-                                     ""version"": ""1.0""
-                                 }
-                                ";
+            var templateJson = File.ReadAllText(@".\SefazLib\AdaptiveCard.json");
 
             AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
             var textoTemplate = template.Expand(this);
 
             var jObject = JObject.Parse(textoTemplate);
             if (!jObject.TryGetValue("version", out var _))
-                jObject["version"] = "0.5";
-
+                jObject["version"] = "1.5";
 
             // Parse the Adaptive Card JSON
             AdaptiveCardParseResult parseResult = AdaptiveCard.FromJson(jObject.ToString());
