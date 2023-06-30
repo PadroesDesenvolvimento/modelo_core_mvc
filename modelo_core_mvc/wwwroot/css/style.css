@@ -57,15 +57,15 @@
 /* Estilos botão usuário */
 #botao-user,
 #botao-user-mobile {
-  padding: 0;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border-color: #bc5000;
-  transform: scale(0.65);
-  font-weight: bolder;
-  font-size: 1.125rem;
-  background-color: #bc5000;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-color: #750b1c;
+    transform: scale(0.65);
+    font-weight: bolder;
+    font-size: 1.125rem;
+    background-color: #750b1c;
 }
 
 #botao-user::after {
@@ -129,14 +129,14 @@ span.badge.rounded-pill.bg-danger {
 
 #drop-down-user {
   border-radius: 6%;
-  height: 114px;
+/*  height: 114px;*/
   width: 10px;
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 #dropDownNotif {
   border-radius: 6%;
-  height: 114px;
+  /*height: 114px;*/
   width: 10px;
   border: 1px solid rgba(0, 0, 0, 0.15);
 }

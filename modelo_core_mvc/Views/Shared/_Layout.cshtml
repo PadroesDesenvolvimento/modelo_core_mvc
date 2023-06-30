@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="~/css/__style-tipografia.css">
 
     <link rel="stylesheet" href="~/css/jqueryui/jquery-ui-1.10.1.custom.min.css" />
-   @* <link rel="stylesheet" href="~/font-awesome/css/all.css">*@
-   @* <link rel="stylesheet" href="~/css/sefaz.css">*@
+    @* <link rel="stylesheet" href="~/font-awesome/css/all.css">*@
+    @* <link rel="stylesheet" href="~/css/sefaz.css">*@
     <link rel="stylesheet" href="~/css/site.css">
 
 
@@ -42,16 +42,19 @@
 </head>
 
 <body class="container-fluid p-0">
-
     <partial name="_Cabecalho" />
-    @* <partial name="_BreadCrumb" />*@
     <div class="d-flex mx-0">
         <partial name="_MenuLateral" />
         <div class="col-12 conteudo-expandido" id="colunaPrincipal">
-
+            <partial name="_MenuDropPartial" />
+            <partial name="_BreadCrumb" />
             <div class="container">
                 <main role="main" class="pb-3">
-                    @RenderBody()
+                    <div id="Main" class="shadow" tabindex="0">
+                        <div class="mx-3 p-md-3 p-3">
+                            @RenderBody()
+                        </div>
+                    </div>
                 </main>
             </div>
             <div>
