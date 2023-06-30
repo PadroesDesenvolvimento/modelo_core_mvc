@@ -107,9 +107,9 @@ function removerPalavras() {
   document.getElementById("menuBar").classList.add("menu-lateral-fechado");
   let palavra = document.getElementsByClassName("palavra");
   palavra.item(0).style.display = "none";
-  for (let i = 1; i < 7; i++) {
-    palavra.item(i).style.display = ""
-  }
+  //for (let i = 1; i < 7; i++) {
+  //  palavra.item(i).style.display = ""
+  //}
   document.getElementsByClassName("item-menu").item(0).classList.add("setinha-d-none");
   document.getElementsByClassName("item-menu").item(1).classList.add("setinha-d-none");
   document.getElementsByClassName("item-menu").item(2).classList.add("setinha-d-none");
