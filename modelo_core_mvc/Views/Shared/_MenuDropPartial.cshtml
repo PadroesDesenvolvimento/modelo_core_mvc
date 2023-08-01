@@ -23,42 +23,45 @@
 
 @Html.Hidden("nomeExibicao", nomeExibicao)
 
-<div class="dropdown">
-    <em id="botao_popup" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" alt="Menu de acesso e informações do sistema">
-        <mgt-person class="drop-person"
-                    line1-property="displayName">
-        </mgt-person>
-    </em>
+<!-- Título -->
+<div id="topo">
 
-    <ul class="dropdown-menu drp-mnu">
-        <li>
-            <em class="fas fa-mail-bulk"></em>
-            <a asp-area="" asp-controller="Home" asp-action="Contato">Contato</a>
-        </li>
-
-        <li>
-            <em class="fas fa-id-card"></em>
-            <a asp-area="" asp-controller="Home" asp-action="TesteIdentity">Teste do Identity</a>
-        </li>
-        <li>
-            <em class="fas fa-info-circle"></em>
-            <a asp-area="" asp-controller="Home" asp-action="Sobre">Sobre</a>
-        </li>
-        <li class="quebra_linha"></li>
-
-        @if (User.Identity.IsAuthenticated)
-        {
-            <li>
-                <em class="fas fa-door-open"></em>
-                <a asp-area="" asp-controller="Home" asp-action="Sair">Sair</a>
-            </li>
-        }
-        else
-        {
-            <li>
-                <em class="fas fa-door-closed"></em>
-                <a asp-area="" asp-controller="Home" asp-action="Entrar">Entrar</a>
-            </li>
-        }
-    </ul>
+    <div class="row header shadow mb-3 p-3 ps-4">
+        <header>
+            <img class="d-lg-none d-block" src="~/img/Brasao_47_40.svg" width="40" height="47"
+                 alt="brasão do estado de São Paulo">
+            <h1 class="fw-normal d-none d-md-block tituloPag">Modelo Sefaz de aplicação Asp Net Core com Razor</h1>
+            <h1 class="fw-normal d-md-none d-block tituloPag">Secretaria da Fazenda e Planejamento</h1>
+            
+            <!--Imagem do user-->
+            <div class="d-none d-lg-block">
+                <div class="btn-group">
+                    <div class="user-name"> <partial name="_LoginPartial" /> </div>
+                    <button id="botao-user" aria-label="Botão perfil usuário"
+                            class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="true">
+                        <mgt-person class="drop-person"
+                                    line1-property="displayName">
+                        </mgt-person>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right text-start p-2" id="drop-down-user">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Contato">Contato</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="TesteIdentity">Teste do Identity</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Sobre">Sobre</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Sair">Sair</a></li>
+                        }
+                        else
+                        {
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Entrar">Entrar</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
 </div>

@@ -1,4 +1,20 @@
-﻿<script src="~/js/mgt/mgt-loader.js"></script>
+﻿<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+<script src="~/js/script.js"></script>
+<script src="~/js/acessibilidade.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+    );
+    const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+    );
+</script>
+
+<script src="~/js/mgt/mgt-loader.js"></script>
 <script src="~/js/adaptivecards/adaptivecards-templating.min.js"></script>
 <script src="~/js/script-cabecalho.js"></script>
 <script src="~/js/script-contrast.js"></script>
@@ -9,6 +25,5 @@
 <script src="~/js/clipboard.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/jquery-ui-1.10.4.custom.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/sefaz.js"></script>
