@@ -28,27 +28,6 @@ var opcoesAutenticacao = identityConfig.AuthenticationOptions;
 switch (Configuration["identity:type"])
 {
     case "azuread":
-        if (!string.IsNullOrEmpty(Configuration["AzureAd:ClientSecretPath"]) 
-            && Configuration["AzureAd:ClientSecretPath"].Contains(":/"))
-        {
-            try
-            {
-                string path = Configuration["AzureAd:ClientSecretPath"];
-                if (File.Exists(path))
-                {
-                    string secret = File.ReadAllText(path);
-                    Configuration["AzureAd:ClientSecret"] = secret;
-                }
-                else
-                {
-                    Console.WriteLine("Secret não encontrado.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ocorreu um erro: {ex.Message}");
-            }
-        }
         services.AddControllersWithViews().AddMicrosoftIdentityUI();
         string[] initialScopes = Configuration.GetValue<string>("CallApi:ScopeForAccessToken")?.Split(' ').ToArray();
         services.AddMicrosoftIdentityWebAppAuthentication(Configuration)
