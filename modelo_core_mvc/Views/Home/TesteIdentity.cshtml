@@ -1,5 +1,25 @@
 ﻿@using Microsoft.AspNetCore.Authentication
+@using Microsoft.Extensions.Configuration
+@using SefazLib.IdentityCfg;
+@inject IdentityConfig identityConfig;
+@inject IConfiguration Configuration
+
 <h1>@ViewData["Message"]</h1>
+@{
+    var jwt = "";
+    if (User.Identity.IsAuthenticated)
+    {
+        if (Configuration["identity:type"] == "azuread")
+        {
+            try
+            {
+                identityConfig.SetScope("ScopeForAccessToken");
+                jwt = await identityConfig.obterAccessToken(null);
+            }
+            catch { }
+        }
+    }
+}
 
 <section>
     @if (!User.Identity.IsAuthenticated)
@@ -29,5 +49,16 @@
             <dt>BootstrapContext</dt>
             <dd>@User.Identities.First().BootstrapContext</dd>
         </dl>
+
+        <h1>Jwt</h1>
+        @if (!string.IsNullOrEmpty(jwt))
+        {
+            <h3>jwt:</h3>
+            <div class="card">
+                @jwt
+            </div>
+        }
     }
+
 </section>
+

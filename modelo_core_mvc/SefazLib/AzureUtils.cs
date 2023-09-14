@@ -21,12 +21,14 @@ namespace SefazLib.AzureUtils
         public Dictionary<string, string> tokenInfo;
         private readonly IConfiguration configuration;
         private readonly IdentityConfig identityConfig;
+        public string jwtToken; 
 
         public AzureUtil(IConfiguration Configuration, IdentityConfig IdentityConfig)
         {
             httpClient = new HttpClient();
             configuration = Configuration;
             identityConfig = IdentityConfig;
+            jwtToken = identityConfig.jwtToken;
         }
 
         public async Task<Usuario> GetUserAsync()

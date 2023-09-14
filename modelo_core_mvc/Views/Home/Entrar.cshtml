@@ -1,15 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Authentication
 @using modelo_core_mvc.Errors;
 @using Microsoft.Extensions.Configuration
+@using SefazLib.IdentityCfg;
 @using SefazLib.usuarios
 @using SefazLib.AzureUtils;
 @inject IConfiguration Configuration
 @inject AzureUtil azureUtil;
+@inject IdentityConfig identityConfig;
 
 @{
     var nomeExibicao = "Não autenticado";
     var foto = "";
-    System.Uri fotoURL = null;
+    var jwt = "";
     if (User.Identity.IsAuthenticated)
     {
         nomeExibicao = @User.Identity.Name.Split(":")[0];
@@ -20,6 +22,8 @@
                 Usuario usuario = await azureUtil.GetUserAsync();
                 nomeExibicao = usuario.nomeCompleto;
                 foto = usuario.foto;
+                identityConfig.SetScope("ScopeForAccessToken");
+                jwt = await identityConfig.obterAccessToken(null);
             }
             catch { }
         }
@@ -51,4 +55,11 @@
             </div>
         }
     </div>
+    @if (!string.IsNullOrEmpty(jwt))
+    {
+        <h3>jwt:</h3>
+        <div class="card">
+            @jwt
+        </div>
+    }
 </section>

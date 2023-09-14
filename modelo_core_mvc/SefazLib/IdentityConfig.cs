@@ -18,6 +18,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TokenWS;
+using System.Security.Claims;
 
 namespace SefazLib.IdentityCfg
 {
@@ -52,6 +53,11 @@ namespace SefazLib.IdentityCfg
                         break;
                     case ("openid" or "azuread"):
                         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                        break;
+                    case ("loginsefaz"):
+                        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                         break;
                     default:
@@ -110,6 +116,46 @@ namespace SefazLib.IdentityCfg
                 };
             };
 
+            if (Configuration["identity:type"] == "loginsefaz")
+            {
+                OpenIdConnectOptions = options =>
+                {
+                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.Authority = Configuration.GetSection("LoginSefaz")["ServerRealm"];
+                    options.ClientId = Configuration.GetSection("LoginSefaz")["ClientId"];
+                    options.ClientSecret = Configuration.GetSection("LoginSefaz")["ClientSecret"];
+                    options.MetadataAddress = Configuration.GetSection("LoginSefaz")["Metadata"];
+                    options.RequireHttpsMetadata = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                    options.SaveTokens = true;
+                    options.ResponseType = OpenIdConnectResponseType.Code;
+                    options.NonceCookie.SameSite = SameSiteMode.Unspecified;
+                    options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = "name",
+                        RoleClaimType = ClaimTypes.Role,
+                        ValidateIssuer = true
+                    };
+
+                    options.Events.OnSignedOutCallbackRedirect += context =>
+                    {
+                        context.Response.Redirect(context.Options.SignedOutRedirectUri);
+                        context.HandleResponse();
+
+                        return Task.CompletedTask;
+                    };
+
+                    options.BackchannelHttpHandler = new HttpClientHandler
+                    {
+                        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                    };
+                };
+            }
+
             CookieAuthenticationOptions = options =>
             {
                 options.Cookie = new CookieBuilder
@@ -167,7 +213,12 @@ namespace SefazLib.IdentityCfg
             {
                 if (clientSecretCredential is null)
                 {
+                    if (scopes is null)
+                    {
+                        SetScope("ScopeForAccessToken");
+                    }
                     jwtToken = await tokenAcquisition.GetAccessTokenForUserAsync(scopes);
+
                 }
                 else
                 {
@@ -269,7 +320,7 @@ namespace SefazLib.IdentityCfg
         }
 
         #region
-          
+
         #endregion
     }
 }

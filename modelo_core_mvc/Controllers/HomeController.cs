@@ -62,6 +62,7 @@ namespace modelo_core_mvc.Controllers
         public IActionResult TesteIdentity()
         {
             ViewData["Title"] = "Teste do Identity";
+            ViewData["jwt"] = azureUtil.jwtToken;
             return View();
         }
 
