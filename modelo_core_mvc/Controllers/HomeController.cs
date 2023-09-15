@@ -8,6 +8,8 @@ using SefazLib.AzureUtils;
 using SefazLib.usuarios;
 using modelo_core_mvc.ProjetosApi;
 using modelo_core_mvc.Errors;
+using Antlr4.Runtime;
+using Microsoft.IdentityModel.Tokens;
 
 namespace modelo_core_mvc.Controllers
 {
@@ -50,7 +52,10 @@ namespace modelo_core_mvc.Controllers
                 foreach (var claim in User.Claims)
                 {
                     if (claim.Type.Contains("upn"))              { ViewData["Login"]      = claim.Value; }
-                    else if (claim.Type.Contains("name"))        { ViewData["Nome"]       = claim.Value; }
+                    else if (claim.Type.Contains("givenname"))   { ViewData["Nome"]       = claim.Value; }
+                    else if (claim.Type.Contains("preferred_username")) { ViewData["Cpf"] = claim.Value; }
+                    else if (claim.Type.Contains("name") && string.IsNullOrEmpty(ViewData["Nome"].ToString()))   { ViewData["Nome"]       = claim.Value; }
+                    else if (claim.Type.Contains("id_token"))    { ViewData["token"]      = claim.Value; }
                     else if (claim.Type.Contains("CPF"))         { ViewData["Cpf"]        = claim.Value; }
                     else if (claim.Type.Contains("dateofbirth")) { ViewData["Nascimento"] = claim.Value; }
                 }

@@ -62,4 +62,11 @@
             @jwt
         </div>
     }
+    @if (!string.IsNullOrEmpty(ViewData["token"].ToString()))
+    {
+        <h3>jwt:</h3>
+        <div class="card">
+            @ViewData["token"]
+        </div>
+    }
 </section>
