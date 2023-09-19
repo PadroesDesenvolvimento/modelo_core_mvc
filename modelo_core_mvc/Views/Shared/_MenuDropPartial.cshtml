@@ -49,6 +49,10 @@
         @if (User.Identity.IsAuthenticated)
         {
             <li>
+                <em class="fas fa-door-closed"></em>
+                <a asp-area="" asp-controller="Home" asp-action="Entrar">Identificação</a>
+            </li>
+            <li>
                 <em class="fas fa-door-open"></em>
                 <a asp-area="" asp-controller="Home" asp-action="Sair">Sair</a>
             </li>

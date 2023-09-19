@@ -40,6 +40,16 @@ namespace modelo_core_mvc.Controllers
         [Authorize]
         public async Task<IActionResult> Entrar()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewData["Title"] = "Identificação";
+            }
+            else
+            {
+                ViewData["Title"] = "Entrar";
+            }
+            ViewData["Nome"] = "";
+            ViewData["token"] = "";
             if (configuration["identity:type"] == "azuread")
             {
                 Usuario usuario = await azureUtil.GetUserAsync();
@@ -60,7 +70,6 @@ namespace modelo_core_mvc.Controllers
                     else if (claim.Type.Contains("dateofbirth")) { ViewData["Nascimento"] = claim.Value; }
                 }
             }
-            ViewData["Title"] = "Entrar";
 
             return View();
         }

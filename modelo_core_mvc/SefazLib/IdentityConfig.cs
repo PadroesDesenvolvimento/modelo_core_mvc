@@ -177,6 +177,11 @@ namespace SefazLib.IdentityCfg
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await obterAccessToken(null));
             }
+            if (configuration["identity:type"] == "loginsefaz")
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+            }
+
             return httpClient.DefaultRequestHeaders.Authorization;
         }
 
