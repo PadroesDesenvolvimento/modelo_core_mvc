@@ -260,20 +260,18 @@ namespace SefazLib.IdentityCfg
         public static async Task Logout(HttpContext httpContext, IConfiguration Configuration)
         {
             await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
             switch (Configuration["identity:type"])
             {
                 case "jwt":
                     await httpContext.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);
                     break;
-                case ("openid" or "azuread"):
-                    await httpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
-                    break;
-                default:
+                case ("sefazidentity" or "wsfed"):
                     await httpContext.SignOutAsync(WsFederationDefaults.AuthenticationScheme);
                     break;
+                default:
+                    await httpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+                    break;
             }
-
             Logoff = true;
         }
 
