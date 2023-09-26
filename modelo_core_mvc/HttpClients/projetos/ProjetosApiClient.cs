@@ -83,7 +83,7 @@ namespace modelo_core_mvc.ProjetosApi
             var resposta = await httpClient.PutAsync("Projetos", projeto.ToJson());
             if (!resposta.IsSuccessStatusCode)
             {
-                throw new HttpRequestException("Essa aplicação não está configurada para acessar a API.");
+                throw new HttpRequestException("Essa aplicação não está configurada para acessar a API."+ resposta.ReasonPhrase);
             }
         }
 
