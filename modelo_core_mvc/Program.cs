@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -73,6 +74,13 @@ switch (Configuration["identity:type"])
 }
 #endregion
 
+services.AddSingleton(async provider =>
+{
+    var authenticationResult = await provider.GetRequiredService<IHttpContextAccessor>().HttpContext.AuthenticateAsync();
+    var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == "Token.access_token").Value;
+
+    return accessToken;
+});
 services.AddTransient<IdentityConfig>();
 services.AddHttpClient<ProjetosApiClient>();
 services.AddTransient<AzureUtil>();

@@ -31,12 +31,16 @@ namespace SefazLib.IdentityCfg
         public Action<OpenIdConnectOptions> OpenIdConnectOptions { get; private set; }
         public static Boolean Logoff { get; private set; }
         public HttpClient httpClient;
-        public string jwtToken;
+        public static string jwtToken;
         public string erro;
         public string[] scopes;
         public Dictionary<string, string> tokenInfo;
         private readonly ITokenAcquisition tokenAcquisition;
 
+        public IdentityConfig(string accessToken)
+        {
+            jwtToken = accessToken;
+        }
         public IdentityConfig(IConfiguration Configuration)
         {
             httpClient = new HttpClient();

@@ -28,7 +28,7 @@ namespace SefazLib.AzureUtils
             httpClient = new HttpClient();
             configuration = Configuration;
             identityConfig = IdentityConfig;
-            jwtToken = identityConfig.jwtToken;
+            jwtToken = IdentityConfig.jwtToken;
         }
 
         public async Task<Usuario> GetUserAsync()
