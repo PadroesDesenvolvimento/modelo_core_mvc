@@ -7,7 +7,7 @@
         nomeExibicao = @User.Identity.Name.Split(":")[0];
 
         var authenticationResult = await Context.AuthenticateAsync();
-        var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == ".Token.id_token").Value;
+        var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == ".Token.access_token").Value;
 
         if (!string.IsNullOrEmpty(accessToken))
         {
