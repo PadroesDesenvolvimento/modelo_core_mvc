@@ -13,6 +13,7 @@ using modelo_core_mvc.Helpers;
 using SefazLib.AzureUtils;
 using SefazLib.usuarios;
 using SefazLib.IdentityCfg;
+using SefazLib.UrlTest;
 
 namespace modelo_core_mvc.Controllers;
 
@@ -86,6 +87,16 @@ public class AutenticacaoController : Controller
     {
         ViewData["Title"] = "Teste do Identity";
         ViewData["jwt"] = azureUtil.jwtToken;
+        ViewData["Authority"] = "";
+        ViewData["Metadata"] = "";
+
+        if (configuration["identity:type"] == "loginsefaz")
+        {
+            var testeURL = new UrlTest();
+            ViewData["Authority"] = testeURL.Verificar_URL("Authority", configuration["LoginSefaz:ServerRealm"]);
+            ViewData["Metadata"] = testeURL.Verificar_URL("Metadata", configuration["LoginSefaz:Metadata"]);
+        }
+
         return View();
     }
 

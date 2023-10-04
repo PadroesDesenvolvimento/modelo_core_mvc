@@ -12,10 +12,25 @@
         <li>Plataforma: @Configuration["dadosdeploy:plataforma"]</li>
     </ul>
     <p>______________________________________________</p>
-    <h2>Identity</h2>
+    <h2>Autenticação</h2>
     <ul>
-        <li>Endereço: @Configuration["identity:metadataaddress"]</li>
-        <li>Aplicação: @Configuration["identity:realm"]</li>
+        <li>Tipo: @Configuration["identity:type"]</li>
+        @if (@Configuration["identity:type"] == "sefazidentity")
+        {
+            <li>Endereço: @Configuration["identity:metadataaddress"]</li>
+            <li>Aplicação: @Configuration["identity:realm"]</li>
+        }
+        @if (@Configuration["identity:type"] == "azuread")
+        {
+            <li>Endereço: @Configuration["AzureAd:Instance"]/@Configuration["AzureAd:TenantId"]</li>
+            <li>ClientID: @Configuration["AzureAd:ClientId"]</li>
+        }
+        @if (@Configuration["identity:type"] == "loginsefaz")
+        {
+            <li>Authority: @Configuration["LoginSefaz:ServerRealm"]</li>
+            <li>Metadata: @Configuration["LoginSefaz:Metadata"]</li>
+        }
+
     </ul>
     <p>______________________________________________</p>
     <h2>Dados da conexão</h2>

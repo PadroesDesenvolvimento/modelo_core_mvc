@@ -60,5 +60,16 @@
         }
     }
 
+    @if (!string.IsNullOrEmpty(ViewData["Authority"].ToString()))
+    {
+        <p>
+            Authority: @Configuration["LoginSefaz:ServerRealm"] -
+            @ViewData["Authority"]
+        </p>
+        <p>
+            Metadata: @Configuration["LoginSefaz:Metadata"] -
+            @ViewData["Metadata"]
+        </p>
+    }
 </section>
 

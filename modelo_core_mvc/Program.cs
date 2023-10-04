@@ -11,7 +11,6 @@ using modelo_core_mvc.Models;
 using modelo_core_mvc.ProjetosApi;
 using SefazLib.AzureUtils;
 using SefazLib.IdentityCfg;
-using SefazLib.UrlTest;
 using System;
 using System.Linq;
 
@@ -56,9 +55,6 @@ switch (Configuration["identity:type"])
                     cookie.SlidingExpiration = true;
                 })
                 .AddOpenIdConnect(identityConfig.OpenIdConnectOptions);
-        var testeURL = new UrlTest();
-        testeURL.Verificar_URL("Authority", Configuration.GetSection("LoginSefaz")["ServerRealm"]);
-
         break;
 
     case ("openid"):

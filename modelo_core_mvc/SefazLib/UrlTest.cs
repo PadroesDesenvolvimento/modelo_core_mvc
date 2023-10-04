@@ -7,9 +7,9 @@ namespace SefazLib.UrlTest;
 public class UrlTest
 
 {
-    public async Task TestUrl(string nomeTeste, string url)
-
+    public async Task<string> TestUrl(string nomeTeste, string url)
     {
+        string mensagem = "";
         using (var httpClient = new HttpClient())
         {
             try
@@ -19,29 +19,32 @@ public class UrlTest
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"URL verificada com sucesso.");
-                    Console.WriteLine($"URL Content:\n{content}");
+                    mensagem += $"URL verificada com sucesso.";
+                    //mensagem += $"URL Content:\n{content}";
                 }
                 else
                 {
-                    Console.WriteLine("URL com falha de acesso.");
-                    Console.WriteLine($"HTTP Status Code: {response.StatusCode}");
+                    mensagem += "URL com falha de acesso.";
+                    mensagem += $"HTTP Status Code: {response.StatusCode}";
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Erro ao acessar a URL:");
-                Console.WriteLine(ex.Message);
+                mensagem += "Erro ao acessar a URL:";
+                mensagem += ex.Message;
             }
         }
+        return mensagem;
     }
 
-    public void Verificar_URL(string nomeTeste, string url)
+    public string Verificar_URL(string nomeTeste, string url)
     {
         var urlTest = new UrlTest();
+        var mensagem = "";
         Task.Run(async () =>
             {
-                await urlTest.TestUrl(nomeTeste, url);
+                mensagem = await urlTest.TestUrl(nomeTeste, url);
             }).Wait();
+        return mensagem;
     }
 }

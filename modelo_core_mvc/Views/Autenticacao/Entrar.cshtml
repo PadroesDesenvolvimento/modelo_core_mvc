@@ -49,9 +49,18 @@
         {
             <div>
                 <h2>@nomeExibicao </h2>
-                <p>Login: @ViewData["Login"]</p>
-                <p>Cpf: @ViewData["Cpf"]</p>
-                <p>Nascimento: @ViewData["Nascimento"]</p>
+                @if (ViewData["Login"] != null)
+                {
+                    <p>Login: @ViewData["Login"]</p>
+                }
+                @if (ViewData["Cpf"] != null)
+                {
+                    <p>Login: @ViewData["Cpf"]</p>
+                }
+                @if (ViewData["Nascimento"] != null)
+                {
+                    <p>Login: @ViewData["Nascimento"]</p>
+                }
             </div>
         }
     </div>
