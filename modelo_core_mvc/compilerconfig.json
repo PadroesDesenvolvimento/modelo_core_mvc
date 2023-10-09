@@ -18,5 +18,9 @@
   {
     "outputFile": "wwwroot/css/styles.css",
     "inputFile": "wwwroot/css/styles.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/sefaz.css",
+    "inputFile": "wwwroot/css/sefaz.scss"
   }
 ]

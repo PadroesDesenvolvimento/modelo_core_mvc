@@ -1,7 +1,7 @@
 (function () {
     var Contrast = {
         storage: 'contrastState',
-        cssClass: 'color-blind',
+        cssClass: 'alto-contrast',
         currentState: null,
         check: checkContrast,
         getState: getContrastState,
