@@ -18,6 +18,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TokenWS;
+using System.Security.Claims;
 
 namespace SefazLib.IdentityCfg
 {
@@ -30,12 +31,16 @@ namespace SefazLib.IdentityCfg
         public Action<OpenIdConnectOptions> OpenIdConnectOptions { get; private set; }
         public static Boolean Logoff { get; private set; }
         public HttpClient httpClient;
-        public string jwtToken;
+        public static string jwtToken;
         public string erro;
         public string[] scopes;
         public Dictionary<string, string> tokenInfo;
         private readonly ITokenAcquisition tokenAcquisition;
 
+        public IdentityConfig(string accessToken)
+        {
+            jwtToken = accessToken;
+        }
         public IdentityConfig(IConfiguration Configuration)
         {
             httpClient = new HttpClient();
@@ -52,6 +57,11 @@ namespace SefazLib.IdentityCfg
                         break;
                     case ("openid" or "azuread"):
                         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                        break;
+                    case ("loginsefaz"):
+                        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                         break;
                     default:
@@ -110,6 +120,46 @@ namespace SefazLib.IdentityCfg
                 };
             };
 
+            if (Configuration["identity:type"] == "loginsefaz")
+            {
+                OpenIdConnectOptions = options =>
+                {
+                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.Authority = Configuration.GetSection("LoginSefaz")["ServerRealm"];
+                    options.ClientId = Configuration.GetSection("LoginSefaz")["ClientId"];
+                    options.ClientSecret = Configuration.GetSection("LoginSefaz")["ClientSecret"];
+                    options.MetadataAddress = Configuration.GetSection("LoginSefaz")["Metadata"];
+                    options.RequireHttpsMetadata = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                    options.SaveTokens = true;
+                    options.ResponseType = OpenIdConnectResponseType.Code;
+                    options.NonceCookie.SameSite = SameSiteMode.Unspecified;
+                    options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = "name",
+                        RoleClaimType = ClaimTypes.Role,
+                        ValidateIssuer = true
+                    };
+
+                    options.Events.OnSignedOutCallbackRedirect += context =>
+                    {
+                        context.Response.Redirect(context.Options.SignedOutRedirectUri);
+                        context.HandleResponse();
+
+                        return Task.CompletedTask;
+                    };
+
+                    options.BackchannelHttpHandler = new HttpClientHandler
+                    {
+                        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                    };
+                };
+            }
+
             CookieAuthenticationOptions = options =>
             {
                 options.Cookie = new CookieBuilder
@@ -131,6 +181,11 @@ namespace SefazLib.IdentityCfg
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await obterAccessToken(null));
             }
+            if (configuration["identity:type"] == "loginsefaz")
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+            }
+
             return httpClient.DefaultRequestHeaders.Authorization;
         }
 
@@ -167,7 +222,12 @@ namespace SefazLib.IdentityCfg
             {
                 if (clientSecretCredential is null)
                 {
+                    if (scopes is null)
+                    {
+                        SetScope("ScopeForAccessToken");
+                    }
                     jwtToken = await tokenAcquisition.GetAccessTokenForUserAsync(scopes);
+
                 }
                 else
                 {
@@ -204,20 +264,18 @@ namespace SefazLib.IdentityCfg
         public static async Task Logout(HttpContext httpContext, IConfiguration Configuration)
         {
             await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
             switch (Configuration["identity:type"])
             {
                 case "jwt":
                     await httpContext.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);
                     break;
-                case ("openid" or "azuread"):
-                    await httpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
-                    break;
-                default:
+                case ("sefazidentity" or "wsfed"):
                     await httpContext.SignOutAsync(WsFederationDefaults.AuthenticationScheme);
                     break;
+                default:
+                    await httpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+                    break;
             }
-
             Logoff = true;
         }
 
@@ -269,7 +327,7 @@ namespace SefazLib.IdentityCfg
         }
 
         #region
-          
+
         #endregion
     }
 }
