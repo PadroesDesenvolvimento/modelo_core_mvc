@@ -12,11 +12,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\layout_padrao_modelo_core_mvc_aygxajevl6m6qipcv4zv\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="compilerconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
