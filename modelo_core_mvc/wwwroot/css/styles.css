@@ -1409,13 +1409,15 @@ button span {
   display: none;
 }
 
-@media (max-width: 767.98px) {
+@media (min-width: 767.99px) {
   #cabecalho-mobile {
     display: none;
   }
   #cabecalho-desktop {
     display: block;
   }
+}
+@media (max-width: 767.98px) {
   #tituloCabecalho {
     background-color: var(--cor-primaria);
     padding: 0.5em 1em;
