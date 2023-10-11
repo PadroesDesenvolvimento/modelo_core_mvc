@@ -34,19 +34,24 @@
         </div>
 
         <div id="conteudo-mobile">
-            <div id="painel-menu" class="menuVisivel">
+            <div id="painel_lateral" class="visivel">
                 <header id="brasao">
                     <img src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
                     <span id="orgao">Secretaria da Fazenda e Planejamento</span>
                 </header>
-                <button type="button" id="botao-expandir" accesskey="c" aria-label="Botão para abrir e fechar o menu">
+                <button type="button" id="botao_expandir" 
+                        accesskey="c" 
+                        aria-label="Botão para abrir e fechar o menu"
+                        onclick="alternarRecolhido('painel_lateral')">
                     <span><i class="fas fa-angle-right"></i></span>
                 </button>
 
-                <partial name="_MenuLateral" />
+                <nav id="menu_lateral">
+                    <partial name="_ItensMenu" />
+                </nav>
             </div>
 
-            <div id="painel-principal">
+            <div id="painel-principal" class="">
                 <header id="cabecalho-desktop" class="painel-cabecalho">
                     <partial name="_Cabecalho" />
                 </header>

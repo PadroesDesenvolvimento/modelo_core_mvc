@@ -562,7 +562,7 @@
   fill: white;
 }
 
-.color-blind #painel-menu {
+.color-blind #painel_lateral {
   color: #000 !important;
   background-color: #000 !important;
 }

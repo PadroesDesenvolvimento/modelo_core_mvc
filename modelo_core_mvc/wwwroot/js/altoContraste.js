@@ -6,7 +6,7 @@
         check: checkContrast,
         getState: getContrastState,
         setState: setContrastState,
-        toogle: toogleContrast,
+        toogle: toggleContrast,
         updateView: updateViewContrast
         
     };

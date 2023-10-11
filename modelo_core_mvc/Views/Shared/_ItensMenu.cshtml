@@ -1,9 +1,5 @@
-﻿@using Microsoft.Extensions.Configuration
-@inject IConfiguration Configuration
-
-
-<nav id="menu">
-    <ul class="list-unstyled components" id="menu">
+﻿<div id="itens-nav">
+    <ul class="list-unstyled components">
         <li>
             <a asp-area="" asp-controller="Home" asp-action="Index">
                 <em class='fas fa-home'></em>
@@ -22,14 +18,9 @@
                 Privacidade
             </a>
         </li>
-        @*@if (Configuration["identity:type"] == "azuread")
-        {
-        <li>
-        <a asp-area="" asp-controller="Azure" asp-action="Index">
-        <em class="fas fa-project-diagram"></em>
-        MS Graph - Lista SharePoint
-        </a>
-        </li>
-        }*@
     </ul>
-</nav>
+</div>
+
+<div id="itens-popup-menu">
+    <partial name="_ItensPopup" />
+</div>

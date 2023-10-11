@@ -31,44 +31,13 @@
   max-height: calc(100vh - 12em);
 }
 
-#painel-menu {
-  background-color: var(--cor-primaria);
-  display: flex;
-  flex-direction: column;
-}
-@media (min-width: 767.99px) {
-  #painel-menu {
-    transition: all 0.3s;
-    position: fixed;
-    width: var(--largura-menu-expandido);
-    z-index: 1;
-    top: 0;
-    bottom: 0;
-  }
-  #painel-menu.recolhido {
-    width: var(--largura-menu-recolhido);
-  }
-  #painel-menu.recolhido #botao-expandir {
-    margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botao-expandir) / 2);
-  }
-  #painel-menu.recolhido #orgao {
-    display: none;
-  }
-}
-
-@media (min-width: 767.99px) {
-  #painel-menu.recolhido + #painel-principal {
-    margin-left: var(--largura-menu-recolhido);
-  }
-}
-
-#botao-expandir {
-  margin-left: calc(var(--largura-menu-expandido) - var(--largura-botao-expandir) / 2);
+#botao_expandir {
+  margin-left: calc(var(--largura-menu-expandido) - var(--largura-botao_expandir) / 2);
   stroke: #000;
   transform: scale(0.5);
-  width: var(--largura-botao-expandir);
-  height: var(--largura-botao-expandir);
-  border-radius: calc(var(--largura-botao-expandir) / 2);
+  width: var(--largura-botao_expandir);
+  height: var(--largura-botao_expandir);
+  border-radius: calc(var(--largura-botao_expandir) / 2);
   border: none;
   background-color: var(--cor-fundo);
   box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.2);
@@ -76,10 +45,10 @@
   top: 2em;
   transition: all 0.3s;
 }
-#botao-expandir:hover, #botao-expandir:focus {
+#botao_expandir:hover, #botao_expandir:focus {
   background-color: var(--cor-apoio-cinza-claro);
 }
-#botao-expandir span {
+#botao_expandir span {
   font-size: 2.5rem;
   font-weight: bold;
   line-height: 40px;
@@ -119,12 +88,13 @@
   position: absolute;
 }
 
+/*mobile*/
 @media (max-width: 767.98px) {
-  #painel-principal {
+  #botao_expandir, #brasao {
     display: none;
-    margin-left: 0;
   }
-  #painel-principal.painelVisivel {
+  #painel-principal {
+    margin-left: 0;
     display: flex;
     transition: height 1s ease;
   }
@@ -136,23 +106,17 @@
   #conteudo-mobile {
     margin-top: calc(var(--altura-barra-acessibilidade) + var(--altura-cabecalho) + 1em);
   }
-  #painel-menu {
+  #painel_lateral.oculto {
+    display: none;
+  }
+  #painel_lateral.visivel {
     display: flex;
     width: 100%;
     height: 0;
     left: 0;
     right: 0;
     bottom: auto;
-    transition: height 0.3s ease;
-  }
-  #painel-menu #botao-expandir, #painel-menu #brasao, #painel-menu app-itens-menu {
-    display: none;
-  }
-  #painel-menu.menuVisivel {
     height: 100vh;
-  }
-  #painel-menu.menuVisivel app-itens-menu {
     transition: height 0.3s ease;
-    display: initial;
   }
 }
