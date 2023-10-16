@@ -24,15 +24,10 @@
 @Html.Hidden("nomeExibicao", nomeExibicao)
 
 <div class="dropdown">
-    <em id="botao_popup" class="dropdown-toggle" data-toggle="dropdown" 
-        aria-expanded="false" 
-        alt="Menu de acesso e informações do sistema" 
-        onclick="alternarOculto('menu_popup')">
-        <mgt-person class="drop-person"
-                    line1-property="displayName">
-        </mgt-person>
+    <em id="botao_popup" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" alt="Menu de acesso e informações do sistema">
+        <mgt-person class="drop-person" line1-property="displayName"></mgt-person>
     </em>
-    <nav id="menu_popup" class="dropdown-menu drp-mnu oculto">
+    <ul class="dropdown-menu" id="menu_popup">
         <partial name="_ItensPopup" />
-    </nav>
+    </ul>
 </div>

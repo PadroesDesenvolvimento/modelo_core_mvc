@@ -1363,7 +1363,7 @@ button span {
   }
   #tituloSefaz,
   #tituloBrasao,
-  #itens-popup-menu,
+  #itens-popup,
   #cabecalho-mobile,
   #botao-hamburguinho {
     display: none;
@@ -1516,15 +1516,6 @@ button span {
   cursor: pointer;
 }
 
-#menu_popup {
-  float: right;
-  position: relative;
-  display: inline-block;
-}
-#menu_popup.oculto {
-  display: none;
-}
-
 #caixa-menu {
   background-color: var(--cor-fundo);
   position: absolute;
@@ -1563,7 +1554,7 @@ button span {
   #botao_popup {
     display: none;
   }
-  #itens-popup-menu {
+  #itens-popup {
     display: block;
   }
   #painel_lateral.oculto {

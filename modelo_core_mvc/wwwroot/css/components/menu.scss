@@ -1,5 +1,5 @@
 .fas {
-  padding-right: 0.5em;
+    padding-right: 0.5em;
 }
 
 #painel_lateral {
@@ -127,17 +127,6 @@
     }
 }
 
-
-#menu_popup {
-    float: right;
-    position: relative;
-    display: inline-block;
-
-    &.oculto {
-        display: none;
-    }
-}
-
 #caixa-menu {
     background-color: var(--cor-fundo);
     position: absolute;
@@ -177,7 +166,7 @@
         display: none;
     }
 
-    #itens-popup-menu {
+    #itens-popup {
         display: block;
     }
 
