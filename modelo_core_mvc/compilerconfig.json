@@ -26,5 +26,29 @@
   {
     "outputFile": "wwwroot/css/site.css",
     "inputFile": "wwwroot/css/site.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/barra-acessibilidade.css",
+    "inputFile": "wwwroot/css/components/barra-acessibilidade.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/botoes.css",
+    "inputFile": "wwwroot/css/components/botoes.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/breadcrumb.css",
+    "inputFile": "wwwroot/css/components/breadcrumb.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/cabecalho.css",
+    "inputFile": "wwwroot/css/components/cabecalho.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/menu.css",
+    "inputFile": "wwwroot/css/components/menu.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/tabela.css",
+    "inputFile": "wwwroot/css/components/tabela.scss"
   }
 ]

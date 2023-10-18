@@ -1,5 +1,5 @@
 @import "jqueryui/jquery-ui-1.10.1.custom.min.css";
-@import "../lib/bootstrap/dist/css/bootstrap.css";
+@import "bootstrap/bootstrap.min.css";
 @import "font-awesome/css/all.css";
 @import "_variaveis.scss";
 @import "components/person-card.css";
@@ -10,6 +10,7 @@
 @import "components/breadcrumb.scss";
 @import "components/cabecalho.scss";
 @import "components/menu.scss";
+@import "components/painel-lateral.scss";
 @import "components/tabela.scss";
 
 @font-face {

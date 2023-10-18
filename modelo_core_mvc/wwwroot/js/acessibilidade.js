@@ -11,7 +11,6 @@ function aumentarCaracter(){
   if(valorMudanca < 0) {valorMudanca = 0}
   else if(valorMudanca > 5) {valorMudanca = 5}
   document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca])
-  document.getElementById("ul-raiz").style.setProperty('margin-top', alturaMenuLateral[valorMudanca])
 }
 
 // ***************************************************************************************************************************************//
@@ -25,7 +24,6 @@ function diminuirCaracter(){
   if(valorMudanca < 0) {valorMudanca = 0}
   else if(valorMudanca > 5) {valorMudanca = 5}
   document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca])
-  document.getElementById("ul-raiz").style.setProperty('margin-top', alturaMenuLateral[valorMudanca])
 }
 
 // ***************************************************************************************************************************************//
@@ -79,17 +77,3 @@ function diminuirCaracter(){
       this.setState(!this.currentState);
   }
 })();
-
-// ***************************************************************************************************************************************//
-//                                                          Event listeners                                                               //
-// ***************************************************************************************************************************************//
-
-document.getElementsByClassName('btn-acessibilidade')[0].addEventListener('click', () => {
-    aumentarCaracter()
-})
-document.getElementsByClassName('btn-acessibilidade')[1].addEventListener('click', () => {
-    diminuirCaracter()
-})
-document.getElementsByClassName('btn-acessibilidade')[2].addEventListener('click', () => {
-    window.toggleContrast()
-})

@@ -45,7 +45,7 @@
     }
 }
 
-#itens-popup {
+#itens_popup {
     display: none;
 }
 
@@ -55,7 +55,7 @@
     background-color: transparent;
 }
 
-#itens-nav {
+#itens_nav {
     display: block;
     background-color: transparent;
     border-radius: 5px;
@@ -64,7 +64,7 @@
     transition: background-color 0.3s;
 }
 
-#itens-popup.exibirPop {
+#itens_popup.exibirPop {
     display: block;
 
     a {
@@ -129,7 +129,7 @@
         display: none;
     }
 
-    #itens-popup {
+    #itens_popup {
         display: block;
     }
 

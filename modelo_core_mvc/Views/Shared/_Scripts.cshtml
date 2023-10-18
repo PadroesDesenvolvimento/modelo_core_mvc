@@ -7,11 +7,4 @@
 
 @*Biblioteca interna*@
 <script src="~/js/acessibilidade.js"></script>
-<script src="~/js/altoContraste.js"></script>
 <script src="~/js/script.js"></script>
-
-@*Adiciona tootips (dicas) a todos os elementos que tiverem o atributo "title"*@
-<script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
-</script>

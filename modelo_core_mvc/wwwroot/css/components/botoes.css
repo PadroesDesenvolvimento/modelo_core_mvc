@@ -40,3 +40,43 @@ button span {
   background-color: var(--cor-borda-clara);
   border-color: var(--cor-borda-clara);
 }
+
+#botao-login {
+  width: var(--largura-botao);
+  box-shadow: -2px 5px 10px var(--cor-sombra);
+  border-color: var(--cor-borda-clara);
+  border-style: solid;
+  border-block-width: thin;
+  margin: 0.5em;
+  text-decoration: none;
+  color: var(--cor-botao-texto);
+}
+#botao-login:hover, #botao-login:focus {
+  color: var(--cor-primaria-texto);
+  box-shadow: -2px 5px 10px var(--cor-sombra);
+  background-color: var(--cor-sombra);
+}
+#botao-login i {
+  margin-right: 0.5em;
+  color: var(--cor-botao-texto);
+}
+
+#botao-logout {
+  width: var(--largura-botao);
+  box-shadow: -2px 5px 10px var(--cor-sombra);
+  border-color: var(--cor-borda-clara);
+  border-style: solid;
+  border-block-width: thin;
+  margin: 0.5em;
+  text-decoration: none;
+  color: var(--cor-botao-texto);
+}
+#botao-logout:hover, #botao-logout:focus {
+  color: var(--cor-primaria-texto);
+  box-shadow: -2px 5px 10px var(--cor-sombra);
+  background-color: var(--cor-sombra);
+}
+#botao-logout i {
+  margin-right: 0.5em;
+  color: var(--cor-botao-texto);
+}
