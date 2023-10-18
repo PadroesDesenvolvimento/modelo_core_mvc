@@ -1,28 +1,20 @@
 ﻿@using Breadcrumbs.Models
 
-<!--Breadcrumb-->
-<div class="row">
-    <nav class="navbar">
-        <div class="container-fluid">
-            <nav aria-label="breadcrumb" id="breadcrumb" class="ms-0 ms-lg-4">
-                @if (ViewBag.Breadcrumbs != null)
+@if (ViewBag.Breadcrumbs != null)
+{
+    <nav id="breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @foreach (var breadcrumb in ViewBag.Breadcrumbs as List<Breadcrumb>)
+            {
+                if (breadcrumb.Active)
                 {
-                    <ol class="breadcrumb">
-                        @foreach (var breadcrumb in ViewBag.Breadcrumbs as List<Breadcrumb>)
-                        {
-                            if (breadcrumb.Active)
-                            {
-                                <li class="breadcrumb-item active"><a asp-action="@breadcrumb.Action" asp-controller="@breadcrumb.Controller">@breadcrumb.Text</a></li>
-                            }
-                            else
-                            {
-                                <li class="breadcrumb-item" aria-current="page">@breadcrumb.Text</li>
-                            }
-                        }
-                    </ol>
+                    <li class="breadcrumb-item active"><a asp-action="@breadcrumb.Action" asp-controller="@breadcrumb.Controller">@breadcrumb.Text</a></li>
                 }
-            </nav>
-        </div>
+                else
+                {
+                    <li class="breadcrumb-item" aria-current="page">@breadcrumb.Text</li>
+                }
+            }
+        </ol>
     </nav>
-</div>
-<!-- /Breadcrumb-->
+}

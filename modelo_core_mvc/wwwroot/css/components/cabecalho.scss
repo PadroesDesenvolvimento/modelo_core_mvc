@@ -30,7 +30,7 @@
     #tituloSefaz,
     #tituloBrasao,
     #itens-popup,
-    #cabecalho-mobile,
+    #cabecalho_mobile,
     #botao-hamburguinho {
         display: none;
     }
@@ -38,7 +38,7 @@
 
 /*mobile*/
 @media (max-width: 767.98px) {
-    #cabecalho-mobile {
+    #cabecalho_mobile {
         display: block;
     }
 

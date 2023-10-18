@@ -29,59 +29,58 @@
 </head>
 
 <body>
-    <main id="raiz">
-        <div id="cabecalho-mobile" class="painel-cabecalho">
-            <partial name="_Cabecalho" />
+    <section id="cabecalho_mobile" class="painel_cabecalho">
+        <partial name="_Cabecalho" />
+    </section>
+
+    <section id="conteudo_mobile">
+        <div id="painel_lateral" class="oculto">
+            <header id="brasao">
+                <img src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
+                <span id="orgao">Secretaria da Fazenda e Planejamento</span>
+            </header>
+            <button type="button" id="botao_expandir"
+                    accesskey="c"
+                    aria-label="Botão para abrir e fechar o menu"
+                    onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher'],'recolhido')">
+                <span id="icone_expandir" class="recolhido">
+                    <i class="fas fa-angle-right"></i>
+                </span>
+                <span id="icone_recolher">
+                    <i class="fas fa-angle-left"></i>
+                </span>
+            </button>
+
+            <nav id="menu_lateral" onclick="alternarClasse(['painel_lateral'],'oculto')">
+                <partial name="_ItensMenu" />
+            </nav>
         </div>
 
-        <div id="conteudo-mobile">
-            <div id="painel_lateral" class="visivel">
-                <header id="brasao">
-                    <img src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
-                    <span id="orgao">Secretaria da Fazenda e Planejamento</span>
-                </header>
-                <button type="button" id="botao_expandir"
-                        accesskey="c"
-                        aria-label="Botão para abrir e fechar o menu"
-                        onclick="alternarRecolhido('painel_lateral')">
-                    <span><i class="fas fa-angle-right"></i></span>
-                </button>
+        <div id="painel_principal" class="">
+            <header id="cabecalho-desktop" class="painel_cabecalho">
+                <partial name="_Cabecalho" />
+            </header>
 
-                <nav id="menu_lateral" onclick="alternarOculto('painel_lateral')" ">
-                    <partial name="_ItensMenu" />
-                </nav>
-            </div>
+            <div id="painel_aplicacao">
+                <partial name="_BreadCrumb" />
 
-            <div id="painel-principal" class="">
-                <header id="cabecalho-desktop" class="painel-cabecalho">
-                    <partial name="_Cabecalho" />
-                </header>
+                <main id="Main" class="container shadow" tabindex="0">
+                    @RenderBody()
+                </main>
 
-                <div id="painel-aplicacao">
-                    <partial name="_BreadCrumb" />
-                    <div class="container">
-                        <main role="main" class="pb-3">
-                            <div id="Main" class="shadow" tabindex="0">
-                                <div class="mx-3 p-md-3 p-3">
-                                    @RenderBody()
-                                </div>
-                            </div>
-                        </main>
-                    </div>
-                    <div>
-                        @if (ViewData["Erro"] != null)
-                        {
-                            @ViewData["Erro"]
-                        }
-                    </div>
+                <div id="mensagem_erro">
+                    @if (ViewData["Erro"] != null)
+                    {
+                        @ViewData["Erro"]
+                    }
                 </div>
             </div>
         </div>
-        <partial name="_Rodape" />
-        <partial name="_Scripts" />
+    </section>
 
-        @RenderSection("Scripts", required: false)
-    </main>
+    <partial name="_Scripts" />
+
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>
