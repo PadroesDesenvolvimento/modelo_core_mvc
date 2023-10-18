@@ -1,7 +1,7 @@
 ﻿@import "jqueryui/jquery-ui-1.10.1.custom.min.css";
 @import "../lib/bootstrap/dist/css/bootstrap.css";
 @import "font-awesome/css/all.css";
-@import "person-card.css";
+@import "components/person-card.css";
 :root {
   --font-principal: "Open Sans", sans-serif;
   --font-secundaria: "Montserrat", sans-serif;
