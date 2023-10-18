@@ -1,0 +1,26 @@
+﻿<div id="itens-nav">
+    <ul class="list-unstyled components">
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+                <em class='fas fa-home'></em>
+                Home
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Projetos" asp-action="Index">
+                <em class="fas fa-table"></em>
+                Lista de Projetos
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Privacidade">
+                <em class="fas fa-user-secret"></em>
+                Privacidade
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="itens-popup">
+    <partial name="_ItensPopup" />
+</div>

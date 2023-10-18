@@ -1,0 +1,30 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/_variaveis.css",
+    "inputFile": "wwwroot/css/_variaveis.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/alto-contraste.css",
+    "inputFile": "wwwroot/css/alto-contraste.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/outros.css",
+    "inputFile": "wwwroot/css/outros.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/style.css",
+    "inputFile": "wwwroot/css/style.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/styles.css",
+    "inputFile": "wwwroot/css/styles.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/sefaz.css",
+    "inputFile": "wwwroot/css/sefaz.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/site.css",
+    "inputFile": "wwwroot/css/site.scss"
+  }
+]

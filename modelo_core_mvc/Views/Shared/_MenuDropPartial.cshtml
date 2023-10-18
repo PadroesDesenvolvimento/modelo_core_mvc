@@ -24,45 +24,10 @@
 @Html.Hidden("nomeExibicao", nomeExibicao)
 
 <div class="dropdown">
-    <em id="botao_popup" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" alt="Menu de acesso e informações do sistema">
-        <mgt-person class="drop-person"
-                    line1-property="displayName">
-        </mgt-person>
+    <em id="botao_popup" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" alt="Menu de acesso e informações do sistema">
+        <mgt-person class="drop-person" line1-property="displayName"></mgt-person>
     </em>
-
-    <ul class="dropdown-menu drp-mnu">
-        <li>
-            <em class="fas fa-mail-bulk"></em>
-            <a asp-area="" asp-controller="Home" asp-action="Contato">Contato</a>
-        </li>
-
-        <li>
-            <em class="fas fa-id-card"></em>
-            <a asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity">Teste do Identity</a>
-        </li>
-        <li>
-            <em class="fas fa-info-circle"></em>
-            <a asp-area="" asp-controller="Home" asp-action="Sobre">Sobre</a>
-        </li>
-        <li class="quebra_linha"></li>
-
-        @if (User.Identity.IsAuthenticated)
-        {
-            <li>
-                <em class="fas fa-door-closed"></em>
-                <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar">Identificação</a>
-            </li>
-            <li>
-                <em class="fas fa-door-open"></em>
-                <a asp-area="" asp-controller="Autenticacao" asp-action="Sair">Sair</a>
-            </li>
-        }
-        else
-        {
-            <li>
-                <em class="fas fa-door-closed"></em>
-                <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
-            </li>
-        }
+    <ul class="dropdown-menu" id="menu_popup">
+        <partial name="_ItensPopup" />
     </ul>
 </div>

@@ -1,0 +1,47 @@
+﻿<ul class="list-unstyled components">
+    <li>
+        <a asp-area="" asp-controller="Home" asp-action="Contato">
+            <em class="fas fa-mail-bulk"></em>
+            Contato
+        </a>
+    </li>
+
+    <li>
+        <a asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity">
+            <em class="fas fa-id-card"></em>
+            Teste do Identity
+        </a>
+    </li>
+    <li>
+        <a asp-area="" asp-controller="Home" asp-action="Sobre">
+            <em class="fas fa-info-circle"></em>
+            Sobre
+        </a>
+    </li>
+    <li class="quebra_linha"></li>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar">
+                <em class="fas fa-door-closed"></em>
+                Identificação
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Sair">
+                <em class="fas fa-door-open"></em>
+                Sair
+            </a>
+        </li>
+    }
+    else
+    {
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar">
+                <em class="fas fa-door-closed"></em>
+                Entrar
+            </a>
+        </li>
+    }
+</ul>
