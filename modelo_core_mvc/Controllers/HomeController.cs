@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using SefazLib.IdentityCfg;
 using modelo_core_mvc.ProjetosApi;
 using modelo_core_mvc.Errors;
 
@@ -13,18 +11,6 @@ namespace modelo_core_mvc.Controllers
     {
         private readonly IConfiguration configuration;
         private readonly ProjetosApiClient api;
-
-        #region Insercao de vulnerabilidades para teste de análise de código
-        string username = "teste";
-        string password = "123@teste";
-        private readonly string[] whiteList = { "https://ads.intra.fazenda.sp.gov.br/tfs" };
-
-        public IActionResult RedirectMe(string url)
-        {
-            return Redirect(url);
-        }
-
-        #endregion //Fim do teste
 
         public HomeController(IConfiguration Configuration, ProjetosApiClient Api)
         {

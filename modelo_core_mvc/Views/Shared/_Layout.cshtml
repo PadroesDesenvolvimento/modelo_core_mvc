@@ -9,7 +9,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="~/img/BRASAO_GOV_SP_Original.svg">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/styles.css">
     <script @*Application Insights*@
             type="text/javascript">
@@ -39,9 +38,11 @@
                 <img src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
                 <span id="orgao">Secretaria da Fazenda e Planejamento</span>
             </header>
-            <button type="button" id="botao_expandir"
+            <button id="botao_expandir"
+                    type="button"
+                    title="Botão para expandir ou recolher o menu"
+                    aria-label="Botão para expandir ou recolher o menu"
                     accesskey="c"
-                    aria-label="Botão para abrir e fechar o menu"
                     onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher'],'recolhido')">
                 <span id="icone_expandir" class="recolhido">
                     <i class="fas fa-angle-right"></i>
