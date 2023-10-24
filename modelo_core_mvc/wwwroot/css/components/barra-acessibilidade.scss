@@ -27,6 +27,12 @@
             background-color: var(--cor-apoio-cinza-claro);
         }
     }
+
+    #icone_vlibras {
+        background-image: url("../../img/vlibras.png");
+        background-size: cover;
+        background-position: center;
+    }
 }
 
 @media (max-width: 767.98px) {

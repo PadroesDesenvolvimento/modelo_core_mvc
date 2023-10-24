@@ -1,12 +1,54 @@
-﻿<partial name="_BarraAcessibilidade" />
+﻿@using Microsoft.AspNetCore.Authentication
+@using Microsoft.Extensions.Configuration
+@using SefazLib.IdentityCfg;
+@using SefazLib.usuarios
+@using SefazLib.AzureUtils;
+@inject AzureUtil azureUtil;
+@inject IConfiguration Configuration
+@{
+    var nomeExibicao = "Não Autenticado";
+    if (User.Identity.IsAuthenticated)
+    {
+        nomeExibicao = @User.Identity.Name.Split(":")[0];
+
+        if (Configuration["identity:type"] == "azuread")
+        {
+            try
+            {
+                Usuario usuario = await azureUtil.GetUserAsync();
+                nomeExibicao = usuario.nomeCompleto;
+            }
+            catch { }
+        }
+
+        var authenticationResult = await Context.AuthenticateAsync();
+        var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == ".Token.access_token").Value;
+        if (!string.IsNullOrEmpty(accessToken))
+        {
+            IdentityConfig.jwtToken = accessToken;
+        }
+        else
+        {
+
+        }
+
+    }
+}
+
+@Html.Hidden("nomeExibicao", nomeExibicao)
+
+<partial name="_BarraAcessibilidade" />
 <header id="tituloCabecalho">
     <img id="tituloBrasao" src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
     <span id="tituloApp">Aplicação modelo .Net MVC</span>
-    <span id="tituloSefaz">Secretaria da Fazenda e Planejamento</span>
-    <partial name="_MenuDropPartial" />
-    <i id="botao-hamburguinho" 
-       class="fas fa-bars" 
-       title="Exibe e oculta o Menu da aplicação" 
-       aria-label="Exibe e oculta o Menu da aplicação" 
+    <div id="subtitulo">
+        <span id="tituloSefaz">Secretaria da Fazenda e Planejamento</span>
+        <span id="usuarioAutenticado">@nomeExibicao</span>
+    </div>
+    <partial name="_MenuDrop" />
+    <i id="botao-hamburguinho"
+       class="fas fa-bars"
+       title="Exibe e oculta o Menu da aplicação"
+       aria-label="Exibe e oculta o Menu da aplicação"
        onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto')"></i>
 </header>
