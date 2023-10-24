@@ -1320,6 +1320,12 @@ button span {
   align-items: center;
 }
 
+#usuarioAutenticado {
+  color: var(--cor-primaria);
+  font-size: 1rem;
+  margin-right: 0.5em;
+}
+
 /*desktop*/
 @media (min-width: 767.99px) {
   #cabecalho-desktop {
@@ -1360,13 +1366,23 @@ button span {
   #tituloApp {
     display: none;
   }
-  #tituloSefaz {
+  #subtitulo {
+    display: flex;
+    flex-direction: column;
+  }
+  #tituloSefaz,
+  #usuarioAutenticado {
     display: block;
     margin-left: 0.5em;
     color: var(--cor-fundo);
     font-size: 1.3rem;
     transition: opacity 0.3s;
     align-items: center;
+  }
+  #usuarioAutenticado {
+    font-size: 0.7rem;
+    margin-right: 0;
+    text-align: center;
   }
   #botao-hamburguinho {
     display: block;
@@ -1567,7 +1583,7 @@ button span {
   cursor: pointer;
 }
 
-#caixa-menu {
+#menu_popup {
   background-color: var(--cor-fundo);
   position: absolute;
   right: -10px;
