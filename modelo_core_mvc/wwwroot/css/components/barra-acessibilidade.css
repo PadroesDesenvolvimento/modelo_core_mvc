@@ -23,6 +23,11 @@
 #barra_acessibilidade button:hover, #barra_acessibilidade button:focus {
   background-color: var(--cor-apoio-cinza-claro);
 }
+#barra_acessibilidade #icone_vlibras {
+  background-image: url("../../img/vlibras.png");
+  background-size: cover;
+  background-position: center;
+}
 
 @media (max-width: 767.98px) {
   #barra_acessibilidade {

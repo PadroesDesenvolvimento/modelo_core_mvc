@@ -8,3 +8,15 @@
 @*Biblioteca interna*@
 <script src="~/js/acessibilidade.js"></script>
 <script src="~/js/script.js"></script>
+
+@* widget para leitura de texto em Libras *@
+<div id="vlibras" vw class="">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="~/js/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>

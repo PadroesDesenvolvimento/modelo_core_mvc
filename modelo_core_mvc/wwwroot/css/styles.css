@@ -23,7 +23,7 @@
   --cor-botao-danger: red;
   --cor-botao-texto: black;
   --cor-invertida-botao-texto: white;
-  --largura-menu-expandido: 240px;
+  --largura-menu-expandido: 250px;
   --largura-menu-recolhido: 100px;
   --largura-botao_expandir: 50px;
   --largura-botao: 12em;
@@ -1154,6 +1154,11 @@ li {
 #barra_acessibilidade button:hover, #barra_acessibilidade button:focus {
   background-color: var(--cor-apoio-cinza-claro);
 }
+#barra_acessibilidade #icone_vlibras {
+  background-image: url("../../img/vlibras.png");
+  background-size: cover;
+  background-position: center;
+}
 
 @media (max-width: 767.98px) {
   #barra_acessibilidade {
@@ -1370,132 +1375,6 @@ button span {
     color: var(--cor-invertida-texto);
   }
 }
-#menu_lateral {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  /*Desktop*/
-}
-#menu_lateral a {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  text-decoration: none;
-  color: var(--cor-menu-invertida-texto);
-  padding: 10px;
-  margin: 5px;
-  background-color: transparent;
-  border-radius: 1.7em;
-}
-#menu_lateral a:hover, #menu_lateral a:focus {
-  background-color: var(--cor-fundo-hover);
-  color: var(--cor-menu-texto);
-  outline: none;
-}
-#menu_lateral a.selected {
-  background-color: var(--cor-fundo-selecionado);
-  color: var(--cor-menu-texto);
-}
-#menu_lateral a i {
-  margin: 0 1em;
-  font-size: 1.7em;
-}
-@media (min-width: 767.99px) {
-  #menu_lateral.recolhido a {
-    border-radius: 0.8em;
-    flex-direction: column;
-    font-size: 0.7em;
-    text-align: center;
-  }
-}
-
-#itens_popup {
-  display: none;
-}
-
-#quebra_linha {
-  border-top: 1px solid #ccc;
-  margin: 5px 0;
-  background-color: transparent;
-}
-
-#itens_nav {
-  display: block;
-  background-color: transparent;
-  border-radius: 5px;
-  padding: 5px;
-  margin-bottom: 10px;
-  transition: background-color 0.3s;
-}
-
-#itens_popup.exibirPop {
-  display: block;
-}
-#itens_popup.exibirPop a {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  text-decoration: none;
-  color: var(--cor-principal);
-  background-color: transparent;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 0.9rem;
-}
-#itens_popup.exibirPop a:hover {
-  background-color: #ccc;
-  cursor: pointer;
-}
-
-#caixa-menu {
-  background-color: var(--cor-fundo);
-  position: absolute;
-  right: -10px;
-  display: flex;
-  flex-direction: row;
-  top: 1.3em;
-  min-width: 180px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid var(--cor-apoio-cinza-claro);
-  box-shadow: 2px 4px 6px var(--cor-sombra);
-}
-
-#botao_popup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 1.6em;
-  width: 1.6em;
-  border-radius: 0.8em;
-  cursor: pointer;
-  color: var(--cor-invertida-texto);
-  background-color: var(--cor-primaria);
-  border: solid thin;
-  border-color: var(--cor-primaria);
-}
-#botao_popup.dropdown-toggle::after {
-  display: none;
-}
-
-#iniciais_popup {
-  font-size: 0.8em;
-  font-style: normal;
-}
-
-/*mobile*/
-@media (max-width: 767.98px) {
-  #botao_popup {
-    display: none;
-  }
-  #itens_popup {
-    display: block;
-  }
-  #quebra_linha {
-    background-color: var(--cor-fundo);
-  }
-}
 #painel_lateral {
   background-color: var(--cor-primaria);
   display: flex;
@@ -1601,6 +1480,143 @@ button span {
   }
   #painel_lateral.oculto {
     display: none;
+  }
+}
+#menu_lateral {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#menu_lateral li {
+  display: block;
+  margin: 5px 0;
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 1.7em;
+}
+#menu_lateral li a {
+  text-decoration: none;
+}
+#menu_lateral li a.selected {
+  color: var(--cor-menu-texto);
+  background-color: var(--cor-fundo-selecionado);
+}
+#menu_lateral li em {
+  font-size: 1.7em;
+}
+#menu_lateral li a, #menu_lateral li em {
+  color: var(--cor-menu-invertida-texto);
+}
+#menu_lateral li:hover, #menu_lateral li:focus {
+  background-color: var(--cor-fundo-hover);
+  color: var(--cor-menu-texto);
+  outline: none;
+}
+#menu_lateral li:hover a, #menu_lateral li:hover em, #menu_lateral li:focus a, #menu_lateral li:focus em {
+  color: var(--cor-menu-texto);
+}
+
+/*Desktop*/
+@media (min-width: 767.99px) {
+  #painel_lateral.recolhido li {
+    border-radius: 0.8em;
+    border-radius: 1.5em;
+    text-align: center;
+  }
+  #painel_lateral.recolhido li a {
+    margin-top: 0.3em;
+    font-size: 0.7em;
+  }
+}
+#itens_popup {
+  display: none;
+}
+
+#quebra_linha {
+  border-top: 1px solid #ccc;
+  margin: 5px 0;
+  background-color: transparent;
+}
+
+#itens_nav {
+  display: block;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+#itens_popup.exibirPop {
+  display: block;
+}
+#itens_popup.exibirPop a {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  color: var(--cor-principal);
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+#itens_popup.exibirPop a:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+#caixa-menu {
+  background-color: var(--cor-fundo);
+  position: absolute;
+  right: -10px;
+  display: flex;
+  flex-direction: row;
+  top: 1.3em;
+  min-width: 180px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--cor-apoio-cinza-claro);
+  box-shadow: 2px 4px 6px var(--cor-sombra);
+}
+
+#botao_popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.6em;
+  width: 1.6em;
+  border-radius: 0.8em;
+  cursor: pointer;
+  color: var(--cor-invertida-texto);
+  background-color: var(--cor-primaria);
+  border: solid thin;
+  border-color: var(--cor-primaria);
+}
+#botao_popup.dropdown-toggle::after {
+  display: none;
+}
+
+#iniciais_popup {
+  font-size: 0.8em;
+  font-style: normal;
+}
+
+/*mobile*/
+@media (max-width: 767.98px) {
+  #botao_popup {
+    display: none;
+  }
+  #itens_popup {
+    display: block;
+  }
+  #quebra_linha {
+    background-color: var(--cor-fundo);
+  }
+  #itens_nav a, #itens_popup a {
+    width: 100%;
+    text-align: center;
   }
 }
 #tabela_dados {
