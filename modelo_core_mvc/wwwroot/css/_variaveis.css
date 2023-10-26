@@ -18,6 +18,7 @@
   --cor-botao-cancelar: white;
   --cor-botao-danger: red;
   --cor-botao-texto: black;
+  --cor-botao-selecionado: rgba(200, 200, 200, 0.7);
   --cor-invertida-botao-texto: white;
   --largura-menu-expandido: 250px;
   --largura-menu-recolhido: 100px;

@@ -27,9 +27,5 @@
         </dd>
     </dl>
 </div>
-<div>
-    <button type="button" class="btn btn-sucesso mr-1">
-        @Html.ActionLink("Alterar", "Alterar", new { Model.id })
-    </button>
-    <a asp-action="Index" class="btn btn-cancelar mr-1">Voltar</a>
-</div>
+<partial name="_Botoes" model='new Tuple<string, string, string, string>("", "", "Projetos/Alterar/"+@Model.id, "Cancelar")' />
+

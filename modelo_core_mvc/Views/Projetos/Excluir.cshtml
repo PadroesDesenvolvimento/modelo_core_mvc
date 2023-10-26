@@ -31,7 +31,6 @@
 
     <form asp-action="Excluir">
         <input asp-for="id" hidden />
-        <input type="submit" value="Excluir" class="btn btn-outline-danger mr-1" />
-        <a asp-action="Index" class="btn btn-cancelar mr-1">Cancelar</a>
+        <partial name="_Botoes" model='new Tuple<string, string, string, string>("", "Excluir", "", "Cancelar")' />
     </form>
 </div>

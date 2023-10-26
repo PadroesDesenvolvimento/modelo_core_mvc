@@ -1,26 +1,65 @@
-﻿<div id="itens_nav">
-    <ul class="list-unstyled components">
+﻿<div id="itens_menu">
+    <ul id="itens_nav" class="list-unstyled components">
         <li>
-            <em class='fas fa-home'></em>
             <a asp-area="" asp-controller="Home" asp-action="Index">
+                <em class="fas fa-home"></em>
                 Home
             </a>
         </li>
         <li>
-            <em class="fas fa-table"></em>
             <a asp-area="" asp-controller="Projetos" asp-action="Index">
+                <em class="fas fa-table"></em>
                 Lista de Projetos
             </a>
         </li>
         <li>
-            <em class="fas fa-user-secret"></em>
             <a asp-area="" asp-controller="Home" asp-action="Privacidade">
+                <em class="fas fa-user-secret"></em>
                 Privacidade
             </a>
         </li>
     </ul>
-</div>
 
-<div id="itens_popup">
-    <partial name="_ItensPopup" />
+    <ul id="itens_popup" class="list-unstyled components">
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Contato">
+                <em class="fas fa-mail-bulk"></em>
+                Contato
+            </a>
+        </li>
+
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity">
+                <em class="fas fa-id-card"></em>
+                Teste do Identity
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Sobre">
+                <em class="fas fa-info-circle"></em>
+                Sobre
+            </a>
+        </li>
+        <li class="quebra_linha"></li>
+
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar">
+                <em class="fas fa-address-card"></em>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <text>Identificação</text>
+                }
+                else
+                {
+                    <text>Entrar</text>
+                }
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Sair">
+                <em class="fas fa-door-open"></em>
+                Sair
+            </a>
+        </li>
+    </ul>
 </div>

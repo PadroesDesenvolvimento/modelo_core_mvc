@@ -28,7 +28,7 @@ body {
     max-height: calc(100vh - 12em);
 }
 
-#conteudo_mobile {
+#conteudo_aplicacao {
     width: 100%;
     position: absolute;
 }
@@ -45,13 +45,13 @@ body {
         }
     }
 
-    #conteudo_mobile {
+    #conteudo_aplicacao {
         margin-top: calc(var(--altura-barra_acessibilidade) + var(--altura-cabecalho) + 1em);
     }
 }
 
-/*Altersacao de configuracoes de terceiros*/
-li {
+/*Alteracao de configuracoes de terceiros*/
+li, dt, dd {
     word-wrap: break-word;
 }
 
@@ -66,5 +66,4 @@ li {
 .tooltip-custom-bg .tooltip-inner {
     background-color: yellow; 
     color: black; 
-    
 }
