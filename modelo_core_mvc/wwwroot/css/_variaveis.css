@@ -18,11 +18,14 @@
   --cor-botao-cancelar: white;
   --cor-botao-danger: red;
   --cor-botao-texto: black;
+  --cor-botao-selecionado: rgba(200, 200, 200, 0.7);
   --cor-invertida-botao-texto: white;
   --largura-menu-expandido: 250px;
   --largura-menu-recolhido: 100px;
-  --largura-botao_expandir: 50px;
+  --largura-botao_expandir: 25px;
   --largura-botao: 12em;
+  --altura-botao-menu: 3.4em;
+  --altura-botao-menu-recolhido: 4.5em;
   --altura-barra_acessibilidade: 2.8em;
   --altura-cabecalho: 3.5em;
   --altura-linha: 2.5em;

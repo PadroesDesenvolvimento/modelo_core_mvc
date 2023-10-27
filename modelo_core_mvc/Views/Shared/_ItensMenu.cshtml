@@ -1,26 +1,63 @@
-﻿<div id="itens_nav">
-    <ul class="list-unstyled components">
+﻿<div id="itens_menu">
+    <ul id="itens_nav" class="list-unstyled components">
         <li>
-            <em class='fas fa-home'></em>
             <a asp-area="" asp-controller="Home" asp-action="Index">
-                Home
+                <em class="fas fa-home"></em>
+                <span>Home</span>
             </a>
         </li>
         <li>
-            <em class="fas fa-table"></em>
             <a asp-area="" asp-controller="Projetos" asp-action="Index">
-                Lista de Projetos
+                <em class="fas fa-table"></em>
+                <span>Lista de Projetos</span>
             </a>
         </li>
         <li>
-            <em class="fas fa-user-secret"></em>
             <a asp-area="" asp-controller="Home" asp-action="Privacidade">
-                Privacidade
+                <em class="fas fa-user-secret"></em>
+                <span>Privacidade</span>
             </a>
         </li>
     </ul>
-</div>
 
-<div id="itens_popup">
-    <partial name="_ItensPopup" />
+    <ul id="itens_popup" class="list-unstyled components">
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Contato">
+                <em class="fas fa-mail-bulk"></em>
+                <span>Contato</span>
+            </a>
+        </li>
+
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity">
+                <em class="fas fa-id-card"></em>
+                <span>Teste do Identity</span>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Sobre">
+                <em class="fas fa-info-circle"></em>
+                <span>Sobre</span>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar">
+                <em class="fas fa-address-card"></em>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span>Identificação</span>
+                }
+                else
+                {
+                    <span>Entrar</span>
+                }
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Sair">
+                <em class="fas fa-door-open"></em>
+                <span>Sair</span>
+            </a>
+        </li>
+    </ul>
 </div>

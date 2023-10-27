@@ -7,6 +7,7 @@
 @inject IConfiguration Configuration
 @{
     var nomeExibicao = "Não Autenticado";
+
     if (User.Identity.IsAuthenticated)
     {
         nomeExibicao = @User.Identity.Name.Split(":")[0];
@@ -33,6 +34,7 @@
         }
 
     }
+    var iniciais = Usuario.ObterIniciais(nomeExibicao).Substring(0, 2);
 }
 
 @Html.Hidden("nomeExibicao", nomeExibicao)
@@ -45,10 +47,17 @@
         <span id="tituloSefaz">Secretaria da Fazenda e Planejamento</span>
         <span id="usuarioAutenticado">@nomeExibicao</span>
     </div>
-    <partial name="_MenuDrop" />
+    <i id="botao_popup"
+       alt="Menu Popup"
+       title="Exibe e oculta o menu de ambiente"
+       aria-label="Exibe e oculta o menu de ambiente"
+       onclick="alternarClasse(['menu_popup'],'oculto')">
+       <text id="iniciais_popup">@iniciais</text>
+    </i>
     <i id="botao-hamburguinho"
        class="fas fa-bars"
-       title="Exibe e oculta o Menu da aplicação"
+       alt="Menu Popup"
        aria-label="Exibe e oculta o Menu da aplicação"
-       onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto')"></i>
+       onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto')">
+    </i>
 </header>

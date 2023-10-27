@@ -28,12 +28,12 @@
 </head>
 
 <body>
-    <section id="cabecalho_mobile" class="painel_cabecalho">
+    <header id="cabecalho_mobile" class="painel_cabecalho">
         <partial name="_Cabecalho" />
-    </section>
+    </header>
 
-    <section id="conteudo_mobile">
-        <div id="painel_lateral" class="oculto">
+    <div id="conteudo_aplicacao">
+        <section id="painel_lateral" class="oculto">
             <header id="brasao">
                 <img src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
                 <span id="orgao">Secretaria da Fazenda e Planejamento</span>
@@ -43,7 +43,7 @@
                     title="Botão para expandir ou recolher o menu"
                     aria-label="Botão para expandir ou recolher o menu"
                     accesskey="c"
-                    onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher'],'recolhido')">
+                    onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher', 'painel_principal'],'recolhido')">
                 <span id="icone_expandir" class="recolhido">
                     <i class="fas fa-angle-right"></i>
                 </span>
@@ -52,20 +52,23 @@
                 </span>
             </button>
 
-            <nav id="menu_lateral" onclick="alternarClasse(['painel_lateral'],'oculto')">
+            <div id="menu_lateral" onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto')">
                 <partial name="_ItensMenu" />
-            </nav>
-        </div>
+            </div>
+        </section>
 
-        <div id="painel_principal" class="">
+        <section id="painel_principal" class="">
             <header id="cabecalho-desktop" class="painel_cabecalho">
                 <partial name="_Cabecalho" />
+                <nav id="menu_popup" class="oculto">
+                    <partial name="_ItensMenu" />
+                </nav>
             </header>
 
             <div id="painel_aplicacao">
                 <partial name="_BreadCrumb" />
 
-                <main id="Main" class="container shadow" tabindex="0">
+                <main id="conteudo" class="container shadow" tabindex="0">
                     @RenderBody()
                 </main>
 
@@ -76,9 +79,10 @@
                     }
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
+    <partial name="_Aguarde" />
     <partial name="_Scripts" />
 
     @RenderSection("Scripts", required: false)

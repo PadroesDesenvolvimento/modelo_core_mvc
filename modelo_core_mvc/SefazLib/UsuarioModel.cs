@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 
@@ -47,6 +48,24 @@ namespace SefazLib.usuarios
 
         public Usuario()
         {
+        }
+
+        public static string ObterIniciais(string nomeCompleto)
+        {
+            string[] palavrasExcluidas = { "de", "dos", "E" };
+
+            string[] partesNome = nomeCompleto.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string iniciais = "";
+
+            for (int i = 0; i < partesNome.Length; i++)
+            {
+                if (!palavrasExcluidas.Contains(partesNome[i], StringComparer.OrdinalIgnoreCase))
+                {
+                    iniciais += partesNome[i][0];
+                }
+            }
+
+            return iniciais;
         }
 
         public StringContent ToJson()
