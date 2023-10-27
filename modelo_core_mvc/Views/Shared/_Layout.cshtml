@@ -43,7 +43,7 @@
                     title="Botão para expandir ou recolher o menu"
                     aria-label="Botão para expandir ou recolher o menu"
                     accesskey="c"
-                    onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher'],'recolhido')">
+                    onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher', 'painel_principal'],'recolhido')">
                 <span id="icone_expandir" class="recolhido">
                     <i class="fas fa-angle-right"></i>
                 </span>
@@ -60,6 +60,9 @@
         <section id="painel_principal" class="">
             <header id="cabecalho-desktop" class="painel_cabecalho">
                 <partial name="_Cabecalho" />
+                <nav id="menu_popup" class="oculto">
+                    <partial name="_ItensMenu" />
+                </nav>
             </header>
 
             <div id="painel_aplicacao">
@@ -79,6 +82,7 @@
         </section>
     </div>
 
+    <partial name="_Aguarde" />
     <partial name="_Scripts" />
 
     @RenderSection("Scripts", required: false)

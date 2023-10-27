@@ -1,7 +1,8 @@
-.botoes {
+#barraBotoes {
     display: flex;
     flex-direction: row;
     margin: 1em 0 0 0;
+    width: 100%;
 }
 
 .btn {
@@ -20,6 +21,10 @@
     a {
         text-decoration: none;
         color: inherit;
+    }
+
+    span {
+        margin-left: 0.5em;
     }
 
     &:hover,

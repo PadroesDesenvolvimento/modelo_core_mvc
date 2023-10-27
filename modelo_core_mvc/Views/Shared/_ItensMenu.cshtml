@@ -3,19 +3,19 @@
         <li>
             <a asp-area="" asp-controller="Home" asp-action="Index">
                 <em class="fas fa-home"></em>
-                Home
+                <span>Home</span>
             </a>
         </li>
         <li>
             <a asp-area="" asp-controller="Projetos" asp-action="Index">
                 <em class="fas fa-table"></em>
-                Lista de Projetos
+                <span>Lista de Projetos</span>
             </a>
         </li>
         <li>
             <a asp-area="" asp-controller="Home" asp-action="Privacidade">
                 <em class="fas fa-user-secret"></em>
-                Privacidade
+                <span>Privacidade</span>
             </a>
         </li>
     </ul>
@@ -24,41 +24,39 @@
         <li>
             <a asp-area="" asp-controller="Home" asp-action="Contato">
                 <em class="fas fa-mail-bulk"></em>
-                Contato
+                <span>Contato</span>
             </a>
         </li>
 
         <li>
             <a asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity">
                 <em class="fas fa-id-card"></em>
-                Teste do Identity
+                <span>Teste do Identity</span>
             </a>
         </li>
         <li>
             <a asp-area="" asp-controller="Home" asp-action="Sobre">
                 <em class="fas fa-info-circle"></em>
-                Sobre
+                <span>Sobre</span>
             </a>
         </li>
-        <li class="quebra_linha"></li>
-
         <li>
             <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar">
                 <em class="fas fa-address-card"></em>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <text>Identificação</text>
+                    <span>Identificação</span>
                 }
                 else
                 {
-                    <text>Entrar</text>
+                    <span>Entrar</span>
                 }
             </a>
         </li>
         <li>
             <a asp-area="" asp-controller="Autenticacao" asp-action="Sair">
                 <em class="fas fa-door-open"></em>
-                Sair
+                <span>Sair</span>
             </a>
         </li>
     </ul>

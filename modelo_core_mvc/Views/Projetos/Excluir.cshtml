@@ -1,13 +1,11 @@
 ﻿@using modelo_core_mvc.projetos;
 @model modelo_core_mvc.projetos.ProjetosModel
 
-<h1>@ViewData["Message"]</h1>
-
 <h3>Deseja excluir esse registro?</h3>
 <div>
     <hr />
     <div class="form-group">
-        <dl class="row">
+        <dl class="row tabela">
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.id)
             </dt>
