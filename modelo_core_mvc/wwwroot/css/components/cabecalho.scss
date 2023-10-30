@@ -2,15 +2,6 @@
     margin-left: 0.5em;
 }
 
-#cabecalho_mobile {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin-bottom: calc(var(--altura-barra_acessibilidade) + var(--altura-cabecalho) + 0.5em);
-    z-index: 2;
-}
-
 #tituloCabecalho {
     display: flex;
     flex-direction: row;
@@ -61,10 +52,6 @@
         margin-left: 0;
         flex: 1;
         flex-grow: 1;
-    }
-
-    #cabecalho_mobile {
-        display: block;
     }
 
     #cabecalho-desktop {

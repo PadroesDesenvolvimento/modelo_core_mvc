@@ -1,14 +1,13 @@
-﻿body {
+﻿#aplicacao {
   display: flex;
   flex-direction: row;
-  height: 100vh;
 }
 
-#conteudo_aplicacao {
+#area_aplicacao {
   display: flex;
   flex-direction: row;
-  width: 100%;
   position: absolute;
+  width: 100vw;
 }
 
 #painel_principal {
@@ -27,6 +26,7 @@
 #painel_aplicacao {
   flex-grow: 1;
   padding: 1em;
+  height: calc(100vh - 13em);
 }
 
 #conteudo {
@@ -36,21 +36,43 @@
   border-style: solid;
   border-block-width: thin;
   overflow-y: auto;
-  max-height: calc(100vh - 12em);
+  max-height: calc(100vh - 13em);
 }
 
 /*mobile*/
 @media (max-width: 767.98px) {
-  #painel_principal {
-    display: flex;
-    margin-left: 0 !important;
-    transition: height 1s ease;
+  #aplicacao {
+    display: block;
   }
-  #painel_principal.oculto {
+  #aplicacao #cabecalho_mobile {
+    display: block;
+  }
+  #aplicacao #area_aplicacao {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    height: auto;
+  }
+  #aplicacao #painel_principal {
+    display: flex;
+    transition: height 1s ease;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  #aplicacao #painel_principal.oculto {
     display: none;
   }
-  #conteudo_aplicacao {
-    margin-top: calc(var(--altura-barra_acessibilidade) + var(--altura-cabecalho) + 1em);
+  #aplicacao #painel_principal #painel_aplicacao {
+    padding: 0;
+    height: auto;
+  }
+  #aplicacao #painel_principal #painel_aplicacao #conteudo {
+    height: auto;
+    max-height: initial;
+    border-style: none;
+    box-shadow: none !important;
   }
 }
 /*Alteracao de configuracoes de terceiros*/

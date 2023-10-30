@@ -50,5 +50,9 @@
   {
     "outputFile": "wwwroot/css/components/tabela.css",
     "inputFile": "wwwroot/css/components/tabela.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/person-card.css",
+    "inputFile": "wwwroot/css/components/person-card.scss"
   }
 ]

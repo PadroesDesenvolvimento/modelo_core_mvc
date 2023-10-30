@@ -1,7 +1,7 @@
-﻿@import "jqueryui/jquery-ui-1.10.1.custom.min.css";
+﻿@charset "UTF-8";
+@import "jqueryui/jquery-ui-1.10.1.custom.min.css";
 @import "bootstrap/bootstrap.min.css";
 @import "font-awesome/css/all.css";
-@import "components/person-card.css";
 :root {
   --font-principal: "Open Sans", sans-serif;
   --font-secundaria: "Montserrat", sans-serif;
@@ -49,17 +49,59 @@ html {
   font-weight: bold;
 }
 
-body {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
+mgt-person {
+  --person-card-display-name-font-size: 40px;
+  --person-card-display-name-color: #ffffff;
+  --person-card-title-font-size: 25px;
+  --person-card-title-color: #ffffff;
+  --person-card-subtitle-font-size: 10px;
+  --person-card-subtitle-color: #ffffff;
+  --person-card-details-title-font-size: 10px;
+  --person-card-details-title-color: #b3bf0a;
+  --person-card-details-item-font-size: 20px;
+  --person-card-details-item-color: #3abf0a;
+  --person-card-background-color: #000000;
+  --person-card-contact-link-color: #ff0000;
+  --person-card-contact-link-hover-color: #00ff00;
+  --person-card-show-more-color: #ff0000;
+  --person-card-show-more-hover-color: #00ff00;
+  --person-card-base-links-color: #ff0000;
+  --person-card-base-links-hover-color: #00ff00;
+  --person-card-tab-nav-color: #ff0000;
+  --person-card-active-org-member-color: #ff0000;
+  --person-card-nav-back-arrow-hover-color: #00ff00;
+  --person-card-nav-back-arrow-color: #ff0000;
 }
 
-#conteudo_aplicacao {
+.usuario-info {
+  display: flex;
+  align-items: center;
+}
+
+.foto-usuario {
+  margin-right: 15px;
+}
+
+.foto-usuario img {
+  margin-right: 10px; /* Espaço entre a foto e o texto */
+  width: 100%;
+  max-width: 200px;
+}
+
+.texto-usuario {
+  text-align: left;
+}
+
+#aplicacao {
   display: flex;
   flex-direction: row;
-  width: 100%;
+}
+
+#area_aplicacao {
+  display: flex;
+  flex-direction: row;
   position: absolute;
+  width: 100vw;
 }
 
 #painel_principal {
@@ -78,6 +120,7 @@ body {
 #painel_aplicacao {
   flex-grow: 1;
   padding: 1em;
+  height: calc(100vh - 13em);
 }
 
 #conteudo {
@@ -87,21 +130,43 @@ body {
   border-style: solid;
   border-block-width: thin;
   overflow-y: auto;
-  max-height: calc(100vh - 12em);
+  max-height: calc(100vh - 13em);
 }
 
 /*mobile*/
 @media (max-width: 767.98px) {
-  #painel_principal {
-    display: flex;
-    margin-left: 0 !important;
-    transition: height 1s ease;
+  #aplicacao {
+    display: block;
   }
-  #painel_principal.oculto {
+  #aplicacao #cabecalho_mobile {
+    display: block;
+  }
+  #aplicacao #area_aplicacao {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    height: auto;
+  }
+  #aplicacao #painel_principal {
+    display: flex;
+    transition: height 1s ease;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  #aplicacao #painel_principal.oculto {
     display: none;
   }
-  #conteudo_aplicacao {
-    margin-top: calc(var(--altura-barra_acessibilidade) + var(--altura-cabecalho) + 1em);
+  #aplicacao #painel_principal #painel_aplicacao {
+    padding: 0;
+    height: auto;
+  }
+  #aplicacao #painel_principal #painel_aplicacao #conteudo {
+    height: auto;
+    max-height: initial;
+    border-style: none;
+    box-shadow: none !important;
   }
 }
 /*Alteracao de configuracoes de terceiros*/
@@ -1197,6 +1262,9 @@ li, dt, dd {
 }
 
 @media (max-width: 767.99px) {
+  .breadcrumb {
+    margin: 0.5em;
+  }
   li.breadcrumb-item span {
     display: block;
   }
@@ -1465,15 +1533,6 @@ li, dt, dd {
   margin-left: 0.5em;
 }
 
-#cabecalho_mobile {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  margin-bottom: calc(var(--altura-barra_acessibilidade) + var(--altura-cabecalho) + 0.5em);
-  z-index: 2;
-}
-
 #tituloCabecalho {
   display: flex;
   flex-direction: row;
@@ -1522,9 +1581,6 @@ li, dt, dd {
     margin-left: 0;
     flex: 1;
     flex-grow: 1;
-  }
-  #cabecalho_mobile {
-    display: block;
   }
   #cabecalho-desktop {
     display: none;
@@ -1611,6 +1667,32 @@ li, dt, dd {
   margin-left: 0.5em;
 }
 
+/*mobile*/
+@media (max-width: 767.98px) {
+  .tabela {
+    display: inline-flex;
+    flex-direction: column;
+    color: var(--cor-primaria-texto);
+    width: 100%;
+    padding: 0.5em;
+    border: none;
+  }
+  .form-group {
+    padding: 0.5em 0;
+  }
+  .th, dt {
+    border: none;
+    background-color: var(--cor-invertida-texto);
+    color: var(--cor-primaria);
+    padding: 0.7em 0 0 0;
+    text-align: left;
+  }
+  .td, dd {
+    border: 1px solid #DDD;
+    height: auto;
+    padding: 0.4em 0;
+  }
+}
 #barraBotoes {
   display: flex;
   flex-direction: row;

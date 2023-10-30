@@ -28,58 +28,60 @@
 </head>
 
 <body>
-    <header id="cabecalho_mobile" class="painel_cabecalho">
-        <partial name="_Cabecalho" />
-    </header>
+    <div id="aplicacao">
+        <header id="cabecalho_mobile" class="painel_cabecalho">
+            <partial name="_Cabecalho" />
+        </header>
 
-    <div id="conteudo_aplicacao">
-        <section id="painel_lateral" class="oculto">
-            <header id="brasao">
-                <img src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
-                <span id="orgao">Secretaria da Fazenda e Planejamento</span>
-            </header>
-            <button id="botao_expandir"
-                    type="button"
-                    title="Botão para expandir ou recolher o menu"
-                    aria-label="Botão para expandir ou recolher o menu"
-                    accesskey="c"
-                    onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher', 'painel_principal'],'recolhido')">
-                <span id="icone_expandir" class="recolhido">
-                    <i class="fas fa-angle-right"></i>
-                </span>
-                <span id="icone_recolher">
-                    <i class="fas fa-angle-left"></i>
-                </span>
-            </button>
+        <div id="area_aplicacao">
+            <section id="painel_lateral" class="oculto">
+                <header id="brasao">
+                    <img src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
+                    <span id="orgao">Secretaria da Fazenda e Planejamento</span>
+                </header>
+                <button id="botao_expandir"
+                        type="button"
+                        title="Botão para expandir ou recolher o menu"
+                        aria-label="Botão para expandir ou recolher o menu"
+                        accesskey="c"
+                        onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher', 'painel_principal'],'recolhido')">
+                    <span id="icone_expandir" class="recolhido">
+                        <i class="fas fa-angle-right"></i>
+                    </span>
+                    <span id="icone_recolher">
+                        <i class="fas fa-angle-left"></i>
+                    </span>
+                </button>
 
-            <div id="menu_lateral" onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto')">
-                <partial name="_ItensMenu" />
-            </div>
-        </section>
-
-        <section id="painel_principal" class="">
-            <header id="cabecalho-desktop" class="painel_cabecalho">
-                <partial name="_Cabecalho" />
-                <nav id="menu_popup" class="oculto">
+                <div id="menu_lateral" onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto')">
                     <partial name="_ItensMenu" />
-                </nav>
-            </header>
-
-            <div id="painel_aplicacao">
-                <partial name="_BreadCrumb" />
-
-                <main id="conteudo" class="container shadow" tabindex="0">
-                    @RenderBody()
-                </main>
-
-                <div id="mensagem_erro">
-                    @if (ViewData["Erro"] != null)
-                    {
-                        @ViewData["Erro"]
-                    }
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <section id="painel_principal" class="">
+                <header id="cabecalho-desktop" class="painel_cabecalho">
+                    <partial name="_Cabecalho" />
+                    <nav id="menu_popup" class="oculto">
+                        <partial name="_ItensMenu" />
+                    </nav>
+                </header>
+
+                <div id="painel_aplicacao">
+                    <partial name="_BreadCrumb" />
+
+                    <main id="conteudo" class="container shadow" tabindex="0">
+                        @RenderBody()
+                    </main>
+
+                    <div id="mensagem_erro">
+                        @if (ViewData["Erro"] != null)
+                        {
+                            @ViewData["Erro"]
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
 
     <partial name="_Aguarde" />
