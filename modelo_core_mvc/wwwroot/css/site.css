@@ -16,11 +16,12 @@
   flex-direction: column;
   padding: 0 0.5em;
   transition: margin-left 0.3s;
-  width: 100%;
   margin-left: var(--largura-menu-expandido);
+  width: calc(100% - var(--largura-menu-expandido));
 }
 #painel_principal.recolhido {
   margin-left: var(--largura-menu-recolhido);
+  width: calc(100% - var(--largura-menu-recolhido));
 }
 
 #painel_aplicacao {

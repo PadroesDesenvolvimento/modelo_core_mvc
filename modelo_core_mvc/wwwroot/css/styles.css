@@ -67,11 +67,12 @@ body {
   flex-direction: column;
   padding: 0 0.5em;
   transition: margin-left 0.3s;
-  width: 100%;
   margin-left: var(--largura-menu-expandido);
+  width: calc(100% - var(--largura-menu-expandido));
 }
 #painel_principal.recolhido {
   margin-left: var(--largura-menu-recolhido);
+  width: calc(100% - var(--largura-menu-recolhido));
 }
 
 #painel_aplicacao {
@@ -1159,7 +1160,7 @@ li, dt, dd {
   background-color: var(--cor-apoio-cinza-claro);
 }
 #barra_acessibilidade #icone_vlibras {
-  background-image: url("../../img/vlibras.png");
+  background-image: url("/img/vlibras.png");
   background-size: cover;
   background-position: center;
 }

@@ -141,7 +141,7 @@
   }
 }
 /*Altersacao de configuracoes de terceiros*/
-li {
+li, div {
   word-wrap: break-word;
 }
 
