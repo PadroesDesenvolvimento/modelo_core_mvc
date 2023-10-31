@@ -1,30 +1,3 @@
-#painel_lateral {
-    background-color: var(--cor-primaria);
-    display: flex;
-    flex-direction: column;
-
-    @media (min-width: 767.99px) {
-        transition: all 0.3s;
-        position: fixed;
-        width: var(--largura-menu-expandido);
-        z-index: 1;
-        top: 0;
-        bottom: 0;
-
-        &.recolhido {
-            width: var(--largura-menu-recolhido);
-
-            #botao_expandir {
-                margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botao_expandir)/2);
-            }
-
-            #orgao {
-                display: none;
-            }
-        }
-    }
-}
-
 #botao_expandir {
     width: var(--largura-botao_expandir);
     height: var(--largura-botao_expandir);

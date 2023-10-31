@@ -3,34 +3,45 @@
   flex-direction: row;
 }
 
-#area_aplicacao {
+#painel_aplicacao {
   display: flex;
   flex-direction: row;
-  position: absolute;
-  width: 100vw;
 }
-
-#painel_principal {
+#painel_aplicacao #painel_lateral {
+  background-color: var(--cor-primaria);
+  display: flex;
+  flex-direction: column;
+  width: var(--largura-menu-expandido);
+  height: 100vh;
+}
+#painel_aplicacao #painel_lateral.recolhido {
+  width: var(--largura-menu-recolhido);
+  transition: all 0.3s;
+}
+#painel_aplicacao #painel_lateral.recolhido #botao_expandir {
+  margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botao_expandir) / 2);
+}
+#painel_aplicacao #painel_lateral.recolhido #orgao {
+  display: none;
+}
+#painel_aplicacao #painel_principal {
   display: flex;
   flex-direction: column;
   padding: 0 0.5em;
   transition: margin-left 0.3s;
-  margin-left: var(--largura-menu-expandido);
-  width: calc(100% - var(--largura-menu-expandido));
+  height: 100vh;
+  width: calc(100vw - var(--largura-menu-expandido) - 0.5em);
 }
-#painel_principal.recolhido {
-  margin-left: var(--largura-menu-recolhido);
-  width: calc(100% - var(--largura-menu-recolhido));
+#painel_aplicacao #painel_principal.recolhido {
+  width: calc(100vw - var(--largura-menu-recolhido) - 0.5em);
 }
 
-#painel_aplicacao {
-  flex-grow: 1;
-  padding: 1em;
-  height: calc(100vh - 13em);
+#painel_conteudo {
+  padding: 1em 0 0 1em;
 }
 
 #conteudo {
-  padding: 1em;
+  padding: 0.5em;
   box-shadow: -5px 10px 15px var(--cor-sombra);
   border-color: var(--cor-borda-clara);
   border-style: solid;
@@ -47,12 +58,20 @@
   #aplicacao #cabecalho_mobile {
     display: block;
   }
-  #aplicacao #area_aplicacao {
+  #aplicacao #painel_aplicacao {
     display: block;
     width: 100%;
     padding: 0;
     margin: 0;
     height: auto;
+  }
+  #aplicacao #painel_lateral {
+    transition: all 0.3s;
+    position: fixed;
+    width: var(--largura-menu-expandido);
+    z-index: 1;
+    top: 0;
+    bottom: 0;
   }
   #aplicacao #painel_principal {
     display: flex;
@@ -64,11 +83,11 @@
   #aplicacao #painel_principal.oculto {
     display: none;
   }
-  #aplicacao #painel_principal #painel_aplicacao {
+  #aplicacao #painel_principal #painel_conteudo {
     padding: 0;
     height: auto;
   }
-  #aplicacao #painel_principal #painel_aplicacao #conteudo {
+  #aplicacao #painel_principal #painel_conteudo #conteudo {
     height: auto;
     max-height: initial;
     border-style: none;
