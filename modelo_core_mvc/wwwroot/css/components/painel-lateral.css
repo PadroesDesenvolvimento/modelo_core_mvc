@@ -38,7 +38,7 @@
   }
 }
 
-#painel_aplicacao {
+#painel_conteudo {
   flex-grow: 1;
   padding: 1em;
 }
@@ -104,7 +104,7 @@
   transition: opacity 0.3s;
 }
 
-#conteudo_aplicacao {
+#painel_aplicacao {
   width: 100%;
   position: absolute;
 }
@@ -123,7 +123,7 @@
   #painel_principal.oculto {
     display: none;
   }
-  #conteudo_aplicacao {
+  #painel_aplicacao {
     margin-top: calc(var(--altura-barra_acessibilidade) + var(--altura-cabecalho) + 1em);
   }
   #painel_lateral {
@@ -141,7 +141,7 @@
   }
 }
 /*Altersacao de configuracoes de terceiros*/
-li {
+li, div {
   word-wrap: break-word;
 }
 

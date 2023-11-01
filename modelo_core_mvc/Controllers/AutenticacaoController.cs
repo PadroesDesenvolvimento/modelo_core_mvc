@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System;
@@ -17,7 +16,7 @@ using SefazLib.UrlTest;
 
 namespace modelo_core_mvc.Controllers;
 
-public class AutenticacaoController : Controller
+public class AutenticacaoController : BaseController
 {
     private readonly IConfiguration configuration;
     private readonly ILogger<HomeController> _logger;
