@@ -36,6 +36,7 @@
         height: 100vh;
         width: calc(100vw - var(--largura-menu-expandido) - 0.5em);
 
+
         &.recolhido {
             width: calc(100vw - var(--largura-menu-recolhido) - 0.5em);
         }
@@ -43,6 +44,8 @@
 }
 
 #painel_conteudo {
+    display: flex;
+    flex-direction: column;
     padding: 1em 0 0 1em;
 }
 
@@ -74,11 +77,14 @@
 
         #painel_lateral {
             transition: all 0.3s;
-            position: fixed;
-            width: var(--largura-menu-expandido);
+            width: 100%;
             z-index: 1;
             top: 0;
             bottom: 0;
+
+            &.oculto {
+                display: none;
+            }
         }
 
         #painel_principal {
@@ -87,6 +93,7 @@
             width: 100%;
             padding: 0;
             margin: 0;
+            height: auto;
 
             &.oculto {
                 display: none;

@@ -28,11 +28,6 @@
         {
             IdentityConfig.jwtToken = accessToken;
         }
-        else
-        {
-
-        }
-
     }
     var iniciais = Usuario.ObterIniciais(nomeExibicao).Substring(0, 2);
 }
@@ -51,7 +46,7 @@
        alt="Menu Popup"
        title="Exibe e oculta o menu de ambiente"
        aria-label="Exibe e oculta o menu de ambiente"
-       onclick="alternarClasse(['menu_popup'],'oculto')">
+       onclick="alternarClasse(['menu_popup'],'oculto',false)">
        <text id="iniciais_popup">@iniciais</text>
     </i>
     <i id="botao-hamburguinho"

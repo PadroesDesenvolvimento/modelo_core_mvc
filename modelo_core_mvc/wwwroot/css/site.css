@@ -37,6 +37,8 @@
 }
 
 #painel_conteudo {
+  display: flex;
+  flex-direction: column;
   padding: 1em 0 0 1em;
 }
 
@@ -67,11 +69,13 @@
   }
   #aplicacao #painel_lateral {
     transition: all 0.3s;
-    position: fixed;
-    width: var(--largura-menu-expandido);
+    width: 100%;
     z-index: 1;
     top: 0;
     bottom: 0;
+  }
+  #aplicacao #painel_lateral.oculto {
+    display: none;
   }
   #aplicacao #painel_principal {
     display: flex;
@@ -79,6 +83,7 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    height: auto;
   }
   #aplicacao #painel_principal.oculto {
     display: none;
