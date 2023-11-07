@@ -35,4 +35,25 @@ function aplicarClassesDeCookies() {
     });
 }
 
-aplicarClassesDeCookies();
+//window.addEventListener('DOMContentLoaded', aplicarClassesDeCookies());
+
+function _aguarde(mostrar=true) {
+    var elemento = document.getElementById('_aguarde');
+    if (elemento) {
+        if (elemento.classList.contains('oculto')) {
+            if (mostrar) {
+                elemento.classList.remove('oculto');
+            };
+        }
+        else {
+            if (!mostrar) {
+                elemento.classList.add('oculto');
+            }
+        }
+    }
+}
+
+window.addEventListener('load', _aguarde(false));
+
+
+
