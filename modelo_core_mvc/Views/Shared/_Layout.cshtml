@@ -7,6 +7,14 @@
 @{
     var cookies = Context.Request.Cookies; 
     var estaRecolhido = cookies.ContainsKey("classe|painel_lateral|recolhido") && cookies["classe|painel_lateral|recolhido"] == "true";
+    int valorMudanca = 0;
+    var valorZoom = "1";
+    double[] valores = { 1, 1.1, 1.3, 1.5, 1.75, 1.9 };
+    if (cookies.ContainsKey("valorMudanca"))
+    {
+        valorMudanca = int.Parse(cookies["valorMudanca"]);
+        valorZoom = valores[valorMudanca].ToString("F", System.Globalization.CultureInfo.InvariantCulture);
+    }
 }
 
 <head>
@@ -33,7 +41,7 @@
     </script>
 </head>
 
-<body>
+<body style="zoom: @valorZoom;">
     <div id="aplicacao">
         <header id="cabecalho_mobile" class="painel_cabecalho">
             <partial name="_Cabecalho" />
