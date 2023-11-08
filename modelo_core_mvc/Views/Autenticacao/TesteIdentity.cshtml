@@ -29,7 +29,7 @@
     else
     {
         <h2>Claims:</h2>
-        <dl>
+        <dl class="claims">
             @foreach (var claim in User.Claims)
             {
                 <dt>@claim.Type</dt>
@@ -38,14 +38,14 @@
             }
         </dl>
         <h2>Propriedades:</h2>
-        <dl>
+        <dl class="claims">
             @foreach (var prop in (await Context.AuthenticateAsync()).Properties.Items)
             {
                 <dt>@prop.Key</dt>
                 <dd>@prop.Value</dd>
             }
         </dl>
-        <dl>
+        <dl class="claims">
             <dt>BootstrapContext</dt>
             <dd>@User.Identities.First().BootstrapContext</dd>
         </dl>

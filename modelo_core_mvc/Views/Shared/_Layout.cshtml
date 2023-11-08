@@ -59,12 +59,12 @@
                     </span>
                 </button>
 
-                <div id="menu_lateral" onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto')">
+                <div id="menu_lateral" onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto',false)">
                     <partial name="_ItensMenu" />
                 </div>
             </section>
 
-            <section id="painel_principal" class="">
+            <section id="painel_principal" class="@(estaRecolhido ? "recolhido" : "")">
                 <header id="cabecalho-desktop" class="painel_cabecalho">
                     <partial name="_Cabecalho" />
                     <nav id="menu_popup" class="oculto">

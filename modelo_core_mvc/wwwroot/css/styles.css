@@ -107,10 +107,10 @@ mgt-person {
   flex-direction: column;
   width: var(--largura-menu-expandido);
   height: 100vh;
+  transition: all 0.3s;
 }
 #painel_aplicacao #painel_lateral.recolhido {
   width: var(--largura-menu-recolhido);
-  transition: all 0.3s;
 }
 #painel_aplicacao #painel_lateral.recolhido #botao_expandir {
   margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botao_expandir) / 2);
@@ -122,11 +122,11 @@ mgt-person {
   display: flex;
   flex-direction: column;
   padding: 0 0.5em;
-  transition: margin-left 0.3s;
   height: 100vh;
   width: calc(100vw - var(--largura-menu-expandido) - 0.5em);
 }
 #painel_aplicacao #painel_principal.recolhido {
+  transition: all 0.3s;
   width: calc(100vw - var(--largura-menu-recolhido) - 0.5em);
 }
 
@@ -1638,19 +1638,30 @@ li, dt, dd {
   vertical-align: middle;
 }
 
-.tabela th, dt {
-  border: 1px solid var(--cor-primaria);
-  background-color: var(--cor-primaria);
-  height: var(--altura-linha);
-  color: var(--cor-invertida-texto);
-  padding: 0 1em;
+.tabela {
+  border: none;
+}
+.tabela th, .tabela dt {
+  padding: 0.2em 1em;
   text-align: right;
+  margin: 0.2em 0;
+}
+.tabela td, .tabela dd {
+  border: 1px solid #DDD;
+  padding: 0.2em 1em;
+  height: auto;
+  margin: 0.2em 0;
 }
 
-.tabela td, dd {
-  border: 1px solid #DDD;
-  height: var(--altura-linha);
-  padding: 0 1em;
+.claims th, td, dd, dt {
+  text-align: left;
+  height: auto;
+  border: none;
+  margin: 0;
+}
+
+.claims dt {
+  margin-top: 0.5em;
 }
 
 .formulario {

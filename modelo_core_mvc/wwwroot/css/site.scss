@@ -13,10 +13,10 @@
         flex-direction: column;
         width: var(--largura-menu-expandido);
         height: 100vh;
+        transition: all 0.3s;
 
         &.recolhido {
             width: var(--largura-menu-recolhido);
-            transition: all 0.3s;
 
             #botao_expandir {
                 margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botao_expandir)/2);
@@ -32,12 +32,11 @@
         display: flex;
         flex-direction: column;
         padding: 0 0.5em;
-        transition: margin-left 0.3s;
         height: 100vh;
         width: calc(100vw - var(--largura-menu-expandido) - 0.5em);
 
-
         &.recolhido {
+            transition: all 0.3s;
             width: calc(100vw - var(--largura-menu-recolhido) - 0.5em);
         }
     }
