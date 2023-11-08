@@ -4,6 +4,11 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 
+@{
+    var cookies = Context.Request.Cookies; 
+    var estaRecolhido = cookies.ContainsKey("classe|painel_lateral|recolhido") && cookies["classe|painel_lateral|recolhido"] == "true";
+}
+
 <head>
     <title>@ViewData["Title"]</title>
     <meta charset="utf-8" />
@@ -35,7 +40,7 @@
         </header>
 
         <div id="painel_aplicacao">
-            <section id="painel_lateral" class="oculto">
+            <section id="painel_lateral" class="oculto @(estaRecolhido ? "recolhido" : "")">
                 <header id="brasao">
                     <img src="~/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
                     <span id="orgao">Secretaria da Fazenda e Planejamento</span>
@@ -46,20 +51,20 @@
                         aria-label="Botão para expandir ou recolher o menu"
                         accesskey="c"
                         onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher', 'painel_principal'],'recolhido')">
-                    <span id="icone_expandir" class="recolhido">
+                    <span id="icone_expandir" class="@(!estaRecolhido ? "recolhido" : "")">
                         <i class="fas fa-angle-right"></i>
                     </span>
-                    <span id="icone_recolher">
+                    <span id="icone_recolher" class="@(estaRecolhido ? "recolhido" : "")">
                         <i class="fas fa-angle-left"></i>
                     </span>
                 </button>
 
-                <div id="menu_lateral" onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto')">
+                <div id="menu_lateral" onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto',false)">
                     <partial name="_ItensMenu" />
                 </div>
             </section>
 
-            <section id="painel_principal" class="">
+            <section id="painel_principal" class="@(estaRecolhido ? "recolhido" : "")">
                 <header id="cabecalho-desktop" class="painel_cabecalho">
                     <partial name="_Cabecalho" />
                     <nav id="menu_popup" class="oculto">

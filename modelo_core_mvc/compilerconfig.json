@@ -54,5 +54,9 @@
   {
     "outputFile": "wwwroot/css/components/person-card.css",
     "inputFile": "wwwroot/css/components/person-card.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/Aguarde.css",
+    "inputFile": "wwwroot/css/components/Aguarde.scss"
   }
 ]

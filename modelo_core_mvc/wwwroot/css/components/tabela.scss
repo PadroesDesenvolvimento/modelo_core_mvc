@@ -9,20 +9,33 @@
     vertical-align: middle;
 }
 
-.tabela th, dt {
-    border: 1px solid var(--cor-primaria);
-    background-color: var(--cor-primaria);
-    height: var(--altura-linha);
-    color: var(--cor-invertida-texto);
-    padding: 0 1em;
-    text-align: right;
+.tabela {
+    border: none;
+    th, dt {
+        padding: 0.2em 1em;
+        text-align: right;
+        margin: 0.2em 0;
+    }
+
+    td, dd {
+        border: 1px solid #DDD;
+        padding: 0.2em 1em;
+        height: auto;
+        margin: 0.2em 0;
+    }
 }
 
-.tabela td, dd {
-    border: 1px solid #DDD;
-    height: var(--altura-linha);
-    padding: 0 1em;
+.claims th, td, dd, dt {
+    text-align: left;
+    height: auto;
+    border: none;
+    margin: 0;
 }
+
+.claims dt {
+    margin-top: 0.5em;
+}
+
 
 .formulario {
     max-width: 50em;

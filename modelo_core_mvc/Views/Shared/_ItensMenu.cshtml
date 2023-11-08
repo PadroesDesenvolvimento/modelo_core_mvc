@@ -7,7 +7,7 @@
             </a>
         </li>
         <li>
-            <a asp-area="" asp-controller="Projetos" asp-action="Index">
+            <a asp-area="" asp-controller="Projetos" asp-action="Index" onclick="_aguarde()">
                 <em class="fas fa-table"></em>
                 <span>Lista de Projetos</span>
             </a>
@@ -29,19 +29,19 @@
         </li>
 
         <li>
-            <a asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity">
+            <a asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity" onclick="_aguarde()">
                 <em class="fas fa-id-card"></em>
                 <span>Teste do Identity</span>
             </a>
         </li>
         <li>
-            <a asp-area="" asp-controller="Home" asp-action="Sobre">
+            <a asp-area="" asp-controller="Home" asp-action="Sobre" onclick="_aguarde()">
                 <em class="fas fa-info-circle"></em>
                 <span>Sobre</span>
             </a>
         </li>
         <li>
-            <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar">
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
                 <em class="fas fa-address-card"></em>
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -54,7 +54,7 @@
             </a>
         </li>
         <li>
-            <a asp-area="" asp-controller="Autenticacao" asp-action="Sair">
+            <a asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
                 <em class="fas fa-door-open"></em>
                 <span>Sair</span>
             </a>

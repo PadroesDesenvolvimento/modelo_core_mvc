@@ -22,7 +22,6 @@ public class ProjetosController : BaseController
     {
         ViewData["Title"] = "Projetos";
         ViewData["Message"] = "Projetos do DTI";
-
         return View(await api.GetProjetosAsync());
     }
 

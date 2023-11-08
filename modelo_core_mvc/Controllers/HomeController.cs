@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using modelo_core_mvc.ProjetosApi;
 using modelo_core_mvc.Errors;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
 namespace modelo_core_mvc.Controllers
 {
@@ -20,7 +21,7 @@ namespace modelo_core_mvc.Controllers
 
         public IActionResult Index()
         {
-            @ViewData["Title"] = "Sefaz-SP";
+            ViewData["Title"] = "Sefaz-SP";
             return View();
         }
 
@@ -52,6 +53,5 @@ namespace modelo_core_mvc.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
     }
 }
