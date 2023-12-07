@@ -53,11 +53,14 @@
                 }
             </a>
         </li>
-        <li>
-            <a asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
-                <em class="fas fa-door-open"></em>
-                <span>Sair</span>
-            </a>
-        </li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li>
+                <a asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
+                    <em class="fas fa-door-open"></em>
+                    <span>Sair</span>
+                </a>
+            </li>
+        }
     </ul>
 </div>
