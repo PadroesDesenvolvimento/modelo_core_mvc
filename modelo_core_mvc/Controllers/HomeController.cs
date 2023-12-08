@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using modelo_core_mvc.ProjetosApi;
 using modelo_core_mvc.Errors;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
 namespace modelo_core_mvc.Controllers
 {
