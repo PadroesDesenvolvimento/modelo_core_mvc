@@ -99,49 +99,27 @@ public class AutenticacaoController : BaseController
         return View();
     }
 
-
-    //A policy was defined, so authorize must use a policy instead of a role.
     public async Task<string> AuthenticationAsync()
     {
-        //Find claims for the current user
         ClaimsPrincipal currentUser = this.User;
-        //Get username, for keycloak you need to regex this to get the clean username
         var currentUserName = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //logs an error so it's easier to find - thanks debug.
         _logger.LogError(currentUserName);
 
-        //Debug this line of code if you want to validate the content jwt.io
         string accessToken = await HttpContext.GetTokenAsync("access_token");
         string idToken = await HttpContext.GetTokenAsync("id_token");
         string refreshToken = await HttpContext.GetTokenAsync("refresh_token");
         string newAccessToken = "";
         if (configuration["identity:type"] == "loginsefaz")
         {
-            /*
-             * Token exchange implementation
-             * Uncomment section below
-             */
-
-            //Call a token exchange to call another service in keycloak
-            //Remember to implement a logger with the default constructor for more visibility
             TokenExchangeHelper exchange = new TokenExchangeHelper(configuration);
-            //Do a refresh token, if the service you need to call has a short lived token time
             newAccessToken = await exchange.GetRefreshTokenAsync(refreshToken);
             var serviceAccessToken = await exchange.GetTokenExchangeAsync(newAccessToken);
-            //Use the access token to call the service that exchanged the token
-            //Example:
-            // MyService myService = new MyService/();
-            //var myService = await myService.GetDataAboutSomethingAsync(serviceAccessToken):
-
-
-            //Get all claims for roles that you have been granted access to 
             IEnumerable<Claim> roleClaims = User.FindAll(ClaimTypes.Role);
             IEnumerable<string> roles = roleClaims.Select(r => r.Value);
             foreach (var role in roles)
             {
                 _logger.LogError(role);
             }
-            //Another way to display all role claims
             var currentClaims = currentUser.FindAll(ClaimTypes.Role).ToList();
             foreach (var claim in currentClaims)
             {

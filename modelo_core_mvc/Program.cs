@@ -25,7 +25,7 @@ services.AddApplicationInsightsTelemetry();
 IdentityConfig identityConfig = new(Configuration);
 var opcoesAutenticacao = identityConfig.AuthenticationOptions;
 // Sugestao: exclua os tipos de autenticacao que não forem usados para simplificar o codigo 
-// Esse switch e so para exemplificar os diversos tipos possiveis na Sefaz
+// Esse switch e' so' para exemplificar os diversos tipos possiveis na Sefaz
 switch (Configuration["identity:type"])
 {
     case "azuread":
@@ -35,13 +35,6 @@ switch (Configuration["identity:type"])
                 .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
                 .AddInMemoryTokenCaches();
         services.AddTransient<ListModel>();
-        break;
-
-    case ("wsfed"):
-        services.AddControllersWithViews();
-        services.AddAuthentication(opcoesAutenticacao)
-                .AddWsFederation(identityConfig.WSFederationOptions)
-                .AddCookie();
         break;
 
     case ("loginsefaz"):
@@ -55,13 +48,6 @@ switch (Configuration["identity:type"])
                     cookie.SlidingExpiration = true;
                 })
                 .AddOpenIdConnect(identityConfig.OpenIdConnectOptions);
-        break;
-
-    case ("openid"):
-        services.AddControllersWithViews();
-        services.AddAuthentication(opcoesAutenticacao)
-                .AddOpenIdConnect(identityConfig.OpenIdConnectOptions)
-                .AddCookie();
         break;
 
     default:
@@ -93,7 +79,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

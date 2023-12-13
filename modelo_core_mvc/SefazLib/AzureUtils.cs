@@ -3,11 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using SefazLib.usuarios;
 using SefazLib.IdentityCfg;
 
@@ -90,64 +88,6 @@ namespace SefazLib.AzureUtils
                     });
                     return new GraphServiceClient(authProvider);
             }
-        }
-
-        public async Task<string> buscaSiteId(string siteNome)
-        {
-            var graphClient = ObterGraphClient("Delegated");
-            var requests = new List<SearchRequestObject>()
-            {
-                new SearchRequestObject
-                {
-                    EntityTypes = new List<EntityType>()
-                    {
-                        EntityType.Site
-                    },
-                    Query = new SearchQuery
-                    {
-                        QueryString = siteNome
-                    },
-                    From = 0,
-                    Size = 25
-                }
-            };
-
-            var result = await graphClient.Search
-                    .Query(requests)
-                    .Request()
-                    .PostAsync();
-
-            string siteId = "";
-            if ((result.CurrentPage.Count > 0) && (result.CurrentPage[0].HitsContainers.Count() > 0))
-            {
-                var hitContainer = result.CurrentPage[0].HitsContainers.First();
-                if (hitContainer.Hits != null)
-                {
-                    foreach (var hit in hitContainer.Hits)
-                    {
-                        var recurso = await graphClient.Sites[hit.HitId].Request().GetAsync();
-                        siteId = hit.HitId;
-                        if (recurso.DisplayName == siteNome) { break; }
-                    }
-                }
-            }
-
-            return siteId;
-        }
-
-        public async Task<string> buscaListaId(string listaNome, string siteId)
-        {
-            var graphClient = ObterGraphClient("Delegated");
-            var items = await graphClient.Sites[siteId].Lists
-                                            .Request()
-                                            .GetAsync();
-            string listaId = "";
-            foreach (var item in items)
-            {
-                if (item.DisplayName == listaNome) { listaId = item.Id; break; }
-            }
-
-            return listaId;
         }
     }
 }

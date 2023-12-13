@@ -16,7 +16,6 @@ using Azure.Identity;
 using Azure.Core;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TokenWS;
 using System.Security.Claims;
 
@@ -51,11 +50,7 @@ namespace SefazLib.IdentityCfg
             {
                 switch (Configuration["identity:type"])
                 {
-                    case "jwt":
-                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                        break;
-                    case ("openid" or "azuread"):
+                    case ("azuread"):
                         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                         break;
@@ -93,31 +88,6 @@ namespace SefazLib.IdentityCfg
                         MaxAge = new TimeSpan(0, 0, 15, 0)
                     };
                 }
-            };
-
-            if (Configuration["identity:type"] == "openid")
-            {
-                OpenIdConnectOptions = options =>
-                {
-                    options.ClientId = configuration["identity:clientid"];
-                    options.Authority = configuration["identity:authority"];
-                    options.MetadataAddress = configuration["identity:metadataaddess"];
-                    options.SignedOutRedirectUri = configuration["identity:realm"];
-                    options.SignInScheme = "Cookies";
-                    options.RequireHttpsMetadata = true;
-                    options.ResponseType = OpenIdConnectResponseType.Code;
-                    options.UsePkce = false;
-                    options.Scope.Clear();
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                    options.Scope.Add("email");
-                    options.SaveTokens = true;
-
-                    options.Events = new OpenIdConnectEvents
-                    {
-                        OnRemoteFailure = OnAuthenticationFailed
-                    };
-                };
             };
 
             if (Configuration["identity:type"] == "loginsefaz")
@@ -266,10 +236,7 @@ namespace SefazLib.IdentityCfg
             await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             switch (Configuration["identity:type"])
             {
-                case "jwt":
-                    await httpContext.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);
-                    break;
-                case ("sefazidentity" or "wsfed"):
+                case ("sefazidentity"):
                     await httpContext.SignOutAsync(WsFederationDefaults.AuthenticationScheme);
                     break;
                 default:
