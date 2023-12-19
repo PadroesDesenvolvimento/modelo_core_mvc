@@ -5,11 +5,11 @@ resources:
       source: modelo_core_mvc_yaml
       project: Padroes_Desenvolvimento
       
-  variables:
-  - group: 'F5_dmz'
-  - group: 'Release'
-  - group: 'IIS'
-  - group: 'modelo_core_mvc-AppSettings-Release'
+variables:
+- group: 'F5_dmz'
+- group: 'Release'
+- group: 'IIS'
+- group: 'modelo_core_mvc-AppSettings-Release'
 
 jobs:
 - deployment: DeploymentGroup
