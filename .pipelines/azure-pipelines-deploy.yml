@@ -26,17 +26,20 @@ jobs:
         - task: IISWebAppManagementOnMachineGroup@0
           displayName: 'IIS Web App Manage'
           inputs:
-            IISDeploymentType: 'IIS Web Application'
+            IISDeploymentType: 'IISWebApplication'
             WebsiteName: '$(_Web_Site_Nome)'
             ParentWebsiteNameForVD: '$(_Web_Site_Nome)'
             VirtualPathForVD: '/$(_Nome_Aplicacao)'
             ParentWebsiteNameForApplication: '$(_Web_Site_Nome)'
             VirtualPathForApplication: '/$(_Nome_Aplicacao)'
             PhysicalPathForApplication: '$(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)'
+            AddBinding: true
+            Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"8088","hostname":"","sslThumbprint":"","sniFlag":false}]}'
             CreateOrUpdateAppPoolForApplication: true
             AppPoolNameForApplication: '$(_Nome_Aplicacao)'
             DotNetVersionForApplication: 'No Managed Code'
             AppPoolName: '$(_Nome_Aplicacao)'
+            AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
         
         - task: IISWebAppDeploymentOnMachineGroup@0
           displayName: 'IIS Web App Deploy'
