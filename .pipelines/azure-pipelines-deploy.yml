@@ -1,28 +1,73 @@
-jobs:
-- job: Job_1
-  displayName: Agent job 1
-  pool:
-    name: Visual Studio
-  steps:
+trigger: none
+resources:
+  pipelines:
+    - pipeline: build
+      source: modelo_core_mvc_yaml
+      project: Padroes_Desenvolvimento
+      
   variables:
-    _Local_IIS: 'D:\inetpub'
-    _Web_Site_Local: 'secure'
-    _Nome_Aplicacao: 'modelo_core_mvc'
+  - group: 'F5_dmz'
+  - group: 'Release'
+  - group: 'IIS'
+  - group: 'modelo_core_mvc-AppSettings-Release'
 
-  - task: IISWebAppManagementOnMachineGroup@0
-    displayName: 'IIS Web App Manage'
-    inputs:
-      IISDeploymentType: '$(Parameters.IISDeploymentType)'
-      WebsiteName: '$(Parameters.WebsiteName)'
-      AddBinding: '$(Parameters.AddBinding)'
-      Bindings: '$(Parameters.Bindings)'
-      ParentWebsiteNameForVD: '$(Parameters.WebsiteName)'
-      VirtualPathForVD: '$(Parameters.VirtualPathForApplication)'
-      ParentWebsiteNameForApplication: '$(Parameters.WebsiteName)'
-      VirtualPathForApplication: '$(Parameters.VirtualPathForApplication)'
-      PhysicalPathForApplication: '$(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)'
-      CreateOrUpdateAppPoolForApplication: true
-      AppPoolNameForApplication: '$(_Nome_Aplicacao)'
-      DotNetVersionForApplication: 'No Managed Code'
-      AppPoolName: '$(Parameters.AppPoolName)'
-  
+jobs:
+- deployment: DeploymentGroup
+  pool:
+    name: 'modelo_core_mvc'
+    demands: 
+    - agent.name -equals webdesenv4.intra.fazenda.sp.gov.br
+  strategy: 
+    runOnce:
+      deploy:
+        steps:
+        - download: build
+          artifact: drop
+        - task: IISWebAppManagementOnMachineGroup@0
+          displayName: 'IIS Web App Manage'
+          inputs:
+            IISDeploymentType: 'IIS Web Application'
+            WebsiteName: '$(_Web_Site_Nome)'
+            ParentWebsiteNameForVD: '$(_Web_Site_Nome)'
+            VirtualPathForVD: '/$(_Nome_Aplicacao)'
+            ParentWebsiteNameForApplication: '$(_Web_Site_Nome)'
+            VirtualPathForApplication: '/$(_Nome_Aplicacao)'
+            PhysicalPathForApplication: '$(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)'
+            CreateOrUpdateAppPoolForApplication: true
+            AppPoolNameForApplication: '$(_Nome_Aplicacao)'
+            DotNetVersionForApplication: 'No Managed Code'
+            AppPoolName: '$(_Nome_Aplicacao)'
+        
+        - task: IISWebAppDeploymentOnMachineGroup@0
+          displayName: 'IIS Web App Deploy'
+          inputs:
+            WebSiteName: '$(_Web_Site_Nome)'
+            VirtualApplication: '$(_Nome_Aplicacao)'
+            Package: '$(Pipeline.Workspace)\build\drop\*.zip'
+            RemoveAdditionalFilesFlag: true
+            ExcludeFilesFromAppDataFlag: true
+            TakeAppOfflineFlag: True
+            XmlVariableSubstitution: True
+            JSONFiles: appsettings.json
+
+        - powershell: |
+                Write-Host "_________________________________________________________________ "
+                Write-Host "appsettings"
+                Write-Host ""
+                type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\appsettings.json
+                
+                Write-Host "_________________________________________________________________ "
+                Write-Host "web.config"
+                Write-Host ""
+                type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\web.config
+                
+                Write-Host "_________________________________________________________________ "
+                Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)"
+                Write-Host ""
+                Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)
+                
+                Write-Host "_________________________________________________________________ "
+                Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img"
+                Write-Host ""
+                Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
+          displayName: 'Verificação do arquivo de configuração'
