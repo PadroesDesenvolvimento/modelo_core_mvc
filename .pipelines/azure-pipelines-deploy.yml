@@ -19,7 +19,7 @@ stages:
   variables:
   - group: 'DEV'
   jobs:
-  - deployment: IIS_Deployment
+  - deployment: IIS
     environment: 'webdesenv'
     strategy: 
       runOnce:
