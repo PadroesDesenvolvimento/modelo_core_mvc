@@ -20,7 +20,9 @@ stages:
   - group: 'DEV'
   jobs:
   - deployment: IIS
-    environment: 'webdesenv'
+    environment: 
+      name: webdesenv
+      resourceName: SRV72208
     strategy: 
       runOnce:
         deploy:
