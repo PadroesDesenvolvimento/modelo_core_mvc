@@ -1,8 +1,8 @@
-trigger: none
+trigger: master
 resources:
   pipelines:
-    - pipeline: build
-      source: modelo_core_mvc_yaml
+    - pipeline: build-mvc
+      source: modelo_core_mvc/modelo_core_mvc-yaml-build
       project: Padroes_Desenvolvimento
       
 variables:
@@ -10,14 +10,18 @@ variables:
 - group: 'Release'
 - group: 'IIS'
 - group: 'modelo_core_mvc-AppSettings-Release'
+- name: _build 
+  value: $(resources.pipeline.build-mvc.runName)
 
-jobs:
-- deployment: DeploymentGroup
-  pool:
-    name: 'modelo_core_mvc'
-    demands: 
-    - agent.name -equals webdesenv4.intra.fazenda.sp.gov.br
-  strategy: 
+stages:
+- stage: Dev
+  displayName: 'Deploy Dev'
+  variables:
+  - group: 'DEV'
+  jobs:
+  - deployment: IIS_Deployment
+    environment: 'webdesenv'
+    strategy: 
     runOnce:
       deploy:
         steps:
