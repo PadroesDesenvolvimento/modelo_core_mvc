@@ -7,7 +7,7 @@ resources:
       
 variables:
 - group: 'F5_dmz'
-- group: 'Release'
+- group: 'Default'
 - group: 'IIS'
 - group: 'modelo_core_mvc-AppSettings-Release'
 - name: _build 
