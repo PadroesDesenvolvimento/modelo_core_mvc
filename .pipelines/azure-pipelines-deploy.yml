@@ -1,28 +1,82 @@
-jobs:
-- job: Job_1
-  displayName: Agent job 1
-  pool:
-    name: Visual Studio
-  steps:
-  variables:
-    _Local_IIS: 'D:\inetpub'
-    _Web_Site_Local: 'secure'
-    _Nome_Aplicacao: 'modelo_core_mvc'
+trigger: none
+resources:
+  pipelines:
+    - pipeline: build-mvc
+      source: modelo_core_mvc/modelo_core_mvc-yaml-build
+      project: Padroes_Desenvolvimento
+      
+variables:
+- group: 'F5_dmz'
+- group: 'Default'
+- group: 'IIS'
+- group: 'modelo_core_mvc-AppSettings-Release'
+- name: _build 
+  value: $(resources.pipeline.build-mvc.runName)
 
-  - task: IISWebAppManagementOnMachineGroup@0
-    displayName: 'IIS Web App Manage'
-    inputs:
-      IISDeploymentType: '$(Parameters.IISDeploymentType)'
-      WebsiteName: '$(Parameters.WebsiteName)'
-      AddBinding: '$(Parameters.AddBinding)'
-      Bindings: '$(Parameters.Bindings)'
-      ParentWebsiteNameForVD: '$(Parameters.WebsiteName)'
-      VirtualPathForVD: '$(Parameters.VirtualPathForApplication)'
-      ParentWebsiteNameForApplication: '$(Parameters.WebsiteName)'
-      VirtualPathForApplication: '$(Parameters.VirtualPathForApplication)'
-      PhysicalPathForApplication: '$(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)'
-      CreateOrUpdateAppPoolForApplication: true
-      AppPoolNameForApplication: '$(_Nome_Aplicacao)'
-      DotNetVersionForApplication: 'No Managed Code'
-      AppPoolName: '$(Parameters.AppPoolName)'
-  
+stages:
+- stage: Dev
+  displayName: 'Deploy Dev'
+  variables:
+  - group: 'DEV'
+  jobs:
+  - deployment: IIS
+    environment: 
+      name: webdesenv
+      resourceName: SRV72208
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+          - download: build-mvc
+            artifact: drop
+          - task: IISWebAppManagementOnMachineGroup@0
+            displayName: 'IIS Web App Manage'
+            inputs:
+              IISDeploymentType: 'IISWebApplication'
+              WebsiteName: '$(_Web_Site_Nome)'
+              ParentWebsiteNameForVD: '$(_Web_Site_Nome)'
+              VirtualPathForVD: '/$(_Nome_Aplicacao)'
+              ParentWebsiteNameForApplication: '$(_Web_Site_Nome)'
+              VirtualPathForApplication: '/$(_Nome_Aplicacao)'
+              PhysicalPathForApplication: '$(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)'
+              AddBinding: true
+              Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"8088","hostname":"","sslThumbprint":"","sniFlag":false}]}'
+              CreateOrUpdateAppPoolForApplication: true
+              AppPoolNameForApplication: '$(_Nome_Aplicacao)'
+              DotNetVersionForApplication: 'No Managed Code'
+              AppPoolName: '$(_Nome_Aplicacao)'
+              AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
+        
+          - task: IISWebAppDeploymentOnMachineGroup@0
+            displayName: 'IIS Web App Deploy'
+            inputs:
+              WebSiteName: '$(_Web_Site_Nome)'
+              VirtualApplication: '$(_Nome_Aplicacao)'
+              Package: '$(Pipeline.Workspace)\build-mvc\drop\*.zip'
+              RemoveAdditionalFilesFlag: true
+              ExcludeFilesFromAppDataFlag: true
+              TakeAppOfflineFlag: True
+              XmlVariableSubstitution: True
+              JSONFiles: appsettings.json
+
+          - powershell: |
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "appsettings"
+                  Write-Host ""
+                  type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\appsettings.json
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "web.config"
+                  Write-Host ""
+                  type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\web.config
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)"
+                  Write-Host ""
+                  Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img"
+                  Write-Host ""
+                  Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
+            displayName: 'Verificação do arquivo de configuração'
