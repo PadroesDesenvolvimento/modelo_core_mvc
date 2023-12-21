@@ -10,8 +10,8 @@ variables:
 - group: 'Default'
 - group: 'IIS'
 - group: 'modelo_core_mvc-AppSettings-Release'
-- name: _build 
-  value: $(resources.pipeline.build-mvc.runName)
+- name: '_build' 
+  value: '$(resources.pipeline.build-mvc.runName)'
 
 stages:
 - stage: Dev
