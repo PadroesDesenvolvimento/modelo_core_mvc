@@ -11,7 +11,7 @@ variables:
 - group: 'IIS'
 - group: 'modelo_core_mvc-AppSettings-Release'
 - name: '_build' 
-  value: '$(resources.pipeline.build-mvc.runName)'
+  value: '$(resources.pipeline.build-mvc.pipelineName).$(resources.pipeline.build-mvc.runName)'
 - name: system.debug
   value: false
 
