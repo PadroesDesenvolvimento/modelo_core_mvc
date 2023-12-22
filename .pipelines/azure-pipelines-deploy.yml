@@ -10,8 +10,10 @@ variables:
 - group: 'Default'
 - group: 'IIS'
 - group: 'modelo_core_mvc-AppSettings-Release'
-- name: _build 
-  value: $(resources.pipeline.build-mvc.runName)
+- name: '_build' 
+  value: '$(resources.pipeline.build-mvc.pipelineName).$(resources.pipeline.build-mvc.runName)'
+- name: system.debug
+  value: false
 
 stages:
 - stage: Dev
@@ -20,8 +22,11 @@ stages:
   - group: 'DEV'
   jobs:
   - deployment: IIS
+    variables:
+    - name: '_Web_Site_Nome'
+      value: 'Seguro'
     environment: 
-      name: webdesenv
+      name: envWebdesenv
       resourceName: SRV72208
     strategy: 
       runOnce:
