@@ -37,7 +37,7 @@ stages:
             displayName: 'IIS Web App Manage'
             inputs:
               IISDeploymentType: 'IISWebApplication'
-              WebsiteName: '$(_Web_Site_Nome)'
+              WebsiteName: 'Seguro'
               ParentWebsiteNameForVD: '$(_Web_Site_Nome)'
               VirtualPathForVD: '/$(_Nome_Aplicacao)'
               ParentWebsiteNameForApplication: '$(_Web_Site_Nome)'
