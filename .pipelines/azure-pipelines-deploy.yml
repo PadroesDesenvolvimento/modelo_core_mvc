@@ -12,6 +12,10 @@ variables:
 - group: 'modelo_core_mvc-AppSettings-Release'
 - name: '_build' 
   value: '$(resources.pipeline.build-mvc.runName)'
+- name: VSTS_ARM_REST_IGNORE_SSL_ERRORS
+  value: true
+- name: system.debug
+  value: true
 
 stages:
 - stage: Dev
