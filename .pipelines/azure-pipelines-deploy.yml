@@ -12,10 +12,8 @@ variables:
 - group: 'modelo_core_mvc-AppSettings-Release'
 - name: '_build' 
   value: '$(resources.pipeline.build-mvc.runName)'
-- name: VSTS_ARM_REST_IGNORE_SSL_ERRORS
-  value: true
 - name: system.debug
-  value: true
+  value: false
 
 stages:
 - stage: Dev
@@ -24,6 +22,9 @@ stages:
   - group: 'DEV'
   jobs:
   - deployment: IIS
+    variables:
+    - name: '_Web_Site_Nome'
+      value: 'Seguro'
     environment: 
       name: envWebdesenv
       resourceName: SRV72208
@@ -37,7 +38,7 @@ stages:
             displayName: 'IIS Web App Manage'
             inputs:
               IISDeploymentType: 'IISWebApplication'
-              WebsiteName: 'Seguro'
+              WebsiteName: '$(_Web_Site_Nome)'
               ParentWebsiteNameForVD: '$(_Web_Site_Nome)'
               VirtualPathForVD: '/$(_Nome_Aplicacao)'
               ParentWebsiteNameForApplication: '$(_Web_Site_Nome)'
