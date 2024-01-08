@@ -52,6 +52,9 @@ namespace SefazLib.usuarios
 
         public static string ObterIniciais(string nomeCompleto)
         {
+            if (string.IsNullOrEmpty(nomeCompleto))
+                return "";
+
             string[] palavrasExcluidas = { "de", "dos", "E" };
 
             string[] partesNome = nomeCompleto.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
