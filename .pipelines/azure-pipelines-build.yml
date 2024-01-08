@@ -1,10 +1,6 @@
 variables:
   BuildParameters.RestoreBuildProjects: '**/*modelo_core_mvc.csproj'
   buildConfiguration: release
-trigger:
-  branches:
-    include:
-    - refs/heads/master
 name: $(date:yyyyMMdd)$(rev:.r)
 jobs:
 - job:
