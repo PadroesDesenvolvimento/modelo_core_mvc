@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using modelo_core_mvc.ProjetosApi;
+using System;
 
 namespace modelo_core_mvc.Controllers;
 
@@ -53,11 +54,12 @@ public class ProjetosController : BaseController
                 await api.PostProjetoAsync(model);
                 return RedirectToAction("Index");
             }
-            catch 
+            catch (Exception ex)
             {
                 ViewData["Title"] = "Novo Projeto";
                 ViewData["Message"] = "Incluir novo projeto";
-                ViewData["Erro"] = "Essa aplicação não está configurada para acessar a API.";
+                ViewData["Erro"] = "Essa aplicação não está configurada para acessar a API." + ex.Message;              
+
                 return View(model);
             }
         }
