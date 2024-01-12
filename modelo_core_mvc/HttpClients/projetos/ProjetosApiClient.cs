@@ -82,10 +82,7 @@ namespace modelo_core_mvc.ProjetosApi
             httpClient.DefaultRequestHeaders.Authorization = await identityConfig.AuthenticationHeader();
             var id = projeto.id;
             var resposta = await httpClient.PutAsync($"Projetos/{id}", projeto.ToJson());
-            if (!resposta.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException("Essa aplicação não está configurada para acessar a API."+ resposta.ReasonPhrase);
-            }
+            resposta.EnsureSuccessStatusCode();
         }
 
         public async Task<byte[]> GetAnexoAsync(long id)

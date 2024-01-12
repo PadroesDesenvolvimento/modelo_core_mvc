@@ -58,7 +58,7 @@ public class ProjetosController : BaseController
             {
                 ViewData["Title"] = "Novo Projeto";
                 ViewData["Message"] = "Incluir novo projeto";
-                ViewData["Erro"] = "Essa aplicação não está configurada para acessar a API." + ex.Message;              
+                ViewData["Erro"] = "Falha ao criar o registro: " + ex.Message;              
 
                 return View(model);
             }
@@ -86,9 +86,9 @@ public class ProjetosController : BaseController
                 await api.PutProjetoAsync(model);
                 return RedirectToAction("Index");
             }
-            catch 
+            catch (Exception ex)
             {
-                ViewData["Erro"] = "Essa aplicação não está configurada para acessar a API.";
+                ViewData["Erro"] = "Falha ao alterar o registro: " + ex.Message;
                 return View(model);
             }
         }
@@ -117,12 +117,12 @@ public class ProjetosController : BaseController
             }
             return BadRequest();
         }
-        catch 
+        catch (Exception ex)
         {
             ViewData["Title"] = "Excluir Projeto";
             ViewData["Message"] = "Exclusão do projeto"; 
             model = await api.GetProjetoAsync(model.id);
-            ViewData["Erro"] = "Essa aplicação não está configurada para acessar a API.";
+            ViewData["Erro"] = "Falha ao excluir o registro: " + ex.Message;
             return View(model);
         }
     }
