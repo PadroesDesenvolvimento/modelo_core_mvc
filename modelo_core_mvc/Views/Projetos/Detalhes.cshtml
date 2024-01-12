@@ -25,5 +25,4 @@
         </dd>
     </dl>
 </div>
-<partial name="_Botoes" model='new Tuple<string, string, string, string>("", "", "Projetos/Alterar/"+@Model.id, "Cancelar")' />
-
+<partial name="_Botoes" model='new Tuple<string, string, string, string>("", "", @ViewData["url"].ToString(), "Cancelar")' />

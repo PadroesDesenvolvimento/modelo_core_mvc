@@ -32,6 +32,7 @@ public class ProjetosController : BaseController
     {
         ViewData["Title"] = "Projeto";
         ViewData["Message"] = "";
+        ViewData["url"] = Url.Action("Alterar", "Projetos", new { id });
         return View(await api.GetProjetoAsync(id));
     }
 
