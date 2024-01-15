@@ -1,4 +1,14 @@
 ﻿:root {
+  --tamanho-fonte-base: 16px;
+  --largura-menu-expandido: 15em;
+  --largura-menu-recolhido: 6em;
+  --largura-botao_expandir: 1.6em;
+  --largura-botao: 12em;
+  --altura-botao-menu: 3.4em;
+  --altura-botao-menu-recolhido: 4.5em;
+  --altura-barra_acessibilidade: 2.8em;
+  --altura-cabecalho: 3.5em;
+  --altura-linha: 2.5em;
   --font-principal: "Open Sans", sans-serif;
   --font-secundaria: "Montserrat", sans-serif;
   --cor-primaria: #17629e;
@@ -20,23 +30,14 @@
   --cor-botao-texto: black;
   --cor-botao-selecionado: rgba(200, 200, 200, 0.7);
   --cor-invertida-botao-texto: white;
-  --largura-menu-expandido: 15em;
-  --largura-menu-recolhido: 6em;
-  --largura-botao_expandir: 1.6em;
-  --largura-botao: 12em;
-  --altura-botao-menu: 3.4em;
-  --altura-botao-menu-recolhido: 4.5em;
-  --altura-barra_acessibilidade: 2.8em;
-  --altura-cabecalho: 3.5em;
-  --altura-linha: 2.5em;
 }
 
 html {
-  font-size: 16px;
+  font-size: var(--tamanho-fonte-base);
 }
 @media (max-width: 767.98px) {
   html {
-    font-size: 12px;
+    font-size: calc(var(--tamanho-fonte-base) * 0.75);
   }
 }
 

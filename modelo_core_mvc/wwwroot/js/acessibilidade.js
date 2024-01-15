@@ -9,22 +9,21 @@ function atualizarBotoesZoom() {
     });
 };
 
-function aumentarCaracter() {
-    valorMudanca = valorMudanca + 1;
+function alterarZoom() {
     if (valorMudanca < 0) { valorMudanca = 0 }
     else if (valorMudanca > 5) { valorMudanca = 5 }
     document.cookie = "valorMudanca=" + valorMudanca + "; path=/";
     document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca]);
     atualizarBotoesZoom()
 }
+function aumentarCaracter() {
+    valorMudanca++;
+    alterarZoom();
+}
 
 function diminuirCaracter() {
-    valorMudanca = valorMudanca - 1;
-    if (valorMudanca < 0) { valorMudanca = 0 }
-    else if (valorMudanca > 5) { valorMudanca = 5 }
-    document.cookie = "valorMudanca=" + valorMudanca + "; path=/";
-    document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca]);
-    atualizarBotoesZoom()
+    valorMudanca--;
+    alterarZoom();
 }
 
 
