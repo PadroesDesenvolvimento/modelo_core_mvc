@@ -1,4 +1,5 @@
 ﻿.tabela {
+  display: block;
   color: var(--cor-primaria-texto);
   width: 100%;
   padding: 0.5em;
@@ -9,6 +10,12 @@
   padding: 0.2em 1em;
   height: auto;
   margin: 0.2em 0;
+}
+
+.corpo-tabela {
+  display: block;
+  overflow-y: auto;
+  max-height: calc(80vh - var(--desconto));
 }
 
 .claims th, td, dd, dt {

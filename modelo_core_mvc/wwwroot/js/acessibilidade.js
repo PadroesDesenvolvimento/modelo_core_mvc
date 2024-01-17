@@ -1,21 +1,17 @@
 let valorMudanca = 0;
 let valores = [1, 1.1, 1.3, 1.5, 1.75, 1.9]
-function atualizarBotoesZoom() {
-    const buttons = document.querySelectorAll('.botaoZoom');
-    buttons.forEach(function (button) {
-        const ariaLabel = button.getAttribute('aria-label');
-        const zoomValue = Math.round(valores[valorMudanca] * 100);
-        button.title = `${ariaLabel} - ${zoomValue}%`;
-    });
-};
+let desconto = [14.5, 19.5, 27.5, 33.5, 38.8, 41.3]
 
 function alterarZoom() {
     if (valorMudanca < 0) { valorMudanca = 0 }
     else if (valorMudanca > 5) { valorMudanca = 5 }
     document.cookie = "valorMudanca=" + valorMudanca + "; path=/";
     document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca]);
+    document.documentElement.style.setProperty('--desconto', desconto[valorMudanca] + 'em');
+
     atualizarBotoesZoom()
 }
+
 function aumentarCaracter() {
     valorMudanca++;
     alterarZoom();
@@ -26,6 +22,14 @@ function diminuirCaracter() {
     alterarZoom();
 }
 
+function atualizarBotoesZoom() {
+    const buttons = document.querySelectorAll('.botaoZoom');
+    buttons.forEach(function (button) {
+        const ariaLabel = button.getAttribute('aria-label');
+        const zoomValue = Math.round(valores[valorMudanca] * 100);
+        button.title = `${ariaLabel} - ${zoomValue}%`;
+    });
+};
 
 // ***************************************************************************************************************************************//
 //                                                        Alto contrste                                                                   //
@@ -38,11 +42,11 @@ function diminuirCaracter() {
         check: checkContrast,
         getState: getContrastState,
         setState: setContrastState,
-        toogle: toogleContrast,
+        toggle: toggleContrast,
         updateView: updateViewContrast
     };
 
-    window.toggleContrast = function () { Contrast.toogle(); };
+    window.toggleContrast = function () { Contrast.toggle(); };
 
     Contrast.check();
 
@@ -56,6 +60,7 @@ function diminuirCaracter() {
 
     function setContrastState(state) {
         localStorage.setItem(this.storage, '' + state);
+        document.cookie = "contrastState=" + state + "; path=/";
         this.currentState = state;
         this.updateView();
     }
@@ -74,7 +79,7 @@ function diminuirCaracter() {
             body.classList.remove(this.cssClass);
     }
 
-    function toogleContrast() {
+    function toggleContrast() {
         this.setState(!this.currentState);
     }
 })();
@@ -83,5 +88,5 @@ window.onload = function () {
     var body = document.getElementsByTagName("body")[0];
     var valorZoom = window.getComputedStyle(body).getPropertyValue('zoom');
     valorMudanca = valores.indexOf(parseFloat(valorZoom));
-    atualizarBotoesZoom()
+    atualizarBotoesZoom();
 }

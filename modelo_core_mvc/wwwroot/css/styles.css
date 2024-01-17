@@ -13,6 +13,7 @@
   --altura-barra_acessibilidade: 2.8em;
   --altura-cabecalho: 3.5em;
   --altura-linha: 2.5em;
+  --desconto: 13em;
   --font-principal: "Open Sans", sans-serif;
   --font-secundaria: "Montserrat", sans-serif;
   --cor-primaria: #17629e;
@@ -93,6 +94,10 @@ mgt-person {
   text-align: left;
 }
 
+body {
+  overflow-y: hidden;
+}
+
 #aplicacao {
   display: flex;
   flex-direction: row;
@@ -101,6 +106,7 @@ mgt-person {
 #painel_aplicacao {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 #painel_aplicacao #painel_lateral {
   background-color: var(--cor-primaria);
@@ -124,11 +130,11 @@ mgt-person {
   flex-direction: column;
   padding: 0 0.5em;
   height: 100vh;
-  width: calc(100vw - var(--largura-menu-expandido) - 0.5em);
+  width: calc(100% - var(--largura-menu-expandido) - 0.5em);
 }
 #painel_aplicacao #painel_principal.recolhido {
   transition: all 0.3s;
-  width: calc(100vw - var(--largura-menu-recolhido) - 0.5em);
+  width: calc(100% - var(--largura-menu-recolhido) - 0.5em);
 }
 
 #painel_conteudo {
@@ -144,7 +150,8 @@ mgt-person {
   border-style: solid;
   border-block-width: thin;
   overflow-y: auto;
-  max-height: calc(100vh - 13em);
+  height: 100vh;
+  max-height: calc(100vh - var(--desconto));
 }
 
 /*mobile*/
@@ -1629,6 +1636,7 @@ li, dt, dd {
   }
 }
 .tabela {
+  display: block;
   color: var(--cor-primaria-texto);
   width: 100%;
   padding: 0.5em;
@@ -1639,6 +1647,12 @@ li, dt, dd {
   padding: 0.2em 1em;
   height: auto;
   margin: 0.2em 0;
+}
+
+.corpo-tabela {
+  display: block;
+  overflow-y: auto;
+  max-height: calc(80vh - var(--desconto));
 }
 
 .claims th, td, dd, dt {

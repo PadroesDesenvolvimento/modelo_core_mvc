@@ -1,3 +1,7 @@
+body {
+    overflow-y: hidden;
+}
+
 #aplicacao {
     display: flex;
     flex-direction: row;
@@ -6,6 +10,7 @@
 #painel_aplicacao {
     display: flex;
     flex-direction: row;
+    width: 100%;
 
     #painel_lateral {
         background-color: var(--cor-primaria);
@@ -33,11 +38,11 @@
         flex-direction: column;
         padding: 0 0.5em;
         height: 100vh;
-        width: calc(100vw - var(--largura-menu-expandido) - 0.5em);
+        width: calc(100% - var(--largura-menu-expandido) - 0.5em);
 
         &.recolhido {
             transition: all 0.3s;
-            width: calc(100vw - var(--largura-menu-recolhido) - 0.5em);
+            width: calc(100% - var(--largura-menu-recolhido) - 0.5em);
         }
     }
 }
@@ -55,7 +60,8 @@
     border-style: solid;
     border-block-width: thin;
     overflow-y: auto;
-    max-height: calc(100vh - 13em);
+    height: 100vh;
+    max-height: calc(100vh - var(--desconto));
 }
 /*mobile*/
 @media (max-width: 767.98px) {
