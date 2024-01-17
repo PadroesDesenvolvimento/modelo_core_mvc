@@ -29,6 +29,10 @@
   border-style: solid;
 }
 
+.color-blind #orgao {
+  color: white !important;
+}
+
 .color-blind ::-moz-selection {
   background-color: #fff;
   color: #000;
