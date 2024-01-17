@@ -19,9 +19,8 @@
     var contrastState = false;
     if (cookies.ContainsKey("contrastState") &&
         bool.TryParse(cookies["contrastState"], out bool parsedContrastState))
-        {
-            contrastState = parsedContrastState;
-        }
+    {
+        contrastState = parsedContrastState;
     }
 }
 
@@ -35,12 +34,11 @@
     @* Controle de zoom *@
     <script src="~/js/acessibilidade.js"></script>
     <script>
-        valorMudanca = @valorMudanca;
         window.addEventListener('DOMContentLoaded', function () {
+            contrastState = @Html.Raw(contrastState.ToString().ToLower());
+            valorMudanca = @valorMudanca;
             alterarZoom();
         });
-
-        Contrast.setState(@contrastState);
     </script>
 
     <script @*Application Insights*@

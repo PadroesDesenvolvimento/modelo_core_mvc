@@ -1,6 +1,7 @@
 let valorMudanca = 0;
 let valores = [1, 1.1, 1.3, 1.5, 1.75, 1.9]
 let desconto = [14.5, 19.5, 27.5, 33.5, 38.8, 41.3]
+let contrastState = "false";
 
 function alterarZoom() {
     if (valorMudanca < 0) { valorMudanca = 0 }
