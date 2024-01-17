@@ -14,8 +14,19 @@
 }
 
 .color-blind {
-  color: #fff !important;
-  background-color: #000 !important;
+  color: #fff;
+  background-color: #000;
+}
+
+.color-blind .ac-adaptivecard {
+  background-color: black !important;
+  color: white;
+}
+
+.color-blind #botao_expandir {
+  color: #fff;
+  border-color: white;
+  border-style: solid;
 }
 
 .color-blind ::-moz-selection {
@@ -142,23 +153,23 @@
   border-color: var(--cor-apoio-verde);
 }
 
-.color-blind .btn-cancelar {
+.color-blind .btn-cancel {
   background-color: #000;
   color: yellow;
 }
 
-.color-blind .btn-cancelar i {
+.color-blind .btn-cancel i {
   color: #fff;
 }
 
-.color-blind .btn-cancelar:hover,
-.color-blind .btn-cancelar:focus {
+.color-blind .btn-cancel:hover,
+.color-blind .btn-cancel:focus {
   color: yellow;
   background-color: #000;
   border-color: #ed1d24;
 }
 
-.color-blind .btn-cancelar svg {
+.color-blind .btn-cancel svg {
   fill: #fff;
   stroke: #fff;
 }
@@ -470,6 +481,11 @@
   color: #000;
 }
 
+.color-blind .card {
+  border: none;
+  background-color: black;
+}
+
 .color-blind .card .btn-info {
   color: #fff;
   border-color: #17a2b8;
@@ -565,6 +581,7 @@
 .color-blind #painel_lateral {
   color: #000 !important;
   background-color: #000 !important;
+  box-shadow: 0 10px 15px var(--cor-sombra);
 }
 
 .color-blind .item-menu:focus-visible {
@@ -597,14 +614,13 @@
   background-color: #fff !important;
 }
 
-.color-blind::-webkit-scrollbar-track {
-  background-color: rgb(62, 62, 62);
+.color-blind ::-webkit-scrollbar-thumb {
+  background-color: yellow !important;
+  color: yellow !important;
 }
 
-.color-blind::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  border: 2px solid #fff;
+.color-blind ::-webkit-scrollbar-thumb:hover {
+  background-color: yellow !important;
 }
 
 .color-blind .icones-menu-fechado:hover {
@@ -679,8 +695,8 @@
 }
 
 .color-blind .form-control {
-  color: #fff;
-  background-color: #000;
+  color: white;
+  background-color: black;
 }
 
 .color-blind .form-control:focus {
@@ -750,10 +766,6 @@
 
 .color-blind .valor-attr {
   color: #00af00;
-}
-
-.color-blind .card {
-  border: none;
 }
 
 .color-blind .card .card-header {

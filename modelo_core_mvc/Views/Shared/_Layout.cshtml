@@ -5,7 +5,7 @@
 @inject IConfiguration Configuration
 
 @{
-    var cookies = Context.Request.Cookies; 
+    var cookies = Context.Request.Cookies;
     var estaRecolhido = cookies.ContainsKey("classe|painel_lateral|recolhido") && cookies["classe|painel_lateral|recolhido"] == "true";
     int valorMudanca = 0;
     var valorZoom = "1";
@@ -15,6 +15,13 @@
         valorMudanca = int.Parse(cookies["valorMudanca"]);
         valorZoom = valores[valorMudanca].ToString("F", System.Globalization.CultureInfo.InvariantCulture);
     }
+
+    var contrastState = false;
+    if (cookies.ContainsKey("contrastState") &&
+        bool.TryParse(cookies["contrastState"], out bool parsedContrastState))
+    {
+        contrastState = parsedContrastState;
+    }
 }
 
 <head>
@@ -23,6 +30,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="~/img/BRASAO_GOV_SP_Original.svg">
     <link rel="stylesheet" href="~/css/styles.css">
+
+    @* Controle de zoom *@
+    <script src="~/js/acessibilidade.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            contrastState = @Html.Raw(contrastState.ToString().ToLower());
+            valorMudanca = @valorMudanca;
+            alterarZoom();
+        });
+    </script>
 
     <script @*Application Insights*@
             type="text/javascript">

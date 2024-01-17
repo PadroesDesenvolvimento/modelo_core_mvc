@@ -3,6 +3,17 @@
 @import "bootstrap/bootstrap.min.css";
 @import "font-awesome/css/all.css";
 :root {
+  --tamanho-fonte-base: 16px;
+  --largura-menu-expandido: 15em;
+  --largura-menu-recolhido: 6em;
+  --largura-botao_expandir: 1.6em;
+  --largura-botao: 12em;
+  --altura-botao-menu: 3.4em;
+  --altura-botao-menu-recolhido: 4.5em;
+  --altura-barra_acessibilidade: 2.8em;
+  --altura-cabecalho: 3.5em;
+  --altura-linha: 2.5em;
+  --desconto: 13em;
   --font-principal: "Open Sans", sans-serif;
   --font-secundaria: "Montserrat", sans-serif;
   --cor-primaria: #17629e;
@@ -24,23 +35,14 @@
   --cor-botao-texto: black;
   --cor-botao-selecionado: rgba(200, 200, 200, 0.7);
   --cor-invertida-botao-texto: white;
-  --largura-menu-expandido: 15em;
-  --largura-menu-recolhido: 6em;
-  --largura-botao_expandir: 1.6em;
-  --largura-botao: 12em;
-  --altura-botao-menu: 3.4em;
-  --altura-botao-menu-recolhido: 4.5em;
-  --altura-barra_acessibilidade: 2.8em;
-  --altura-cabecalho: 3.5em;
-  --altura-linha: 2.5em;
 }
 
 html {
-  font-size: 16px;
+  font-size: var(--tamanho-fonte-base);
 }
 @media (max-width: 767.98px) {
   html {
-    font-size: 12px;
+    font-size: calc(var(--tamanho-fonte-base) * 0.75);
   }
 }
 
@@ -92,6 +94,10 @@ mgt-person {
   text-align: left;
 }
 
+body {
+  overflow-y: hidden;
+}
+
 #aplicacao {
   display: flex;
   flex-direction: row;
@@ -100,6 +106,7 @@ mgt-person {
 #painel_aplicacao {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 #painel_aplicacao #painel_lateral {
   background-color: var(--cor-primaria);
@@ -123,11 +130,11 @@ mgt-person {
   flex-direction: column;
   padding: 0 0.5em;
   height: 100vh;
-  width: calc(100vw - var(--largura-menu-expandido) - 0.5em);
+  width: calc(100% - var(--largura-menu-expandido) - 0.5em);
 }
 #painel_aplicacao #painel_principal.recolhido {
   transition: all 0.3s;
-  width: calc(100vw - var(--largura-menu-recolhido) - 0.5em);
+  width: calc(100% - var(--largura-menu-recolhido) - 0.5em);
 }
 
 #painel_conteudo {
@@ -143,7 +150,8 @@ mgt-person {
   border-style: solid;
   border-block-width: thin;
   overflow-y: auto;
-  max-height: calc(100vh - 13em);
+  height: 100vh;
+  max-height: calc(100vh - var(--desconto));
 }
 
 /*mobile*/
@@ -223,8 +231,19 @@ li, dt, dd {
 }
 
 .color-blind {
-  color: #fff !important;
-  background-color: #000 !important;
+  color: #fff;
+  background-color: #000;
+}
+
+.color-blind .ac-adaptivecard {
+  background-color: black !important;
+  color: white;
+}
+
+.color-blind #botao_expandir {
+  color: #fff;
+  border-color: white;
+  border-style: solid;
 }
 
 .color-blind ::-moz-selection {
@@ -351,23 +370,23 @@ li, dt, dd {
   border-color: var(--cor-apoio-verde);
 }
 
-.color-blind .btn-cancelar {
+.color-blind .btn-cancel {
   background-color: #000;
   color: yellow;
 }
 
-.color-blind .btn-cancelar i {
+.color-blind .btn-cancel i {
   color: #fff;
 }
 
-.color-blind .btn-cancelar:hover,
-.color-blind .btn-cancelar:focus {
+.color-blind .btn-cancel:hover,
+.color-blind .btn-cancel:focus {
   color: yellow;
   background-color: #000;
   border-color: #ed1d24;
 }
 
-.color-blind .btn-cancelar svg {
+.color-blind .btn-cancel svg {
   fill: #fff;
   stroke: #fff;
 }
@@ -679,6 +698,11 @@ li, dt, dd {
   color: #000;
 }
 
+.color-blind .card {
+  border: none;
+  background-color: black;
+}
+
 .color-blind .card .btn-info {
   color: #fff;
   border-color: #17a2b8;
@@ -774,6 +798,7 @@ li, dt, dd {
 .color-blind #painel_lateral {
   color: #000 !important;
   background-color: #000 !important;
+  box-shadow: 0 10px 15px var(--cor-sombra);
 }
 
 .color-blind .item-menu:focus-visible {
@@ -806,14 +831,13 @@ li, dt, dd {
   background-color: #fff !important;
 }
 
-.color-blind::-webkit-scrollbar-track {
-  background-color: rgb(62, 62, 62);
+.color-blind ::-webkit-scrollbar-thumb {
+  background-color: yellow !important;
+  color: yellow !important;
 }
 
-.color-blind::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  border: 2px solid #fff;
+.color-blind ::-webkit-scrollbar-thumb:hover {
+  background-color: yellow !important;
 }
 
 .color-blind .icones-menu-fechado:hover {
@@ -888,8 +912,8 @@ li, dt, dd {
 }
 
 .color-blind .form-control {
-  color: #fff;
-  background-color: #000;
+  color: white;
+  background-color: black;
 }
 
 .color-blind .form-control:focus {
@@ -959,10 +983,6 @@ li, dt, dd {
 
 .color-blind .valor-attr {
   color: #00af00;
-}
-
-.color-blind .card {
-  border: none;
 }
 
 .color-blind .card .card-header {
@@ -1628,29 +1648,23 @@ li, dt, dd {
   }
 }
 .tabela {
-  border: 1px solid #DDD;
+  display: block;
   color: var(--cor-primaria-texto);
   width: 100%;
   padding: 0.5em;
-}
-
-.align-middle {
-  vertical-align: middle;
-}
-
-.tabela {
   border: none;
-}
-.tabela th, .tabela dt {
-  padding: 0.2em 1em;
-  text-align: right;
-  margin: 0.2em 0;
 }
 .tabela td, .tabela dd {
   border: 1px solid #DDD;
   padding: 0.2em 1em;
   height: auto;
   margin: 0.2em 0;
+}
+
+.corpo-tabela {
+  display: block;
+  overflow-y: auto;
+  max-height: calc(80vh - var(--desconto));
 }
 
 .claims th, td, dd, dt {
@@ -1677,6 +1691,24 @@ li, dt, dd {
   margin-left: 0.5em;
 }
 
+.align-middle {
+  vertical-align: middle;
+}
+
+.control-label {
+  margin-left: 0.75em;
+  color: var(--cor-primaria);
+}
+
+@media (min-width: 767.98px) {
+  .tabela th, .tabela dt {
+    padding: 0.2em 1em;
+    margin: 0.2em 0;
+  }
+  .form-control {
+    margin-bottom: 0.5em;
+  }
+}
 /*mobile*/
 @media (max-width: 767.98px) {
   .tabela {
@@ -1690,17 +1722,23 @@ li, dt, dd {
   .form-group {
     padding: 0.5em 0;
   }
-  .th, dt {
+  th, dt {
     border: none;
     background-color: var(--cor-invertida-texto);
     color: var(--cor-primaria);
     padding: 0.7em 0 0 0;
     text-align: left;
   }
-  .td, dd {
+  td, dd {
     border: 1px solid #DDD;
     height: auto;
     padding: 0.4em 0;
+  }
+  .control-label {
+    text-align: left;
+  }
+  .formulario {
+    max-width: 100%;
   }
 }
 #barraBotoes {

@@ -1,27 +1,21 @@
 ﻿.tabela {
-  border: 1px solid #DDD;
+  display: block;
   color: var(--cor-primaria-texto);
   width: 100%;
   padding: 0.5em;
-}
-
-.align-middle {
-  vertical-align: middle;
-}
-
-.tabela {
   border: none;
-}
-.tabela th, .tabela dt {
-  padding: 0.2em 1em;
-  text-align: right;
-  margin: 0.2em 0;
 }
 .tabela td, .tabela dd {
   border: 1px solid #DDD;
   padding: 0.2em 1em;
   height: auto;
   margin: 0.2em 0;
+}
+
+.corpo-tabela {
+  display: block;
+  overflow-y: auto;
+  max-height: calc(80vh - var(--desconto));
 }
 
 .claims th, td, dd, dt {
@@ -48,6 +42,24 @@
   margin-left: 0.5em;
 }
 
+.align-middle {
+  vertical-align: middle;
+}
+
+.control-label {
+  margin-left: 0.75em;
+  color: var(--cor-primaria);
+}
+
+@media (min-width: 767.98px) {
+  .tabela th, .tabela dt {
+    padding: 0.2em 1em;
+    margin: 0.2em 0;
+  }
+  .form-control {
+    margin-bottom: 0.5em;
+  }
+}
 /*mobile*/
 @media (max-width: 767.98px) {
   .tabela {
@@ -61,16 +73,22 @@
   .form-group {
     padding: 0.5em 0;
   }
-  .th, dt {
+  th, dt {
     border: none;
     background-color: var(--cor-invertida-texto);
     color: var(--cor-primaria);
     padding: 0.7em 0 0 0;
     text-align: left;
   }
-  .td, dd {
+  td, dd {
     border: 1px solid #DDD;
     height: auto;
     padding: 0.4em 0;
+  }
+  .control-label {
+    text-align: left;
+  }
+  .formulario {
+    max-width: 100%;
   }
 }
