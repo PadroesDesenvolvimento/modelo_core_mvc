@@ -1,14 +1,14 @@
 let valorMudanca = 0;
 let valores = [1, 1.1, 1.3, 1.5, 1.75, 1.9]
-let desconto = [14.5, 19.5, 27.5, 33.5, 38.8, 41.3]
+let desconto = [13, 18, 26, 32, 37.3, 39.8]
 let contrastState = "false";
 
 function alterarZoom() {
     if (valorMudanca < 0) { valorMudanca = 0 }
     else if (valorMudanca > 5) { valorMudanca = 5 }
     document.cookie = "valorMudanca=" + valorMudanca + "; path=/";
-    document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca]);
     document.documentElement.style.setProperty('--desconto', desconto[valorMudanca] + 'em');
+    document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca]);
 
     atualizarBotoesZoom()
 }
@@ -56,7 +56,15 @@ function atualizarBotoesZoom() {
     }
 
     function getContrastState() {
-        return localStorage.getItem(this.storage) === 'true';
+        var cookies = document.cookie.split('; ');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].split('=');
+
+            if (cookie[0] === 'contrastState') {
+                return cookie[1] === 'true';
+            }
+        }
+        return null;
     }
 
     function setContrastState(state) {
@@ -84,10 +92,3 @@ function atualizarBotoesZoom() {
         this.setState(!this.currentState);
     }
 })();
-
-window.onload = function () {
-    var body = document.getElementsByTagName("body")[0];
-    var valorZoom = window.getComputedStyle(body).getPropertyValue('zoom');
-    valorMudanca = valores.indexOf(parseFloat(valorZoom));
-    atualizarBotoesZoom();
-}
