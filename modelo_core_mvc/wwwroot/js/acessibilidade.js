@@ -65,6 +65,7 @@ function atualizarBotoesZoom() {
         this.currentState = state;
         this.updateView();
     }
+    window.initContrast = function () { Contrast.check(); };
 
     function updateViewContrast() {
         var body = document.body;
