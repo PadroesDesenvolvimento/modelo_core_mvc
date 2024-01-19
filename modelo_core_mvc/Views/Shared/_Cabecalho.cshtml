@@ -29,7 +29,8 @@
             IdentityConfig.jwtToken = accessToken;
         }
     }
-    var iniciais = Usuario.ObterIniciais(nomeExibicao).Substring(0, 2);
+    var iniciaisDoNome = Usuario.ObterIniciais(nomeExibicao);
+    var iniciais = iniciaisDoNome.Length >= 2 ? iniciaisDoNome.Substring(0, 2) : iniciaisDoNome;
 }
 
 @Html.Hidden("nomeExibicao", nomeExibicao)
