@@ -15,6 +15,12 @@
         valorMudanca = int.Parse(cookies["valorMudanca"]);
         valorZoom = valores[valorMudanca].ToString("F", System.Globalization.CultureInfo.InvariantCulture);
     }
+
+    var contrastState = "false";
+    if (cookies.ContainsKey("contrastState"))
+    {
+        contrastState = cookies["contrastState"];
+    }
 }
 
 <head>
@@ -23,15 +29,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="~/img/BRASAO_GOV_SP_Original.svg">
     <link rel="stylesheet" href="~/css/styles.css">
-    <script src="~/js/acessibilidade.js"></script>
-
-    @* Controle de zoom *@
-    <script>
-        window.addEventListener('DOMContentLoaded', function () {
-            valorMudanca = @valorMudanca;
-            alterarZoom();
-        });
-    </script>
 
     <script @*Application Insights*@
             type="text/javascript">
@@ -51,6 +48,15 @@
 </head>
 
 <body style="zoom: @valorZoom;">
+    <script src="~/js/acessibilidade.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            contrastState = @contrastState;
+            valorMudanca = @valorMudanca;
+            alterarZoom();
+        });
+    </script>
+
     <div id="aplicacao">
         <header id="cabecalho_mobile" class="painel_cabecalho">
             <partial name="_Cabecalho" />

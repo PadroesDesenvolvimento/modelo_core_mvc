@@ -18,6 +18,10 @@
   background-color: #000;
 }
 
+.color-blind th, td, dd, dt {
+  color: var(--cor-primaria-texto);
+}
+
 .color-blind .ac-adaptivecard {
   background-color: black !important;
   color: white;

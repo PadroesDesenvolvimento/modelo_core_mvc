@@ -1,23 +1,23 @@
-.tabela {
-    display: block;
+#tabela {
     color: var(--cor-primaria-texto);
     width: 100%;
-    padding: 0.5em;
+    padding: 0 0.2em 0 0;
     border: none;
+    overflow-y: auto;
+    max-height: calc(79vh - var(--desconto));
 
-    td, dd {
+    td, th {
         border: 1px solid #DDD;
         padding: 0.2em 1em;
         height: auto;
         margin: 0.2em 0;
     }
+
+    tbody {
+        max-height: calc(79vh - var(--desconto));
+    }
 }
 
-.corpo-tabela {
-    display: block;
-    overflow-y: auto;
-    max-height: calc(80vh - var(--desconto));
-}
 
 .claims th, td, dd, dt {
     text-align: left;

@@ -6,40 +6,43 @@
 <p>
     <a asp-action="Adicionar" class="btn btn-regular mr-1">+ Adicionar Projeto</a>
 </p>
-<table class="tabela">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.descricao)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody class="corpo-tabela">
-        @foreach (var item in Model)
-        {
+
+<div id="tabela">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.descricao)
-                </td>
-                <td>
-                    @Html.ActionLink("Alterar", "Alterar", new { item.id }) |
-                    @Html.ActionLink("Detalhes", "Detalhes", new { item.id }) |
-                    @Html.ActionLink("Excluir", "Excluir", new { item.id })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.descricao)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descricao)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Alterar", "Alterar", new { item.id }) |
+                        @Html.ActionLink("Detalhes", "Detalhes", new { item.id }) |
+                        @Html.ActionLink("Excluir", "Excluir", new { item.id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
