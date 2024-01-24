@@ -18,6 +18,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using TokenWS;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens.Saml;
+using System.Threading;
 
 namespace SefazLib.IdentityCfg
 {
@@ -68,6 +70,8 @@ namespace SefazLib.IdentityCfg
 
             WSFederationOptions = options =>
             {
+                options.TokenHandlers.Clear();
+                options.TokenHandlers.Add(new CustomSamlSecurityTokenHandler());
                 options.Wtrealm = configuration["identity:realm"];
                 options.MetadataAddress = configuration["identity:metadataaddress"];
 
@@ -157,6 +161,20 @@ namespace SefazLib.IdentityCfg
             }
 
             return httpClient.DefaultRequestHeaders.Authorization;
+        }
+
+        public class CustomSamlSecurityTokenHandler : SamlSecurityTokenHandler
+        {
+            public override async Task<TokenValidationResult> ValidateTokenAsync(string token, TokenValidationParameters _validationParameters)
+            {
+                var validationParameters = _validationParameters.Clone();
+                var configuration = await validationParameters.ConfigurationManager.GetBaseConfigurationAsync(CancellationToken.None).ConfigureAwait(false);
+                var issuers = new[] { configuration.Issuer };
+                validationParameters.ValidIssuers = (validationParameters.ValidIssuers == null ? issuers : validationParameters.ValidIssuers.Concat(issuers));
+                validationParameters.IssuerSigningKeys = (validationParameters.IssuerSigningKeys == null ? configuration.SigningKeys : validationParameters.IssuerSigningKeys.Concat(configuration.SigningKeys));
+
+                return await base.ValidateTokenAsync(token, validationParameters);
+            }
         }
 
         #region Azure AD
