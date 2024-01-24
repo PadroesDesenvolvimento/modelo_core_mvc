@@ -31,5 +31,51 @@
 }
 
 <div>
-    <h1>Usuário autenticado.</h1>
+    <h1>Usuário autenticado:</h1>
+    <div class="usuario-info">
+        @if (Configuration["identity:type"] == "azuread")
+        {
+            @if (!string.IsNullOrEmpty(foto))
+            {
+                <div class="foto-usuario">
+                    <img src="data:image;base64,@foto" alt="Foto do usuário" />
+                </div>
+            }
+            <div class="texto-usuario">
+                @Html.Raw(@ViewData["html"])
+            </div>
+        }
+        else
+        {
+            <div>
+                <h2>@nomeExibicao </h2>
+                @if (ViewData["Login"] != null)
+                {
+                    <p>Login: @ViewData["Login"]</p>
+                }
+                @if (ViewData["Cpf"] != null)
+                {
+                    <p>Login: @ViewData["Cpf"]</p>
+                }
+                @if (ViewData["Nascimento"] != null)
+                {
+                    <p>Login: @ViewData["Nascimento"]</p>
+                }
+            </div>
+        }
+    </div>
+    @if (!string.IsNullOrEmpty(jwt))
+    {
+        <h3>jwt:</h3>
+        <div class="card">
+            @jwt
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(ViewData["token"].ToString()))
+    {
+        <h3>jwt:</h3>
+        <div class="card">
+            @ViewData["token"]
+        </div>
+    }
 </div>
