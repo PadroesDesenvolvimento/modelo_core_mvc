@@ -1,4 +1,4 @@
-﻿@model ErrorViewModel
+﻿@model modelo_core_mvc.Errors.ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }
@@ -10,5 +10,17 @@
 {
     <p>
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+@if (Model.Exception != null)
+{
+    <h3>Detalhes do Erro:</h3>
+    <p>
+        <strong>Mensagem de Erro:</strong> @Model.Exception.Message
+    </p>
+    <p>
+        <strong>StackTrace:</strong>
+        <pre>@Model.Exception.StackTrace</pre>
     </p>
 }

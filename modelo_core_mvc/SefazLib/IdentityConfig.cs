@@ -18,6 +18,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using TokenWS;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens.Saml2;
+using System.Threading;
 
 namespace SefazLib.IdentityCfg
 {
@@ -68,6 +70,8 @@ namespace SefazLib.IdentityCfg
 
             WSFederationOptions = options =>
             {
+                options.TokenHandlers.Clear();
+                options.TokenHandlers.Add(new CustomSaml2SecurityTokenHandler());
                 options.Wtrealm = configuration["identity:realm"];
                 options.MetadataAddress = configuration["identity:metadataaddress"];
 
@@ -77,16 +81,6 @@ namespace SefazLib.IdentityCfg
                     options.Events.OnRedirectToIdentityProvider = OnRedirectToIdentityProvider;
                     options.Events.OnSecurityTokenReceived = OnSecurityTokenReceived;
                     options.TokenValidationParameters = new TokenValidationParameters { SaveSigninToken = true };
-                    options.CorrelationCookie = new CookieBuilder
-                    {
-                        Name = ".Correlation.",
-                        HttpOnly = true,
-                        IsEssential = true,
-                        SameSite = SameSiteMode.None,
-                        SecurePolicy = CookieSecurePolicy.Always,
-                        Expiration = new TimeSpan(0, 0, 15, 0),
-                        MaxAge = new TimeSpan(0, 0, 15, 0)
-                    };
                 }
             };
 
@@ -132,14 +126,6 @@ namespace SefazLib.IdentityCfg
 
             CookieAuthenticationOptions = options =>
             {
-                options.Cookie = new CookieBuilder
-                {
-                    Name = "FedAuth",
-                    HttpOnly = true,
-                    IsEssential = true,
-                    SameSite = SameSiteMode.None,
-                    SecurePolicy = CookieSecurePolicy.Always
-                };
                 options.ExpireTimeSpan = new TimeSpan(0, 0, int.Parse(configuration["identity:timeout"]), 0);
                 options.SlidingExpiration = false;
             };
@@ -157,6 +143,20 @@ namespace SefazLib.IdentityCfg
             }
 
             return httpClient.DefaultRequestHeaders.Authorization;
+        }
+
+        public class CustomSaml2SecurityTokenHandler : Saml2SecurityTokenHandler
+        {
+            public override async Task<TokenValidationResult> ValidateTokenAsync(string token, TokenValidationParameters _validationParameters)
+            {
+                var validationParameters = _validationParameters.Clone();
+                var configuration = await validationParameters.ConfigurationManager.GetBaseConfigurationAsync(CancellationToken.None).ConfigureAwait(false);
+                var issuers = new[] { configuration.Issuer };
+                validationParameters.ValidIssuers = (validationParameters.ValidIssuers == null ? issuers : validationParameters.ValidIssuers.Concat(issuers));
+                validationParameters.IssuerSigningKeys = (validationParameters.IssuerSigningKeys == null ? configuration.SigningKeys : validationParameters.IssuerSigningKeys.Concat(configuration.SigningKeys));
+
+                return await base.ValidateTokenAsync(token, validationParameters);
+            }
         }
 
         #region Azure AD
