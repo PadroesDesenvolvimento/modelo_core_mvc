@@ -40,27 +40,30 @@
                 <span>Sobre</span>
             </a>
         </li>
-        <li>
-            <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
-                <em class="fas fa-address-card"></em>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <span>Identificação</span>
-                }
-                else
-                {
-                    <span>Entrar</span>
-                }
-            </a>
-        </li>
         @if (User.Identity.IsAuthenticated)
         {
+            <li>
+                <a asp-area="" asp-controller="Autenticacao" asp-action="Identificacao" onclick="_aguarde()">
+                    <em class="fas fa-address-card"></em>
+                    <span>Identificação</span>
+                </a>
+            </li>
             <li>
                 <a asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
                     <em class="fas fa-door-open"></em>
                     <span>Sair</span>
                 </a>
             </li>
+        }
+        else
+        {
+            <li>
+                <a asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
+                    <em class="fas fa-address-card"></em>
+                    <span>Entrar</span>
+                </a>
+            </li>
+
         }
     </ul>
 </div>

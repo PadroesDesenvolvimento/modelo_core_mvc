@@ -30,44 +30,50 @@ public class AutenticacaoController : BaseController
     }
 
     [Authorize]
-    public async Task<IActionResult> Entrar()
+    public IActionResult Entrar()
+    {
+        return View();
+    }
+
+    public async Task<IActionResult> Identificacao()
     {
         var token = "";
         if (User.Identity.IsAuthenticated)
         {
             ViewData["Title"] = "Identificação";
-        }
-        else
-        {
-            ViewData["Title"] = "Entrar";
-        }
-        ViewData["Nome"] = "";
-        if (configuration["identity:type"] == "azuread")
-        {
-            Usuario usuario = await azureUtil.GetUserAsync();
-            ViewData["html"] = usuario.GetAdaptiveCard().Html;
-            ViewData["id"] = usuario.id;
-        }
-        else
-        {
-            var claims = User.Claims;
-            foreach (var claim in User.Claims)
+            ViewData["Nome"] = "";
+            if (configuration["identity:type"] == "azuread")
             {
-                if (claim.Type.Contains("upn")) { ViewData["Login"] = claim.Value; }
-                else if (claim.Type.Contains("givenname")) { ViewData["Nome"] = claim.Value; }
-                else if (claim.Type.Contains("preferred_username")) { ViewData["Cpf"] = claim.Value; }
-                else if (claim.Type.Contains("name") && string.IsNullOrEmpty(ViewData["Nome"].ToString())) { ViewData["Nome"] = claim.Value; }
-                else if (claim.Type.Contains("id_token")) { token = claim.Value; }
-                else if (claim.Type.Contains("CPF")) { ViewData["Cpf"] = claim.Value; }
-                else if (claim.Type.Contains("dateofbirth")) { ViewData["Nascimento"] = claim.Value; }
+                Usuario usuario = await azureUtil.GetUserAsync();
+                ViewData["html"] = usuario.GetAdaptiveCard().Html;
+                ViewData["id"] = usuario.id;
             }
-        }
-        if (String.IsNullOrEmpty(token))
-        {
-            ViewData["token"] = await AuthenticationAsync();
-        }
+            else
+            {
+                var claims = User.Claims;
+                foreach (var claim in User.Claims)
+                {
+                    if (claim.Type.Contains("upn")) { ViewData["Login"] = claim.Value; }
+                    else if (claim.Type.Contains("givenname")) { ViewData["Nome"] = claim.Value; }
+                    else if (claim.Type.Contains("preferred_username")) { ViewData["Cpf"] = claim.Value; }
+                    else if (claim.Type.Contains("name") && string.IsNullOrEmpty(ViewData["Nome"].ToString())) { ViewData["Nome"] = claim.Value; }
+                    else if (claim.Type.Contains("id_token")) { token = claim.Value; }
+                    else if (claim.Type.Contains("CPF")) { ViewData["Cpf"] = claim.Value; }
+                    else if (claim.Type.Contains("dateofbirth")) { ViewData["Nascimento"] = claim.Value; }
+                }
+            }
+            if (String.IsNullOrEmpty(token))
+            {
+                ViewData["token"] = await AuthenticationAsync();
+            }
 
-        ViewData["token"] = token;
+            ViewData["token"] = token;
+
+        }
+        else
+        {
+            ViewData["Title"] = "Não autenticado";
+        }
 
         return View();
     }

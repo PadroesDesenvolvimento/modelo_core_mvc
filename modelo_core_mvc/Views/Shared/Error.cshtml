@@ -12,3 +12,15 @@
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
 }
+
+@if (Model.Exception != null)
+{
+    <h3>Erro:</h3>
+    <p>
+        <strong>Mensagem:</strong> @Model.Exception.Message
+    </p>
+    <p>
+        <strong>Detalhes:</strong>
+        <pre>@Model.Exception.StackTrace</pre>
+    </p>
+}
