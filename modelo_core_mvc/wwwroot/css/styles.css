@@ -125,17 +125,6 @@ body {
 #painel_aplicacao #painel_lateral.recolhido #orgao {
   display: none;
 }
-#painel_aplicacao #painel_principal {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0.5em;
-  height: 100vh;
-  width: calc(100% - var(--largura-menu-expandido) - 0.5em);
-}
-#painel_aplicacao #painel_principal.recolhido {
-  transition: all 0.3s;
-  width: calc(100% - var(--largura-menu-recolhido) - 0.5em);
-}
 
 #painel_conteudo {
   display: flex;
@@ -144,7 +133,7 @@ body {
 }
 
 #conteudo {
-  padding: 0.5em;
+  padding: 0.5em 0 0 0.5em;
   box-shadow: -5px 10px 15px var(--cor-sombra);
   border-color: var(--cor-borda-clara);
   border-style: solid;
@@ -154,6 +143,20 @@ body {
   max-height: calc(100vh - var(--desconto));
 }
 
+/**desktop**/
+@media (min-width: 767.98px) {
+  #painel_principal {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.5em;
+    height: 100vh;
+    width: calc(100% - var(--largura-menu-expandido) - 0.5em);
+  }
+  #painel_principal.recolhido {
+    transition: all 0.3s;
+    width: calc(100% - var(--largura-menu-recolhido) - 0.5em);
+  }
+}
 /*mobile*/
 @media (max-width: 767.98px) {
   #aplicacao {
@@ -199,6 +202,7 @@ body {
     max-height: initial;
     border-style: none;
     box-shadow: none !important;
+    max-height: calc(100vh - var(--desconto));
   }
 }
 /*Alteracao de configuracoes de terceiros*/
@@ -233,6 +237,10 @@ li, dt, dd {
 .color-blind {
   color: #fff;
   background-color: #000;
+}
+
+.color-blind th, td, dd, dt {
+  color: var(--cor-primaria-texto);
 }
 
 .color-blind .ac-adaptivecard {
@@ -1651,24 +1659,22 @@ li, dt, dd {
     color: var(--cor-invertida-texto);
   }
 }
-.tabela {
-  display: block;
+#tabela {
   color: var(--cor-primaria-texto);
   width: 100%;
-  padding: 0.5em;
+  padding: 0 0.2em 0 0;
   border: none;
+  overflow-y: auto;
+  max-height: calc(79vh - var(--desconto));
 }
-.tabela td, .tabela dd {
+#tabela td, #tabela th {
   border: 1px solid #DDD;
   padding: 0.2em 1em;
   height: auto;
   margin: 0.2em 0;
 }
-
-.corpo-tabela {
-  display: block;
-  overflow-y: auto;
-  max-height: calc(80vh - var(--desconto));
+#tabela tbody {
+  max-height: calc(79vh - var(--desconto));
 }
 
 .claims th, td, dd, dt {
