@@ -101,16 +101,24 @@ public class AutenticacaoController : BaseController
 
     public async Task<string> AuthenticationAsync()
     {
-        ClaimsPrincipal currentUser = this.User;
-        var currentUserName = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-        _logger.LogError(currentUserName);
-
         string accessToken = await HttpContext.GetTokenAsync("access_token");
         string idToken = await HttpContext.GetTokenAsync("id_token");
         string refreshToken = await HttpContext.GetTokenAsync("refresh_token");
         string newAccessToken = "";
         if (configuration["identity:type"] == "loginsefaz")
         {
+            var currentUserName = "Não identificado";
+            ClaimsPrincipal currentUser = this.User;
+            if (currentUser != null)
+            {
+                var claim = currentUser.FindFirst(ClaimTypes.NameIdentifier);
+                if (claim != null)
+                {
+                    currentUserName = claim.Value;
+                    _logger.LogError(currentUserName);
+                }
+            }
+
             TokenExchangeHelper exchange = new TokenExchangeHelper(configuration);
             newAccessToken = await exchange.GetRefreshTokenAsync(refreshToken);
             var serviceAccessToken = await exchange.GetTokenExchangeAsync(newAccessToken);

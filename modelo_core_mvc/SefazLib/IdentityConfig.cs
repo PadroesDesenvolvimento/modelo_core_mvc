@@ -81,16 +81,6 @@ namespace SefazLib.IdentityCfg
                     options.Events.OnRedirectToIdentityProvider = OnRedirectToIdentityProvider;
                     options.Events.OnSecurityTokenReceived = OnSecurityTokenReceived;
                     options.TokenValidationParameters = new TokenValidationParameters { SaveSigninToken = true };
-                    options.CorrelationCookie = new CookieBuilder
-                    {
-                        Name = ".Correlation.",
-                        HttpOnly = true,
-                        IsEssential = true,
-                        SameSite = SameSiteMode.None,
-                        SecurePolicy = CookieSecurePolicy.Always,
-                        Expiration = new TimeSpan(0, 0, 15, 0),
-                        MaxAge = new TimeSpan(0, 0, 15, 0)
-                    };
                 }
             };
 
@@ -136,14 +126,6 @@ namespace SefazLib.IdentityCfg
 
             CookieAuthenticationOptions = options =>
             {
-                options.Cookie = new CookieBuilder
-                {
-                    Name = "FedAuth",
-                    HttpOnly = true,
-                    IsEssential = true,
-                    SameSite = SameSiteMode.None,
-                    SecurePolicy = CookieSecurePolicy.Always
-                };
                 options.ExpireTimeSpan = new TimeSpan(0, 0, int.Parse(configuration["identity:timeout"]), 0);
                 options.SlidingExpiration = false;
             };
