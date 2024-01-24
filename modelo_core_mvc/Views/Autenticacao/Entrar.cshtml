@@ -31,7 +31,7 @@
 }
 
 <div>
-    <h1>Usuário autenticado:</h1>
+    <p class="titulo_formulario">Usuário autenticado:</p>
     <div class="usuario-info">
         @if (Configuration["identity:type"] == "azuread")
         {
@@ -48,18 +48,18 @@
         else
         {
             <div>
-                <h2>@nomeExibicao </h2>
+                <p>Nome de exibição: @nomeExibicao </p>
                 @if (ViewData["Login"] != null)
                 {
                     <p>Login: @ViewData["Login"]</p>
                 }
                 @if (ViewData["Cpf"] != null)
                 {
-                    <p>Login: @ViewData["Cpf"]</p>
+                    <p>Identificação: @ViewData["Cpf"]</p>
                 }
                 @if (ViewData["Nascimento"] != null)
                 {
-                    <p>Login: @ViewData["Nascimento"]</p>
+                    <p>Nascimento: @ViewData["Nascimento"]</p>
                 }
             </div>
         }
