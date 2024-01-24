@@ -18,7 +18,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using TokenWS;
 using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens.Saml;
+using Microsoft.IdentityModel.Tokens.Saml2;
 using System.Threading;
 
 namespace SefazLib.IdentityCfg
@@ -71,7 +71,7 @@ namespace SefazLib.IdentityCfg
             WSFederationOptions = options =>
             {
                 options.TokenHandlers.Clear();
-                options.TokenHandlers.Add(new CustomSamlSecurityTokenHandler());
+                options.TokenHandlers.Add(new CustomSaml2SecurityTokenHandler());
                 options.Wtrealm = configuration["identity:realm"];
                 options.MetadataAddress = configuration["identity:metadataaddress"];
 
@@ -163,7 +163,7 @@ namespace SefazLib.IdentityCfg
             return httpClient.DefaultRequestHeaders.Authorization;
         }
 
-        public class CustomSamlSecurityTokenHandler : SamlSecurityTokenHandler
+        public class CustomSaml2SecurityTokenHandler : Saml2SecurityTokenHandler
         {
             public override async Task<TokenValidationResult> ValidateTokenAsync(string token, TokenValidationParameters _validationParameters)
             {
