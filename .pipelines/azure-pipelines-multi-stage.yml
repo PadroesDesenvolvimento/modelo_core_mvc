@@ -15,14 +15,15 @@ stages:
       name: Visual Studio
     steps:
     - checkout: self
-    - task: SonarQubePrepare@4
-      displayName: Prepare analysis on SonarQube
-      continueOnError: True
-      inputs:
-        SonarQube: 86a0aeb0-42e0-4aeb-bb38-c46e0b00b615
-        projectKey: Layout_Padrao_modelo_core_mvc_AYICN6jAipiVWg4CBkqP
-        projectName: modelo_core_mvc
-        extraProperties: "# Additional properties that will be passed to the scanner, \n# Put one key=value per line, example:\nsonar.exclusions=**/wwwroot/**, **/docker/**"
+    - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
+      - task: SonarQubePrepare@4
+        displayName: Prepare analysis on SonarQube
+        continueOnError: True
+        inputs:
+          SonarQube: 86a0aeb0-42e0-4aeb-bb38-c46e0b00b615
+          projectKey: Layout_Padrao_modelo_core_mvc_AYICN6jAipiVWg4CBkqP
+          projectName: modelo_core_mvc
+          extraProperties: "# Additional properties that will be passed to the scanner, \n# Put one key=value per line, example:\nsonar.exclusions=**/wwwroot/**, **/docker/**"
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
@@ -43,12 +44,13 @@ stages:
         command: test
         projects: '**/*[Tt]ests/*.csproj'
         arguments: --configuration $(BuildConfiguration)
-    - task: SonarQubeAnalyze@4
-      displayName: Run Code Analysis
-      continueOnError: True
-    - task: SonarQubePublish@4
-      displayName: Publish Quality Gate Result
-      continueOnError: True
+    - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
+      - task: SonarQubeAnalyze@4
+        displayName: Run Code Analysis
+        continueOnError: True
+      - task: SonarQubePublish@4
+        displayName: Publish Quality Gate Result
+        continueOnError: True
     - task: DotNetCoreCLI@2
       displayName: Publish
       inputs:
@@ -58,6 +60,7 @@ stages:
         arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --no-build --no-restore
         zipAfterPublish: True
     - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
@@ -66,6 +69,7 @@ stages:
 - stage: Dev
   displayName: 'Deploy Dev'
   dependsOn: build
+  download: none
   variables:
   - group: 'DEV'
   jobs:
@@ -80,6 +84,11 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'drop'
+              targetPath: '$(Pipeline.Workspace)'
           - task: IISWebAppManagementOnMachineGroup@0
             displayName: 'IIS Web App Manage'
             inputs:
