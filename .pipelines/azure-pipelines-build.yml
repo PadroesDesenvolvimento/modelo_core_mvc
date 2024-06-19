@@ -1,3 +1,4 @@
+trigger: none
 variables:
   BuildParameters.RestoreBuildProjects: '**/*modelo_core_mvc.csproj'
   buildConfiguration: release

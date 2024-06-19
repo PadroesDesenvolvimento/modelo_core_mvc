@@ -9,6 +9,10 @@ variables:
   value: '$(resources.pipeline.build-mvc.pipelineName).$(resources.pipeline.build-mvc.runName)'
 - name: system.debug
   value: false
+  variables:
+  BuildParameters.RestoreBuildProjects: '**/*modelo_core_mvc.csproj'
+  buildConfiguration: release
+name: $(date:yyyyMMdd)$(rev:.r)
 
 stages:
 - stage: build
