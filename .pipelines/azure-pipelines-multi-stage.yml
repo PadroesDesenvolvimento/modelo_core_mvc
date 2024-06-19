@@ -84,11 +84,12 @@ stages:
         deploy:
           steps:
           - download: none
-          - task: DownloadPipelineArtifact@2
+          - task: DownloadBuildArtifacts@1
             inputs:
               buildType: 'current'
+              downloadType: 'single'
               artifactName: 'drop'
-              targetPath: '$(Pipeline.Workspace)'
+              downloadPath: '$(Pipeline.Workspace)'
           - task: IISWebAppManagementOnMachineGroup@0
             displayName: 'IIS Web App Manage'
             inputs:
