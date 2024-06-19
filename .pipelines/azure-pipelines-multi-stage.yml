@@ -1,18 +1,10 @@
 trigger: none
-      
+name: $(date:yyyyMMdd)$(rev:.r)
+
 variables:
 - group: 'F5_dmz'
-- group: 'Default'
 - group: 'IIS'
-- group: 'modelo_core_mvc-AppSettings-Release'
-- name: '_build' 
-  value: '$(resources.pipeline.build-mvc.pipelineName).$(resources.pipeline.build-mvc.runName)'
-- name: system.debug
-  value: false
-  variables:
-  BuildParameters.RestoreBuildProjects: '**/*modelo_core_mvc.csproj'
-  buildConfiguration: release
-name: $(date:yyyyMMdd)$(rev:.r)
+- group: 'modelo_core_mvc'
 
 stages:
 - stage: build
@@ -35,7 +27,7 @@ stages:
       displayName: Restore
       inputs:
         command: restore
-        projects: $(BuildParameters.RestoreBuildProjects)
+        projects: $(projects)
         selectOrConfig: config
         feedRestore: 4eb34145-aff0-41ad-a936-1f3645390db5
         nugetConfigPath: D:\Nuget\nuget.config
@@ -43,7 +35,7 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
-        projects: $(BuildParameters.RestoreBuildProjects)
+        projects: $(projects)
         arguments: '--configuration $(BuildConfiguration) --no-restore '
     - task: DotNetCoreCLI@2
       displayName: dotnet test
@@ -62,7 +54,7 @@ stages:
       inputs:
         command: publish
         publishWebProjects: false
-        projects: $(BuildParameters.RestoreBuildProjects)
+        projects: $(projects)
         arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --no-build --no-restore
         zipAfterPublish: True
     - task: PublishBuildArtifacts@1
