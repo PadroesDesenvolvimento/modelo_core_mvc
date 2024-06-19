@@ -69,7 +69,6 @@ stages:
 - stage: Dev
   displayName: 'Deploy Dev'
   dependsOn: build
-  download: none
   variables:
   - group: 'DEV'
   jobs:
@@ -84,6 +83,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - download: none
           - task: DownloadPipelineArtifact@2
             inputs:
               buildType: 'current'
