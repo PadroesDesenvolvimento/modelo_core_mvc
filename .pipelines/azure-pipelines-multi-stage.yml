@@ -84,7 +84,7 @@ stages:
         deploy:
           steps:
           - download: none
-          - task: DownloadBuildArtifacts@1
+          - task: DownloadBuildArtifacts@0
             inputs:
               buildType: 'current'
               downloadType: 'single'
