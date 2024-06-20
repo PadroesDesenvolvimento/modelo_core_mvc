@@ -102,18 +102,6 @@ stages:
               AppPoolName: '$(_Nome_Aplicacao)'
               AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
         
-          - task: IISWebAppDeploymentOnMachineGroup@0
-            displayName: 'IIS Web App Deploy'
-            inputs:
-              WebSiteName: '$(_Web_Site_Nome)'
-              VirtualApplication: '$(_Nome_Aplicacao)'
-              Package: '$(Build.ArtifactStagingDirectory)\*.zip'
-              RemoveAdditionalFilesFlag: true
-              ExcludeFilesFromAppDataFlag: true
-              TakeAppOfflineFlag: True
-              XmlVariableSubstitution: True
-              JSONFiles: appsettings.json
-
           - powershell: |
                   Write-Host "_________________________________________________________________ "
                   Write-Host "appsettings"
