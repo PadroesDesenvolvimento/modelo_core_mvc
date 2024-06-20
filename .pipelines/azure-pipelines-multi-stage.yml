@@ -77,7 +77,7 @@ stages:
     - name: '_Web_Site_Nome'
       value: 'Seguro'
     environment: 
-      name: envWebdesenv
+      name: envPadroesDesenvolvimento
       resourceName: SRV72208
       pre-deployment approvals: 
         - approver: 'wtfscampos'
