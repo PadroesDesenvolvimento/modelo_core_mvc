@@ -79,16 +79,6 @@ stages:
     environment: 
       name: envPadroesDesenvolvimento
       resourceName: SRV72208
-      pre-deployment approvals: 
-        - approver: 'wtfscampos'
-          requestor: 'wtfscampos'
-          timeoutInMinutes: 1440
-          comments: 'Aprovacao previa para deploy no ambiente de desenvolvimento'
-      post-deployment approvals: 
-        - approver: 'wtfscampos'
-          requestor: 'wtfscampos'
-          timeoutInMinutes: 1440
-          comments: 'Aprovacao apos deploy no ambiente de desenvolvimento'
     strategy: 
       runOnce:
         deploy:
