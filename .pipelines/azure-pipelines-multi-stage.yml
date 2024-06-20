@@ -79,17 +79,21 @@ stages:
     environment: 
       name: envWebdesenv
       resourceName: SRV72208
+      pre-deployment approvals: 
+        - approver: 'wtfscampos'
+          requestor: 'wtfscampos'
+          timeoutInMinutes: 1440
+          comments: 'Aprovacao previa para deploy no ambiente de desenvolvimento'
+      post-deployment approvals: 
+        - approver: 'wtfscampos'
+          requestor: 'wtfscampos'
+          timeoutInMinutes: 1440
+          comments: 'Aprovacao apos deploy no ambiente de desenvolvimento'
     strategy: 
       runOnce:
         deploy:
           steps:
           - download: none
-          - task: DownloadBuildArtifacts@0
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: 'drop'
-              downloadPath: '$(Pipeline.Workspace)'
           - task: IISWebAppManagementOnMachineGroup@0
             displayName: 'IIS Web App Manage'
             inputs:
@@ -113,7 +117,7 @@ stages:
             inputs:
               WebSiteName: '$(_Web_Site_Nome)'
               VirtualApplication: '$(_Nome_Aplicacao)'
-              Package: '$(Pipeline.Workspace)\drop\*.zip'
+              Package: '$(Build.ArtifactStagingDirectory)\*.zip'
               RemoveAdditionalFilesFlag: true
               ExcludeFilesFromAppDataFlag: true
               TakeAppOfflineFlag: True
