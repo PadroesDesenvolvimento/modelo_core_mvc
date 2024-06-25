@@ -83,7 +83,12 @@ stages:
       runOnce:
         deploy:
           steps:
-          - download: none
+          - download: current
+            env:
+              NODE_TLS_REJECT_UNAUTHORIZED: 0
+            artifact: drop
+            patterns: '**/*.zip'
+            displayName: 'Download artefatos'
           - task: IISWebAppManagementOnMachineGroup@0
             displayName: 'IIS Web App Manage'
             inputs:
