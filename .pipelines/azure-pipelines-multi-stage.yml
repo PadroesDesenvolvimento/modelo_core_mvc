@@ -110,7 +110,7 @@ stages:
             inputs:
               WebSiteName: '$(_Web_Site_Nome)'
               VirtualApplication: '$(_Nome_Aplicacao)'
-              Package: '$(System.DefaultWorkingDirectory)/drop/$(_Nome_Aplicacao).zip'
+              Package: 'drop/$(_Nome_Aplicacao).zip'
               RemoveAdditionalFilesFlag: true
               ExcludeFilesFromAppDataFlag: true
               TakeAppOfflineFlag: true
