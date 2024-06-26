@@ -106,7 +106,16 @@ stages:
               DotNetVersionForApplication: 'No Managed Code'
               AppPoolName: '$(_Nome_Aplicacao)'
               AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
-        
+          - task: IISWebAppDeploymentOnMachineGroup@0
+            inputs:
+              WebSiteName: '$(_Web_Site_Nome)'
+              VirtualApplication: '$(_Nome_Aplicacao)'
+              Package: '$(_drop).zip'
+              RemoveAdditionalFilesFlag: true
+              ExcludeFilesFromAppDataFlag: true
+              TakeAppOfflineFlag: true
+              XmlVariableSubstitution: true
+              JSONFiles: 'appsettings.json'
           - powershell: |
                   Write-Host "_________________________________________________________________ "
                   Write-Host "appsettings"
