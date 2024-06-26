@@ -84,11 +84,11 @@ stages:
         deploy:
           steps:
           - download: current
+            displayName: 'Download dos artefatos para o agent'
             env:
               NODE_TLS_REJECT_UNAUTHORIZED: 0
             artifact: drop
             patterns: '**/*.zip'
-            displayName: 'Download artefatos'
           - task: IISWebAppManagementOnMachineGroup@0
             displayName: 'IIS Web App Manage'
             inputs:
@@ -108,9 +108,9 @@ stages:
               AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
           - powershell: |
                   Write-Host "_________________________________________________________________ "
-                  Write-Host "Dir ."
+                  Write-Host "Get-ChildItem -Path '$(System.DefaultWorkingDirectory)' -Recurse"
                   Write-Host ""
-                  Get-ChildItem -Path "."
+                  Get-ChildItem -Path "$(System.DefaultWorkingDirectory)" -Recurse
 
                   if (Test-Path "drop/$(_Nome_Aplicacao).zip") {
                     Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip encontrado"
@@ -119,10 +119,11 @@ stages:
                   }
             displayName: 'Verificação da pasta drop'
           - task: IISWebAppDeploymentOnMachineGroup@0
+            displayName: 'IIS Web App Deploy'
             inputs:
               WebSiteName: '$(_Web_Site_Nome)'
               VirtualApplication: '$(_Nome_Aplicacao)'
-              Package: 'drop/$(_Nome_Aplicacao).zip'
+              Package: '$(System.DefaultWorkingDirectory)/**/modelo_core_mvc.zip'
               RemoveAdditionalFilesFlag: true
               ExcludeFilesFromAppDataFlag: true
               TakeAppOfflineFlag: true
