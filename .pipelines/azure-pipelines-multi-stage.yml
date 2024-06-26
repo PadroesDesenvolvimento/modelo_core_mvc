@@ -106,6 +106,18 @@ stages:
               DotNetVersionForApplication: 'No Managed Code'
               AppPoolName: '$(_Nome_Aplicacao)'
               AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
+          - powershell: |
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir ."
+                  Write-Host ""
+                  Get-ChildItem -Path "."
+
+                  if (Test-Path "drop/$(_Nome_Aplicacao).zip") {
+                    Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip encontrado"
+                  } else {
+                    Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip não encontrado"
+                  }
+            displayName: 'Verificação da pasta drop'
           - task: IISWebAppDeploymentOnMachineGroup@0
             inputs:
               WebSiteName: '$(_Web_Site_Nome)'
