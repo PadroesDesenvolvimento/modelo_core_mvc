@@ -108,9 +108,9 @@ stages:
               AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
           - powershell: |
                   Write-Host "_________________________________________________________________ "
-                  Write-Host "Get-ChildItem -Path '$(System.DefaultWorkingDirectory)' -Recurse"
+                  Write-Host "Get-ChildItem -Path '$(Pipeline.Workspace)/drop' -Recurse"
                   Write-Host ""
-                  Get-ChildItem -Path "$(System.DefaultWorkingDirectory)" -Recurse
+                  Get-ChildItem -Path "$(Pipeline.Workspace)/drop" -Recurse
 
                   if (Test-Path "drop/$(_Nome_Aplicacao).zip") {
                     Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip encontrado"
@@ -123,7 +123,7 @@ stages:
             inputs:
               WebSiteName: '$(_Web_Site_Nome)'
               VirtualApplication: '$(_Nome_Aplicacao)'
-              Package: '$(System.DefaultWorkingDirectory)/**/modelo_core_mvc.zip'
+              Package: '$(Pipeline.Workspace)/drop/**/*.zip'
               RemoveAdditionalFilesFlag: true
               ExcludeFilesFromAppDataFlag: true
               TakeAppOfflineFlag: true
