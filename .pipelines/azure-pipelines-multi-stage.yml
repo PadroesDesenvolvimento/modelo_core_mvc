@@ -94,7 +94,6 @@ stages:
               NODE_TLS_REJECT_UNAUTHORIZED: 0
             artifact: drop
             patterns: '**/*.zip'
-            clean: true
           - task: IISWebAppManagementOnMachineGroup@0
             displayName: 'IIS Web App Manage'
             inputs:
