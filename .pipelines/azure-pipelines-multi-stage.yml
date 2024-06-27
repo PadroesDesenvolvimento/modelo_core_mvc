@@ -2,9 +2,13 @@ trigger: none
 name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
+- group: 'Default'
 - group: 'F5_dmz'
 - group: 'IIS'
 - group: 'modelo_core_mvc'
+- group: 'Pipeline'
+- group: 'Helix'
+- group: 'SefazIdentity'
 
 stages:
 - stage: build
@@ -28,7 +32,7 @@ stages:
       displayName: Restore
       inputs:
         command: restore
-        projects: $(projects)
+        projects: $(projectsToRestore)
         selectOrConfig: config
         feedRestore: 4eb34145-aff0-41ad-a936-1f3645390db5
         nugetConfigPath: D:\Nuget\nuget.config
@@ -70,7 +74,8 @@ stages:
   displayName: 'Deploy Dev'
   dependsOn: build
   variables:
-  - group: 'DEV'
+  - group: 'modelo_core_mvc-DEV'
+  - group: 'SefazIdentity-DEV'
   jobs:
   - deployment: IIS
     variables:
@@ -89,6 +94,7 @@ stages:
               NODE_TLS_REJECT_UNAUTHORIZED: 0
             artifact: drop
             patterns: '**/*.zip'
+            clean: true
           - task: IISWebAppManagementOnMachineGroup@0
             displayName: 'IIS Web App Manage'
             inputs:
@@ -108,11 +114,11 @@ stages:
               AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
           - powershell: |
                   Write-Host "_________________________________________________________________ "
-                  Write-Host "Get-ChildItem -Path '$(Pipeline.Workspace)/drop' -Recurse"
+                  Write-Host "Get-ChildItem -Path '$(Pipeline.Workspace)\drop' -Recurse"
                   Write-Host ""
-                  Get-ChildItem -Path "$(Pipeline.Workspace)/drop" -Recurse
+                  Get-ChildItem -Path "$(Pipeline.Workspace)\drop" -Recurse
 
-                  if (Test-Path "drop/$(_Nome_Aplicacao).zip") {
+                  if (Test-Path "$(Pipeline.Workspace)\drop\$(_Nome_Aplicacao).zip") {
                     Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip encontrado"
                   } else {
                     Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip não encontrado"
