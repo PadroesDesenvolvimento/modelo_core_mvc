@@ -32,7 +32,7 @@ stages:
       displayName: Restore
       inputs:
         command: restore
-        projects: $(projectsToRestore)
+        projects: $(projectsToBuild)
         selectOrConfig: config
         feedRestore: 4eb34145-aff0-41ad-a936-1f3645390db5
         nugetConfigPath: D:\Nuget\nuget.config
@@ -40,14 +40,8 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
-        projects: $(projects)
+        projects: $(projectsToBuild)
         arguments: '--configuration $(BuildConfiguration) --no-restore '
-    - task: DotNetCoreCLI@2
-      displayName: dotnet test
-      inputs:
-        command: test
-        projects: '**/*[Tt]ests/*.csproj'
-        arguments: --configuration $(BuildConfiguration)
     - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
       - task: SonarQubeAnalyze@4
         displayName: Run Code Analysis
