@@ -18,6 +18,7 @@ stages:
   displayName: 'Criação dos artefatos'
   jobs:
   - job:
+    displayName: 'Build'
     pool:
       name: Visual Studio
     steps:
@@ -75,6 +76,7 @@ stages:
   - group: 'SefazIdentity-DEV'
   jobs:
   - deployment: IIS
+    displayName: 'Deploy IIS servidor $($env:SRV72208)'
     variables:
     - name: '_Web_Site_Nome'
       value: 'Seguro'
@@ -159,8 +161,9 @@ stages:
   condition: succeeded()
   variables:
   - group: 'PostApproval'
-  jobs:
-  - job:
+  jobs: 
+  - job: PostApproval
+    displayName: 'Aprovação'
     pool:
       name: Visual Studio
     steps:
