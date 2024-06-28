@@ -76,7 +76,6 @@ stages:
   - group: 'SefazIdentity-DEV'
   jobs:
   - deployment: IIS
-    displayName: 'Deploy IIS servidor $($env:SRV72208)'
     variables:
     - name: '_Web_Site_Nome'
       value: 'Seguro'
@@ -172,4 +171,15 @@ stages:
       displayName: 'Post Approval'
       inputs:
         targetType: 'inline'
-        script: 'Write-Host "Post Approval"'
+        script: |
+          Write-Host "Variaveis da execucao:"
+          Write-Host ". AgentID: $env:Agent.Id"
+          Write-Host ". AgentName: $env:Agent.Name"
+          Write-Host ". AgentHome: $env:Agent.HomeDirectory"
+          Write-Host ". AgentWork: $env:Agent.WorkFolder"
+          Write-Host ". BuildID: $env:Build.BuildId"
+          Write-Host ". BuildNumber: $env:Build.BuildNumber"
+          Write-Host ". StageID: $env:SYSTEM_STAGEID"
+          Write-Host ". ServiceHost: $env:SYSTEM_SERVICENAME"
+          Write-Host ". ServiceHostID: $env:SYSTEM_SERVICEHOSTID"
+
