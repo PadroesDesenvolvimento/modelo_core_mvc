@@ -71,7 +71,7 @@ stages:
   displayName: 'Deploy Dev'
   dependsOn: build
   variables:
-  - group: 'modelo_core_mvc-DEV'
+  - group: 'modelo_core_mvc-webdesenv'
   - group: 'SefazIdentity-DEV'
   jobs:
   - deployment: IIS
@@ -152,3 +152,9 @@ stages:
                   Write-Host ""
                   Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
             displayName: 'Verificação do arquivo de configuração'
+- stage: postApproval
+  displayName: 'Pós Aprovação'
+  dependsOn: Dev
+  condition: succeeded()
+  variables:
+  - group: 'PostApproval'
