@@ -152,6 +152,7 @@ stages:
                   Write-Host ""
                   Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
             displayName: 'Verificação do arquivo de configuração'
+
 - stage: postApproval
   displayName: 'Pós Aprovação'
   dependsOn: Dev
@@ -167,7 +168,5 @@ stages:
     - task: PowerShell@2
       displayName: 'Post Approval'
       inputs:
-        targetType: inline
-        script: |
-        write-host "Post Approval"
-        
+        targetType: 'inline'
+        script: 'Write-Host "Post Approval"'
