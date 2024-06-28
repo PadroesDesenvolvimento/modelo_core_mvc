@@ -160,3 +160,14 @@ stages:
   - group: 'PostApproval'
   jobs:
   - job:
+    pool:
+      name: Visual Studio
+    steps:
+    - checkout: self
+    - task: PowerShell@2
+      displayName: 'Post Approval'
+      inputs:
+        targetType: inline
+        script: |
+        write-host "Post Approval"
+        
