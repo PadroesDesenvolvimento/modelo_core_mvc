@@ -153,26 +153,14 @@ stages:
                   Write-Host ""
                   Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
             displayName: 'Verificação do arquivo de configuração'
-
-- stage: postApproval
-  displayName: 'Pós Aprovação'
-  dependsOn: Dev
-  condition: succeeded()
-  variables:
-  - group: 'PostApproval'
-  jobs: 
-  - job: PostApproval
-    displayName: 'Aprovação'
-    pool:
-      name: Visual Studio
-    steps:
-    - checkout: self
-    - task: PowerShell@2
-      displayName: 'Post Approval'
+          - task: PowerShell@2
+      displayName: 'Informacoes do stage'
       inputs:
         targetType: 'inline'
         script: |
           Write-Host "Variaveis da execucao:"
+          Write-Host ". Project ID: $env:SYSTEM_PROJECTID"
+          Write-Host ". Project name: $env:SYSTEM_TEAMPROJECT"
           Write-Host ". AgentID: $env:AGENT_ID"
           Write-Host ". AgentName: $env:AGENT_NAME"
           Write-Host ". BuildID: $env:BUILD_BUILDID"
@@ -182,10 +170,42 @@ stages:
           Write-Host ". ServiceHost: $env:SYSTEM_SERVICE_HOST"
           Write-Host ". User agent: $env:AZURE_HTTP_USER_AGENT"
           Write-Host ". MS deploy User agent: $env:MSDEPLOY_HTTP_USER_AGENT"
-          Write-Host ". Project ID: $env:BUILD_PROJECTID"
           Write-Host ". Repository ID: $env:BUILD_REPOSITORY_ID"
           Write-Host ". Request for ID: $env:BUILD_REQUESTEDFORID"
           Write-Host ". Job ID: $env:SYSTEM_JOBID"
-          Write-Host ". Job Identifier: $env:SYSTEM_JOBIDENTIFIER"
+
+- stage: postApproval
+  displayName: 'Pós Aprovação'
+  dependsOn: Dev
+  condition: succeeded()
+  environment: Pos-aprovacao
+  jobs: 
+  - job: PostApproval
+    displayName: 'Aprovação'
+    pool:
+      name: Visual Studio
+    steps:
+    - checkout: none
+    - task: PowerShell@2
+      displayName: 'Informacoes do stage'
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "Variaveis da execucao:"
+          Write-Host ". Collection ID: $env:SYSTEM_COLLECTIONID"
+          Write-Host ". Project ID: $env:SYSTEM_PROJECTID"
+          Write-Host ". Project name: $env:SYSTEM_TEAMPROJECT"
+          Write-Host ". AgentID: $env:AGENT_ID"
+          Write-Host ". AgentName: $env:AGENT_NAME"
+          Write-Host ". BuildID: $env:BUILD_BUILDID"
+          Write-Host ". BuildNumber: $env:BUILD_BUILDNUMBER"
+          Write-Host ". StageID: $env:SYSTEM_STAGEID"
+          Write-Host ". Stage name: $env:SYSTEM_STAGENAME"
+          Write-Host ". ServiceHost: $env:SYSTEM_SERVICE_HOST"
+          Write-Host ". User agent: $env:AZURE_HTTP_USER_AGENT"
+          Write-Host ". MS deploy User agent: $env:MSDEPLOY_HTTP_USER_AGENT"
+          Write-Host ". Repository ID: $env:BUILD_REPOSITORY_ID"
+          Write-Host ". Request for ID: $env:BUILD_REQUESTEDFORID"
+          Write-Host ". Job ID: $env:SYSTEM_JOBID"
 
 
