@@ -158,7 +158,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                Write-Host "Variaveis da execucao:"
+                Write-Host ". Collection ID: $env:SYSTEM_COLLECTIONID"
                 Write-Host ". Project ID: $env:SYSTEM_PROJECTID"
                 Write-Host ". Project name: $env:SYSTEM_TEAMPROJECT"
                 Write-Host ". AgentID: $env:AGENT_ID"
@@ -209,5 +209,10 @@ stages:
                 Write-Host ". Repository ID: $env:BUILD_REPOSITORY_ID"
                 Write-Host ". Request for ID: $env:BUILD_REQUESTEDFORID"
                 Write-Host ". Job ID: $env:SYSTEM_JOBID"
-
-
+                Write-Host "##vso[task.setvariable variable=HELIXRLMID;]RLM000000050298"
+          - task: PowerShell@2
+            displayName: 'Buscar variável HELIXRLMID'
+            inputs:
+              targetType: 'inline'
+              script: |
+                Write-Host "Liberação: $(HELIXRLMID)"
