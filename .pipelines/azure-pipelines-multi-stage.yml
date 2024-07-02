@@ -173,7 +173,7 @@ stages:
   dependsOn: Dev
   condition: succeeded()
   jobs: 
-  - deployment: jobPostApproval
+  - deployment: deploymentPostApproval
     displayName: 'Aprovação para criação da liberação no Helix'
     environment: Pre-aprovacao
     pool:
@@ -184,7 +184,7 @@ stages:
           steps:
           - task: PowerShell@2
             displayName: 'Informacoes do stage'
-            name: 'taskPostApproval'
+            name: 'taskCriaLiberacao'
             inputs:
               targetType: 'inline'
               script: |
@@ -196,25 +196,49 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                Write-Host "Liberação: $(taskPostApproval.HELIXRLMID)"
-- stage: AprovacaoDeployHML
-  displayName: 'Aprovação para criar RDM no Helix'
+                Write-Host "Liberação: $(taskCriaLiberacao.HELIXRLMID)"
+
+- stage: verificacaoLiberacao
+  displayName: 'Verificação da Liberação no Helix'
   dependsOn: CriacaoLiberacao
   variables:
-      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.jobPostApproval.outputs['jobPostApproval.taskPostApproval.HELIXRLMID']]
+      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskCriaLiberacao.HELIXRLMID']]
   jobs:
   - job: numeroLiberacao
     displayName: 'Número da Liberação no Helix'
-    environment: Pos-Aprovacao
     pool:
       name: Release PRD
     steps:
     - checkout: none
     - task: PowerShell@2
+      name: 'taskPostApproval'
       displayName: 'Buscar variável HELIXRLMID'
       inputs:
         targetType: 'inline'
         script: |
           Write-Host "Liberação: $(HELIXRLMID)"
+          Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
+          Write-Host "Get-ChildItem ENV:"
+          Get-ChildItem ENV:
+
+- stage: verificacaoMudanca
+  displayName: 'Verificação da RDM no Helix'
+  dependsOn: verificacaoLiberacao
+  variables:
+      HELIXRDMHMLID: $[stageDependencies.verificacaoLiberacao.numeroLiberacao.outputs['taskPostApproval.HELIXRDMHMLID']]
+  jobs:
+  - job: numeroLiberacao
+    displayName: 'Número da RDM no Helix'
+    pool:
+      name: Release PRD
+    steps:
+    - checkout: none
+    - task: PowerShell@2
+      displayName: 'Buscar variável HELIXRDMHMLID'
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "RDM: $(HELIXRDMHMLID)"
+          Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
           Write-Host "Get-ChildItem ENV:"
           Get-ChildItem ENV:
