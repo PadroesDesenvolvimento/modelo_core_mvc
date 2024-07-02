@@ -168,14 +168,14 @@ stages:
                 Write-Host "Variaveis da execucao:"
                 Get-ChildItem ENV:
 
-- stage: stagePostApproval
-  displayName: 'Pós Aprovação'
+- stage: CriacaoLiberacao
+  displayName: 'Criação de Liberação no Helix'
   dependsOn: Dev
   condition: succeeded()
   jobs: 
   - deployment: jobPostApproval
-    displayName: 'Aprovação'
-    environment: Pos-aprovacao
+    displayName: 'Aprovação para criação da liberação no Helix'
+    environment: Pre-aprovacao
     pool:
       name: Visual Studio
     strategy:
@@ -197,14 +197,15 @@ stages:
               targetType: 'inline'
               script: |
                 Write-Host "Liberação: $(taskPostApproval.HELIXRLMID)"
-- stage: Helix
-  displayName: 'Helix'
-  dependsOn: stagePostApproval
+- stage: AprovacaoDeployHML
+  displayName: 'Aprovação para criar RDM no Helix'
+  dependsOn: CriacaoLiberacao
   variables:
-      HELIXRLMID: $[stageDependencies.stagePostApproval.jobPostApproval.outputs['jobPostApproval.taskPostApproval.HELIXRLMID']]
+      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.jobPostApproval.outputs['jobPostApproval.taskPostApproval.HELIXRLMID']]
   jobs:
-  - job: Helix
-    displayName: 'Helix'
+  - job: numeroLiberacao
+    displayName: 'Número da Liberação no Helix'
+    environment: Pos-Aprovacao
     pool:
       name: Release PRD
     steps:
