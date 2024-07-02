@@ -174,12 +174,12 @@ stages:
                 Write-Host ". Request for ID: $env:BUILD_REQUESTEDFORID"
                 Write-Host ". Job ID: $env:SYSTEM_JOBID"
 
-- stage: postApproval
+- stage: stagePostApproval
   displayName: 'Pós Aprovação'
   dependsOn: Dev
   condition: succeeded()
   jobs: 
-  - deployment: PostApproval
+  - deployment: jobPostApproval
     displayName: 'Aprovação'
     environment: Pos-aprovacao
     pool:
@@ -190,7 +190,7 @@ stages:
           steps:
           - task: PowerShell@2
             displayName: 'Informacoes do stage'
-            name: 'PosAprovacao'
+            name: 'taskPostApproval'
             inputs:
               targetType: 'inline'
               script: |
@@ -212,12 +212,17 @@ stages:
                 Write-Host ". Request for ID: $env:BUILD_REQUESTEDFORID"
                 Write-Host ". Job ID: $env:SYSTEM_JOBID"
                 Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]RLM000000050298"
-          
+          - task: PowerShell@2
+            displayName: 'Buscar variável HELIXRLMID'
+            inputs:
+              targetType: 'inline'
+              script: |
+                Write-Host "Liberação: $(taskPostApproval.HELIXRLMID)"
 - stage: Helix
   displayName: 'Helix'
-  dependsOn: postApproval
+  dependsOn: stagePostApproval
   variables:
-      HELIXRLMID: $[stageDependencies.postApproval.PostApproval.outputs['PosAprovacao.HELIXRLMID']]
+      HELIXRLMID: $[stageDependencies.stagePostApproval.jobPostApproval.outputs['taskPostApproval.HELIXRLMID']]
   jobs:
   - job: Helix
     displayName: 'Helix'
