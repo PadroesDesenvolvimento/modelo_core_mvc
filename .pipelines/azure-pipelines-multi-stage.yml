@@ -67,6 +67,13 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+    - task: PowerShell@2
+        displayName: 'Informacoes do stage'
+        inputs:
+          targetType: 'inline'
+          script: |
+            Write-Host "Variaveis da execucao:"
+            Get-ChildItem ENV:
 
 - stage: Dev
   displayName: 'Deploy Dev'
@@ -158,21 +165,8 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                Write-Host ". Collection ID: $env:SYSTEM_COLLECTIONID"
-                Write-Host ". Project ID: $env:SYSTEM_PROJECTID"
-                Write-Host ". Project name: $env:SYSTEM_TEAMPROJECT"
-                Write-Host ". AgentID: $env:AGENT_ID"
-                Write-Host ". AgentName: $env:AGENT_NAME"
-                Write-Host ". BuildID: $env:BUILD_BUILDID"
-                Write-Host ". BuildNumber: $env:BUILD_BUILDNUMBER"
-                Write-Host ". StageID: $env:SYSTEM_STAGEID"
-                Write-Host ". Stage name: $env:SYSTEM_STAGENAME"
-                Write-Host ". ServiceHost: $env:SYSTEM_SERVICE_HOST"
-                Write-Host ". User agent: $env:AZURE_HTTP_USER_AGENT"
-                Write-Host ". MS deploy User agent: $env:MSDEPLOY_HTTP_USER_AGENT"
-                Write-Host ". Repository ID: $env:BUILD_REPOSITORY_ID"
-                Write-Host ". Request for ID: $env:BUILD_REQUESTEDFORID"
-                Write-Host ". Job ID: $env:SYSTEM_JOBID"
+                Write-Host "Variaveis da execucao:"
+                Get-ChildItem ENV:
 
 - stage: stagePostApproval
   displayName: 'Pós Aprovação'
@@ -194,24 +188,9 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                Write-Host "Variaveis da execucao:"
-                Write-Host ". Collection ID: $env:SYSTEM_COLLECTIONID"
-                Write-Host ". Project ID: $env:SYSTEM_PROJECTID"
-                Write-Host ". Project name: $env:SYSTEM_TEAMPROJECT"
-                Write-Host ". AgentID: $env:AGENT_ID"
-                Write-Host ". AgentName: $env:AGENT_NAME"
-                Write-Host ". ReleaseID:$env:RELEASE_RELEASEID"
-                Write-Host ". BuildID: $env:BUILD_BUILDID"
-                Write-Host ". BuildNumber: $env:BUILD_BUILDNUMBER"
-                Write-Host ". StageID: $env:SYSTEM_STAGEID"
-                Write-Host ". Stage name: $env:SYSTEM_STAGENAME"
-                Write-Host ". ServiceHost: $env:SYSTEM_SERVICE_HOST"
-                Write-Host ". User agent: $env:AZURE_HTTP_USER_AGENT"
-                Write-Host ". MS deploy User agent: $env:MSDEPLOY_HTTP_USER_AGENT"
-                Write-Host ". Repository ID: $env:BUILD_REPOSITORY_ID"
-                Write-Host ". Request for ID: $env:BUILD_REQUESTEDFORID"
-                Write-Host ". Job ID: $env:SYSTEM_JOBID"
                 Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]RLM000000050298"
+                Write-Host "Variaveis da execucao:"
+                Get-ChildItem ENV:
           - task: PowerShell@2
             displayName: 'Buscar variável HELIXRLMID'
             inputs:
@@ -222,7 +201,7 @@ stages:
   displayName: 'Helix'
   dependsOn: stagePostApproval
   variables:
-      HELIXRLMID: $[stageDependencies.stagePostApproval.jobPostApproval.outputs['taskPostApproval.HELIXRLMID']]
+      HELIXRLMID: $[stageDependencies.stagePostApproval.jobPostApproval.outputs['jobPostApproval.taskPostApproval.HELIXRLMID']]
   jobs:
   - job: Helix
     displayName: 'Helix'
