@@ -236,3 +236,5 @@ stages:
         targetType: 'inline'
         script: |
           Write-Host "Liberação: $(HELIXRLMID)"
+          Write-Host "Get-ChildItem ENV:"
+          Get-ChildItem ENV:
