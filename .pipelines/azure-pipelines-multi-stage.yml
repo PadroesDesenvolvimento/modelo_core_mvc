@@ -227,7 +227,7 @@ stages:
   - job: Helix
     displayName: 'Helix'
     pool:
-      name: ReleasePRD
+      name: Release PRD
     steps:
     - checkout: none
     - task: PowerShell@2
