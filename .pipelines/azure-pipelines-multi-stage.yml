@@ -212,12 +212,7 @@ stages:
                 Write-Host ". Request for ID: $env:BUILD_REQUESTEDFORID"
                 Write-Host ". Job ID: $env:SYSTEM_JOBID"
                 Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]RLM000000050298"
-          - task: PowerShell@2
-            displayName: 'Buscar variável HELIXRLMID'
-            inputs:
-              targetType: 'inline'
-              script: |
-                Write-Host "Liberação: $(HELIXRLMID)"
+          
 - stage: Helix
   displayName: 'Helix'
   dependsOn: postApproval
