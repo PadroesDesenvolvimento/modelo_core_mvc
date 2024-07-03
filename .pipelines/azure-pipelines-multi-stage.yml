@@ -184,6 +184,8 @@ stages:
           steps:
           - download: none
           - task: Helix - Criacao de Liberacao (RLM)@2
+            displayName: 'Criação de Liberação no Helix'
+            name: taskCriaLiberacao
             inputs:
               Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
               Servico: '$(Servico_Helix)'
