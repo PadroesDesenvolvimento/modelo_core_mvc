@@ -177,21 +177,13 @@ stages:
     displayName: 'Aprovação para criação da liberação no Helix'
     environment: Pre-aprovacao
     pool:
-      name: Visual Studio
+      name: Release PRD
     strategy:
       runOnce:
         deploy:
           steps:
-          - task: PowerShell@2
-            displayName: 'Informacoes do stage'
-            name: 'taskCriaLiberacao'
-            inputs:
-              targetType: 'inline'
-              script: |
-                Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]RLM000000050298"
-                Write-Host "Variaveis da execucao:"
-                Get-ChildItem ENV:
-
+          - checkout: none
+            persistCredentials: true
           - task: Helix - Criacao de Liberacao (RLM)@2
             inputs:
               Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
