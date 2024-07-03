@@ -191,12 +191,13 @@ stages:
                 Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]RLM000000050298"
                 Write-Host "Variaveis da execucao:"
                 Get-ChildItem ENV:
-          - task: PowerShell@2
-            displayName: 'Buscar variável HELIXRLMID'
+
+          - task: Helix - Criacao de Liberacao (RLM)@2
             inputs:
-              targetType: 'inline'
-              script: |
-                Write-Host "Liberação: $(taskCriaLiberacao.HELIXRLMID)"
+              Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
+              Servico: '$(Servico_Helix)'
+              loginResponsavel: '$(Scrum_Master)'
+              Ambiente_Helix: 'hml'
 
 - stage: verificacaoLiberacao
   displayName: 'Verificação da Liberação no Helix'
