@@ -193,6 +193,13 @@ stages:
               Ambiente_Helix: 'hml'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          - task: PowerShell@2
+            name: 'taskPostApproval'
+            displayName: 'Buscar variável HELIXRLMID'
+            inputs:
+              targetType: 'inline'
+              script: |
+                Write-Host "Liberação: $(HELIXRLMID)"
 
 - stage: verificacaoLiberacao
   displayName: 'Verificação da Liberação no Helix'
@@ -214,8 +221,6 @@ stages:
         script: |
           Write-Host "Liberação: $(HELIXRLMID)"
           Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
-          Write-Host "Get-ChildItem ENV:"
-          Get-ChildItem ENV:
 
 - stage: verificacaoMudanca
   displayName: 'Verificação da RDM no Helix'
