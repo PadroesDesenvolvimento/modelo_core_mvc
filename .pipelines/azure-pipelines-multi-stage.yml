@@ -182,9 +182,6 @@ stages:
       runOnce:
         deploy:
           steps:
-          - download: current
-          - checkout: none
-            persistCredentials: true
           - task: Helix - Criacao de Liberacao (RLM)@2
             inputs:
               Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
