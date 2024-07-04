@@ -169,7 +169,7 @@ stages:
                 Write-Host "Variaveis da execucao:"
                 Get-ChildItem ENV:
 
-- stage: CriacaoLiberacao
+- stage: stageCriacaoLiberacao
   displayName: 'Criação de Liberação no Helix'
   dependsOn: Dev
   condition: succeeded()
@@ -186,7 +186,7 @@ stages:
           - download: none
           - task: CriacaoLiberacao@2
             displayName: 'Criação de Liberação no Helix'
-            name: CriacaoLiberacao@2
+            name: CriacaoLiberacao
             inputs:
               Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
               Servico: '$(Servico_Helix)'
@@ -204,10 +204,10 @@ stages:
 
 - stage: verificacaoLiberacao
   displayName: 'Verificação da Liberação no Helix'
-  dependsOn: CriacaoLiberacao
+  dependsOn: stageCriacaoLiberacao
   condition: succeeded()
   variables:
-      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.CriacaoLiberacao@2.HELIXRLMID']]
+      HELIXRLMID: $[stageDependencies.stageCriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.CriacaoLiberacao.HELIXRLMID']]
   jobs:
   - job: numeroLiberacao
     displayName: 'Número da Liberação no Helix'
