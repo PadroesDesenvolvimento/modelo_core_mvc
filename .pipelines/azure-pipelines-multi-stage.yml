@@ -78,6 +78,7 @@ stages:
 - stage: Dev
   displayName: 'Deploy Dev'
   dependsOn: build
+  condition: succeeded()
   variables:
   - group: 'modelo_core_mvc-webdesenv'
   - group: 'SefazIdentity-DEV'
@@ -194,6 +195,7 @@ stages:
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           - task: PowerShell@2
+            name: 'taskVerificarLiberacao'
             displayName: 'Buscar variável HELIXRLMID'
             inputs:
               targetType: 'inline'
