@@ -208,7 +208,7 @@ stages:
   dependsOn: CriacaoLiberacao
   condition: succeeded()
   variables:
-      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskCriaLiberacao.HELIXRLMID']]
+      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskVerificarLiberacao.HELIXRLMID']]
   jobs:
   - job: numeroLiberacao
     displayName: 'Número da Liberação no Helix'
