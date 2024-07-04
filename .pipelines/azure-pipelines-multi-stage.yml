@@ -184,9 +184,9 @@ stages:
         deploy:
           steps:
           - download: none
-          - task: Helix - Criacao de Liberacao (RLM)@2
+          - task: CriacaoLiberacao@2
             displayName: 'Criação de Liberação no Helix'
-            name: taskCriaLiberacao
+            name: CriacaoLiberacao@2
             inputs:
               Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
               Servico: '$(Servico_Helix)'
@@ -201,14 +201,13 @@ stages:
               targetType: 'inline'
               script: |
                 Write-Host "1-Liberação: $(HELIXRLMID)"
-                Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]$(HELIXRLMID)"
 
 - stage: verificacaoLiberacao
   displayName: 'Verificação da Liberação no Helix'
   dependsOn: CriacaoLiberacao
   condition: succeeded()
   variables:
-      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskVerificarLiberacao.HELIXRLMID']]
+      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.CriacaoLiberacao@2.HELIXRLMID']]
   jobs:
   - job: numeroLiberacao
     displayName: 'Número da Liberação no Helix'
