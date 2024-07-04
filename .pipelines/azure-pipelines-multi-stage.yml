@@ -201,7 +201,7 @@ stages:
               targetType: 'inline'
               script: |
                 Write-Host "1-Liberação: $(HELIXRLMID)"
-                Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID2;isOutput=true]$(HELIXRLMID2)"
+                Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID2;isOutput=true]$(HELIXRLMID)"
 
 - stage: verificacaoLiberacao
   displayName: 'Verificação da Liberação no Helix'
