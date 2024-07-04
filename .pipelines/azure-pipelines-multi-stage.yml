@@ -195,13 +195,13 @@ stages:
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           - task: PowerShell@2
-            name: 'taskVerificarLiberacao'
+            name: taskVerificarLiberacao
             displayName: 'Buscar variável HELIXRLMID'
             inputs:
               targetType: 'inline'
               script: |
                 Write-Host "1-Liberação: $(HELIXRLMID)"
-                Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID2;isOutput=true]$(HELIXRLMID)"
+                Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]$(HELIXRLMID)"
 
 - stage: verificacaoLiberacao
   displayName: 'Verificação da Liberação no Helix'
@@ -209,7 +209,6 @@ stages:
   condition: succeeded()
   variables:
       HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskCriaLiberacao.HELIXRLMID']]
-      HELIXRLMID2: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskVerificarLiberacao.HELIXRLMID2']]
   jobs:
   - job: numeroLiberacao
     displayName: 'Número da Liberação no Helix'
@@ -218,13 +217,12 @@ stages:
     steps:
     - checkout: none
     - task: PowerShell@2
-      name: 'taskPostApproval'
+      name: taskPostApproval
       displayName: 'Buscar variável HELIXRLMID'
       inputs:
         targetType: 'inline'
         script: |
           Write-Host "2-Liberação: $(HELIXRLMID)"
-          Write-Host "3-Liberação: $(HELIXRLMID2)"
           Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
 
 - stage: verificacaoMudanca
@@ -240,11 +238,9 @@ stages:
     steps:
     - checkout: none
     - task: PowerShell@2
+      name: taskVerificarMudanca
       displayName: 'Buscar variável HELIXRDMHMLID'
       inputs:
         targetType: 'inline'
         script: |
           Write-Host "RDM: $(HELIXRDMHMLID)"
-          Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
-          Write-Host "Get-ChildItem ENV:"
-          Get-ChildItem ENV:
