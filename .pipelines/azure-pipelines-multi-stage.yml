@@ -194,18 +194,20 @@ stages:
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           - task: PowerShell@2
-            name: 'taskPostApproval'
             displayName: 'Buscar variável HELIXRLMID'
             inputs:
               targetType: 'inline'
               script: |
-                Write-Host "Liberação: $(HELIXRLMID)"
+                Write-Host "1-Liberação: $(HELIXRLMID)"
+                Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID2;isOutput=true]$(HELIXRLMID2)"
 
 - stage: verificacaoLiberacao
   displayName: 'Verificação da Liberação no Helix'
   dependsOn: CriacaoLiberacao
+  condition: succeeded()
   variables:
       HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskCriaLiberacao.HELIXRLMID']]
+      HELIXRLMID2: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskCriaLiberacao.HELIXRLMID2']]
   jobs:
   - job: numeroLiberacao
     displayName: 'Número da Liberação no Helix'
@@ -219,7 +221,8 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          Write-Host "Liberação: $(HELIXRLMID)"
+          Write-Host "2-Liberação: $(HELIXRLMID)"
+          Write-Host "3-Liberação: $(HELIXRLMID2)"
           Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
 
 - stage: verificacaoMudanca
