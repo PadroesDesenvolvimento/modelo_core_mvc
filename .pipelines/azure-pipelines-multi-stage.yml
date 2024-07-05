@@ -1,4 +1,7 @@
-trigger: none
+trigger: 
+  branches:
+    include:
+    - Pipelines_YAML
 name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
@@ -15,6 +18,7 @@ stages:
   displayName: 'Criação dos artefatos'
   jobs:
   - job:
+    displayName: 'Build'
     pool:
       name: Visual Studio
     steps:
@@ -54,7 +58,7 @@ stages:
       inputs:
         command: publish
         publishWebProjects: false
-        projects: $(projects)
+        projects: $(projectsToBuild)
         arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --no-build --no-restore
         zipAfterPublish: True
     - task: PublishBuildArtifacts@1
@@ -63,12 +67,20 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+    - task: PowerShell@2
+      displayName: 'Informacoes do stage'
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "Variaveis da execucao:"
+          Get-ChildItem ENV:
 
 - stage: Dev
   displayName: 'Deploy Dev'
   dependsOn: build
+  condition: succeeded()
   variables:
-  - group: 'modelo_core_mvc-DEV'
+  - group: 'modelo_core_mvc-webdesenv'
   - group: 'SefazIdentity-DEV'
   jobs:
   - deployment: IIS
@@ -149,3 +161,85 @@ stages:
                   Write-Host ""
                   Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
             displayName: 'Verificação do arquivo de configuração'
+          - task: PowerShell@2
+            displayName: 'Informacoes do stage'
+            inputs:
+              targetType: 'inline'
+              script: |
+                Write-Host "Variaveis da execucao:"
+                Get-ChildItem ENV:
+
+- stage: stageCriacaoLiberacao
+  displayName: 'Criação de Liberação no Helix'
+  dependsOn: Dev
+  condition: succeeded()
+  jobs: 
+  - deployment: deploymentPostApproval
+    displayName: 'Aprovação para criação da liberação no Helix'
+    environment: Pre-aprovacao
+    pool:
+      name: Release PRD
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: none
+          - task: CriacaoLiberacao@2
+            displayName: 'Criação de Liberação no Helix'
+            name: CriacaoLiberacao
+            inputs:
+              Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
+              Servico: '$(Servico_Helix)'
+              loginResponsavel: '$(Scrum_Master)'
+              Ambiente_Helix: 'hml'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          - task: PowerShell@2
+            name: taskVerificarLiberacao
+            displayName: 'Buscar variável HELIXRLMID'
+            inputs:
+              targetType: 'inline'
+              script: |
+                Write-Host "1-Liberação: $(HELIXRLMID)"
+
+- stage: verificacaoLiberacao
+  displayName: 'Verificação da Liberação no Helix'
+  dependsOn: stageCriacaoLiberacao
+  condition: succeeded()
+  variables:
+      HELIXRLMID: $[stageDependencies.stageCriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.CriacaoLiberacao.HELIXRLMID']]
+  jobs:
+  - job: numeroLiberacao
+    displayName: 'Número da Liberação no Helix'
+    pool:
+      name: Release PRD
+    steps:
+    - checkout: none
+    - task: PowerShell@2
+      name: taskPostApproval
+      displayName: 'Buscar variável HELIXRLMID'
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "2-Liberação: $(HELIXRLMID)"
+          Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
+
+- stage: verificacaoMudanca
+  displayName: 'Verificação da RDM no Helix'
+  dependsOn: verificacaoLiberacao
+  variables:
+      HELIXRDMHMLID: $[stageDependencies.verificacaoLiberacao.numeroLiberacao.outputs['taskPostApproval.HELIXRDMHMLID']]
+  jobs:
+  - job: numeroLiberacao
+    displayName: 'Número da RDM no Helix'
+    pool:
+      name: Release PRD
+    steps:
+    - checkout: none
+    - task: PowerShell@2
+      name: taskVerificarMudanca
+      displayName: 'Buscar variável HELIXRDMHMLID'
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "RDM: $(HELIXRDMHMLID)"
