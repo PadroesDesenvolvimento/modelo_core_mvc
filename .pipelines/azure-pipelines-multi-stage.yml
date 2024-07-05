@@ -169,7 +169,7 @@ stages:
                 Write-Host "Variaveis da execucao:"
                 Get-ChildItem ENV:
 
-- stage: stageCriacaoLiberacao
+- stage: CriacaoLiberacao
   displayName: 'Criação de Liberação no Helix'
   dependsOn: Dev
   condition: succeeded()
@@ -184,7 +184,7 @@ stages:
         deploy:
           steps:
           - download: none
-          - task: CriacaoLiberacao@2
+          - task: Helix - Criacao de Liberacao (RLM)@2
             displayName: 'Criação de Liberação no Helix'
             name: CriacaoLiberacao
             inputs:
@@ -201,13 +201,14 @@ stages:
               targetType: 'inline'
               script: |
                 Write-Host "1-Liberação: $(HELIXRLMID)"
+                Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]$(HELIXRLMID)"
 
 - stage: verificacaoLiberacao
   displayName: 'Verificação da Liberação no Helix'
-  dependsOn: stageCriacaoLiberacao
+  dependsOn: CriacaoLiberacao
   condition: succeeded()
   variables:
-      HELIXRLMID: $[stageDependencies.stageCriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.CriacaoLiberacao.HELIXRLMID']]
+      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskVerificarLiberacao.HELIXRLMID']]
   jobs:
   - job: numeroLiberacao
     displayName: 'Número da Liberação no Helix'
