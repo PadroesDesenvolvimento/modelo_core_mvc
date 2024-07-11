@@ -117,18 +117,6 @@ stages:
               DotNetVersionForApplication: 'No Managed Code'
               AppPoolName: '$(_Nome_Aplicacao)'
               AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
-          - powershell: |
-                  Write-Host "_________________________________________________________________ "
-                  Write-Host "Get-ChildItem -Path '$(Pipeline.Workspace)\drop' -Recurse"
-                  Write-Host ""
-                  Get-ChildItem -Path "$(Pipeline.Workspace)\drop" -Recurse
-
-                  if (Test-Path "$(Pipeline.Workspace)\drop\$(_Nome_Aplicacao).zip") {
-                    Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip encontrado"
-                  } else {
-                    Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip não encontrado"
-                  }
-            displayName: 'Verificação da pasta drop'
           - task: IISWebAppDeploymentOnMachineGroup@0
             displayName: 'IIS Web App Deploy'
             inputs:
@@ -161,13 +149,7 @@ stages:
                   Write-Host ""
                   Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
             displayName: 'Verificação do arquivo de configuração'
-          - task: PowerShell@2
-            displayName: 'Informacoes do stage'
-            inputs:
-              targetType: 'inline'
-              script: |
-                Write-Host "Variaveis da execucao:"
-                Get-ChildItem ENV:
+
 
 - stage: CriacaoLiberacao
   displayName: 'Criação de Liberação no Helix'
@@ -206,3 +188,78 @@ stages:
               Ambiente_Helix: 'hml'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+- stage: Hml
+  displayName: 'Deploy Hml'
+  dependsOn: CriacaoLiberacao
+  condition: succeeded()
+  variables:
+  - group: 'modelo_core_mvc-webhomolog'
+  - group: 'SefazIdentity-DEV'
+  jobs:
+  - deployment: IIS
+    variables:
+    - name: '_Web_Site_Nome'
+      value: 'seguro'
+    environment: 
+      name: envPadroesDesenvolvimento
+      resourceName: SRV72208
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            displayName: 'Download dos artefatos para o agent'
+            env:
+              NODE_TLS_REJECT_UNAUTHORIZED: 0
+            artifact: drop
+            patterns: '**/*.zip'
+          - task: IISWebAppManagementOnMachineGroup@0
+            displayName: 'IIS Web App Manage'
+            inputs:
+              IISDeploymentType: 'IISWebApplication'
+              WebsiteName: '$(_Web_Site_Nome)'
+              ParentWebsiteNameForVD: '$(_Web_Site_Nome)'
+              VirtualPathForVD: '/$(_Nome_Aplicacao)'
+              ParentWebsiteNameForApplication: '$(_Web_Site_Nome)'
+              VirtualPathForApplication: '/$(_Nome_Aplicacao)'
+              PhysicalPathForApplication: '$(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)'
+              AddBinding: true
+              Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"8088","hostname":"","sslThumbprint":"","sniFlag":false}]}'
+              CreateOrUpdateAppPoolForApplication: true
+              AppPoolNameForApplication: '$(_Nome_Aplicacao)'
+              DotNetVersionForApplication: 'No Managed Code'
+              AppPoolName: '$(_Nome_Aplicacao)'
+              AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
+          - task: IISWebAppDeploymentOnMachineGroup@0
+            displayName: 'IIS Web App Deploy'
+            inputs:
+              WebSiteName: '$(_Web_Site_Nome)'
+              VirtualApplication: '$(_Nome_Aplicacao)'
+              Package: '$(Pipeline.Workspace)/drop/**/*.zip'
+              RemoveAdditionalFilesFlag: true
+              ExcludeFilesFromAppDataFlag: true
+              TakeAppOfflineFlag: true
+              XmlVariableSubstitution: true
+              JSONFiles: 'appsettings.json'
+          - powershell: |
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "appsettings"
+                  Write-Host ""
+                  type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\appsettings.json
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "web.config"
+                  Write-Host ""
+                  type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\web.config
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)"
+                  Write-Host ""
+                  Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img"
+                  Write-Host ""
+                  Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
+            displayName: 'Verificação do arquivo de configuração'
