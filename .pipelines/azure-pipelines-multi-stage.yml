@@ -194,6 +194,7 @@ stages:
               Ambiente_Helix: 'hml'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
           - task: Helix - Criacao de Mudanca (RDM)@2
             displayName: 'Criação de RDM HML'
             inputs:
@@ -203,3 +204,5 @@ stages:
               loginResponsavel: '$(Scrum_Master)'
               Ambiente_Deploy: 'hml'
               Ambiente_Helix: 'hml'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
