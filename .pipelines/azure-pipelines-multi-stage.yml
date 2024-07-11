@@ -194,53 +194,12 @@ stages:
               Ambiente_Helix: 'hml'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-          - task: PowerShell@2
-            name: taskVerificarLiberacao
-            displayName: 'Buscar variável HELIXRLMID'
+          - task: Helix - Criacao de Mudanca (RDM)@2
+            displayName: 'Criação de RDM HML'
             inputs:
-              targetType: 'inline'
-              script: |
-                Write-Host "1-Liberação: $(HELIXRLMID)"
-                Write-Host "##vso[task.setvariable variable=HELIXRLMID;isOutput=true]$(HELIXRLMID)"
-
-- stage: verificacaoLiberacao
-  displayName: 'Verificação da Liberação no Helix'
-  dependsOn: CriacaoLiberacao
-  condition: succeeded()
-  variables:
-      HELIXRLMID: $[stageDependencies.CriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.taskVerificarLiberacao.HELIXRLMID']]
-  jobs:
-  - job: numeroLiberacao
-    displayName: 'Número da Liberação no Helix'
-    pool:
-      name: Release PRD
-    steps:
-    - checkout: none
-    - task: PowerShell@2
-      name: taskPostApproval
-      displayName: 'Buscar variável HELIXRLMID'
-      inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host "2-Liberação: $(HELIXRLMID)"
-          Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
-
-- stage: verificacaoMudanca
-  displayName: 'Verificação da RDM no Helix'
-  dependsOn: verificacaoLiberacao
-  variables:
-      HELIXRDMHMLID: $[stageDependencies.verificacaoLiberacao.numeroLiberacao.outputs['taskPostApproval.HELIXRDMHMLID']]
-  jobs:
-  - job: numeroLiberacao
-    displayName: 'Número da RDM no Helix'
-    pool:
-      name: Release PRD
-    steps:
-    - checkout: none
-    - task: PowerShell@2
-      name: taskVerificarMudanca
-      displayName: 'Buscar variável HELIXRDMHMLID'
-      inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host "RDM: $(HELIXRDMHMLID)"
+              SFZ_RDM_Sumario: 'Deploy automatizado - $(Nome_Aplicacao) em HML'
+              Servico: '$(Servico_Helix)'
+              Acompanhamento: 'nao'
+              loginResponsavel: '$(Scrum_Master)'
+              Ambiente_Deploy: 'hml'
+              Ambiente_Helix: 'hml'
