@@ -424,7 +424,7 @@ stages:
         deploy:
           steps:
           - download: none
-          - task: task: Helix - Encerramento de Liberacao (RLM)@2
+          - task: Helix - Encerramento de Liberacao (RLM)@2
             displayName: 'Encerramento da Liberação no Helix'
             inputs:
               Ambiente_Helix: 'hml'
