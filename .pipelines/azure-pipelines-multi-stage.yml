@@ -281,10 +281,10 @@ stages:
         deploy:
           steps:
           - download: none
-          - task: Helix - Encerramento de RDM@2
+          - task: Helix - Encerramento de Mudanca (RDM)@2
             displayName: 'Encerramento da RDM HML'
             inputs:
-              Ambiente_Deploy: 'prd'
+              Ambiente_Deploy: 'hml'
               Ambiente_Helix: 'hml'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
