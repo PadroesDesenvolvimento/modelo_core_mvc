@@ -326,6 +326,8 @@ stages:
   jobs:
   - deployment: IIS
     variables:
+    - name: '_Web_Site_Nome'
+      value: 'seguro'
     - name: '_Nome_Aplicacao'
       value: 'modelo_core_mvc-prd'
     environment: 
