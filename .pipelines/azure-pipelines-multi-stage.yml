@@ -88,7 +88,7 @@ stages:
     - name: '_Web_Site_Nome'
       value: 'Seguro'
     environment: 
-      name: envPadroesDesenvolvimento
+      name: Deploy-webdesenv
       resourceName: SRV72208
     strategy: 
       runOnce:
@@ -158,7 +158,7 @@ stages:
   jobs: 
   - deployment: deploymentPostApproval
     displayName: 'Aprovação para criação da liberação no Helix'
-    environment: Pre-aprovacao
+    environment: AprovacaoDev
     pool:
       name: Release PRD
     strategy:
@@ -204,7 +204,7 @@ stages:
     - name: '_Nome_Aplicacao'
       value: 'modelo_core_mvc-hml'
     environment: 
-      name: envPadroesDesenvolvimento
+      name: Deploy-webdesenv
       resourceName: SRV72208
     strategy: 
       runOnce:
@@ -268,26 +268,22 @@ stages:
 
 - stage: EncerramentoRDMHML
   displayName: 'Encerramento da RDM HML no Helix'
-  dependsOn: Hml
+  dependsOn: Prd
   condition: succeeded()
   jobs: 
-  - deployment: deploymentPostApproval
-    displayName: 'Aprovação após encerramento da RDM HML'
-    environment: Pre-aprovacao
+  - job: EncerramentoRDMHML
     pool:
       name: Release PRD
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: none
-          - task: Helix - Encerramento de Mudanca (RDM)@2
-            displayName: 'Encerramento da RDM HML'
-            inputs:
-              Ambiente_Deploy: 'hml'
-              Ambiente_Helix: 'hml'
-            env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    steps:
+    - checkout: none
+    - download: none
+    - task: Helix - Encerramento de Mudanca (RDM)@2
+      displayName: 'Encerramento da RDM HML'
+      inputs:
+        Ambiente_Deploy: 'hml'
+        Ambiente_Helix: 'hml'
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - stage: CriacaoRDMPRD
   displayName: 'Criação de RDM PRD no Helix'
@@ -296,7 +292,7 @@ stages:
   jobs: 
   - deployment: deploymentPostApproval
     displayName: 'Aprovação para criação da RDM em produção no Helix'
-    environment: Pre-aprovacao
+    environment: AprovacaoDev
     pool:
       name: Release PRD
     strategy:
@@ -331,7 +327,7 @@ stages:
     - name: '_Nome_Aplicacao'
       value: 'modelo_core_mvc-prd'
     environment: 
-      name: envPadroesDesenvolvimento
+      name: Deploy-webdesenv
       resourceName: SRV72208
     strategy: 
       runOnce:
@@ -419,7 +415,7 @@ stages:
   jobs: 
   - deployment: deploymentPostApproval
     displayName: 'Aprovação após encerramento da RDM HML'
-    environment: Pre-aprovacao
+    environment: AprovacaoDev
     pool:
       name: Release PRD
     strategy:
