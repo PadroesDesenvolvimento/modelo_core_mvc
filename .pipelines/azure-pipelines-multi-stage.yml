@@ -268,7 +268,7 @@ stages:
 
 - stage: EncerramentoRDMHML
   displayName: 'Encerramento da RDM HML no Helix'
-  dependsOn: Prd
+  dependsOn: Hml
   condition: succeeded()
   jobs: 
   - job: EncerramentoRDMHML
