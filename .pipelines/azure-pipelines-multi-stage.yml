@@ -402,6 +402,7 @@ stages:
     pool:
       name: Release PRD
     steps:
+    - checkout: none
     - download: none
     - task: Helix - Encerramento de Mudanca (RDM)@2
       displayName: 'Encerramento da RDM PRD'
