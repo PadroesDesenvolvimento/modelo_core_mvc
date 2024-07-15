@@ -269,7 +269,6 @@ stages:
 - stage: EncerramentoRDMHML
   displayName: 'Encerramento da RDM HML no Helix'
   dependsOn: Hml
-  condition: succeeded()
   jobs: 
   - job: EncerramentoRDMHML
     pool:
@@ -392,7 +391,6 @@ stages:
 - stage: EncerramentoRDMPRD
   displayName: 'Encerramento da RDM PRD no Helix'
   dependsOn: Prd
-  condition: succeeded()
   jobs: 
   - job: EncerramentoRDMPRD
     pool:
@@ -411,7 +409,6 @@ stages:
 - stage: EncerramentoLiberacao
   displayName: 'Encerramento da Liberacao no Helix'
   dependsOn: EncerramentoRDMPRD
-  condition: succeeded()
   jobs: 
   - deployment: deploymentPostApproval
     displayName: 'Aprovação após encerramento da RDM HML'
