@@ -88,7 +88,7 @@ stages:
     - name: '_Web_Site_Nome'
       value: 'Seguro'
     environment: 
-      name: envPadroesDesenvolvimento
+      name: Deploy-webdesenv
       resourceName: SRV72208
     strategy: 
       runOnce:
@@ -117,18 +117,6 @@ stages:
               DotNetVersionForApplication: 'No Managed Code'
               AppPoolName: '$(_Nome_Aplicacao)'
               AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
-          - powershell: |
-                  Write-Host "_________________________________________________________________ "
-                  Write-Host "Get-ChildItem -Path '$(Pipeline.Workspace)\drop' -Recurse"
-                  Write-Host ""
-                  Get-ChildItem -Path "$(Pipeline.Workspace)\drop" -Recurse
-
-                  if (Test-Path "$(Pipeline.Workspace)\drop\$(_Nome_Aplicacao).zip") {
-                    Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip encontrado"
-                  } else {
-                    Write-Host "Arquivo drop/$(_Nome_Aplicacao).zip não encontrado"
-                  }
-            displayName: 'Verificação da pasta drop'
           - task: IISWebAppDeploymentOnMachineGroup@0
             displayName: 'IIS Web App Deploy'
             inputs:
@@ -161,22 +149,16 @@ stages:
                   Write-Host ""
                   Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
             displayName: 'Verificação do arquivo de configuração'
-          - task: PowerShell@2
-            displayName: 'Informacoes do stage'
-            inputs:
-              targetType: 'inline'
-              script: |
-                Write-Host "Variaveis da execucao:"
-                Get-ChildItem ENV:
 
-- stage: stageCriacaoLiberacao
-  displayName: 'Criação de Liberação no Helix'
+
+- stage: CriacaoLiberacao
+  displayName: 'Criação de Liberação e RDM HML no Helix'
   dependsOn: Dev
   condition: succeeded()
   jobs: 
   - deployment: deploymentPostApproval
     displayName: 'Aprovação para criação da liberação no Helix'
-    environment: Pre-aprovacao
+    environment: AprovacaoDev
     pool:
       name: Release PRD
     strategy:
@@ -184,7 +166,7 @@ stages:
         deploy:
           steps:
           - download: none
-          - task: CriacaoLiberacao@2
+          - task: Helix - Criacao de Liberacao (RLM)@2
             displayName: 'Criação de Liberação no Helix'
             name: CriacaoLiberacao
             inputs:
@@ -194,52 +176,253 @@ stages:
               Ambiente_Helix: 'hml'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-          - task: PowerShell@2
-            name: taskVerificarLiberacao
-            displayName: 'Buscar variável HELIXRLMID'
-            inputs:
-              targetType: 'inline'
-              script: |
-                Write-Host "1-Liberação: $(HELIXRLMID)"
 
-- stage: verificacaoLiberacao
-  displayName: 'Verificação da Liberação no Helix'
-  dependsOn: stageCriacaoLiberacao
+          - task: Helix - Criacao de Mudanca (RDM)@2
+            displayName: 'Criação de RDM HML'
+            inputs:
+              SFZ_RDM_Sumario: 'Deploy automatizado - $(Nome_Aplicacao) em HML'
+              Servico: '$(Servico_Helix)'
+              Acompanhamento: 'nao'
+              loginResponsavel: '$(Scrum_Master)'
+              Ambiente_Deploy: 'hml'
+              Ambiente_Helix: 'hml'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+- stage: Hml
+  displayName: 'Deploy Hml'
+  dependsOn: CriacaoLiberacao
   condition: succeeded()
   variables:
-      HELIXRLMID: $[stageDependencies.stageCriacaoLiberacao.deploymentPostApproval.outputs['deploymentPostApproval.CriacaoLiberacao.HELIXRLMID']]
+  - group: 'modelo_core_mvc-webhomolog'
+  - group: 'SefazIdentity-DEV'
   jobs:
-  - job: numeroLiberacao
-    displayName: 'Número da Liberação no Helix'
-    pool:
-      name: Release PRD
-    steps:
-    - checkout: none
-    - task: PowerShell@2
-      name: taskPostApproval
-      displayName: 'Buscar variável HELIXRLMID'
-      inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host "2-Liberação: $(HELIXRLMID)"
-          Write-Host "##vso[task.setvariable variable=HELIXRDMHMLID;isOutput=true]CRQ000000214783"
+  - deployment: IIS
+    variables:
+    - name: '_Web_Site_Nome'
+      value: 'seguro'
+    - name: '_Nome_Aplicacao'
+      value: 'modelo_core_mvc-hml'
+    environment: 
+      name: Deploy-webdesenv
+      resourceName: SRV72208
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            displayName: 'Download dos artefatos para o agent'
+            env:
+              NODE_TLS_REJECT_UNAUTHORIZED: 0
+            artifact: drop
+            patterns: '**/*.zip'
+          - task: IISWebAppManagementOnMachineGroup@0
+            displayName: 'IIS Web App Manage'
+            inputs:
+              IISDeploymentType: 'IISWebApplication'
+              WebsiteName: '$(_Web_Site_Nome)'
+              ParentWebsiteNameForVD: '$(_Web_Site_Nome)'
+              VirtualPathForVD: '/$(_Nome_Aplicacao)'
+              ParentWebsiteNameForApplication: '$(_Web_Site_Nome)'
+              VirtualPathForApplication: '/$(_Nome_Aplicacao)'
+              PhysicalPathForApplication: '$(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)'
+              AddBinding: true
+              Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"8088","hostname":"","sslThumbprint":"","sniFlag":false}]}'
+              CreateOrUpdateAppPoolForApplication: true
+              AppPoolNameForApplication: '$(_Nome_Aplicacao)'
+              DotNetVersionForApplication: 'No Managed Code'
+              AppPoolName: '$(_Nome_Aplicacao)'
+              AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
+          - task: IISWebAppDeploymentOnMachineGroup@0
+            displayName: 'IIS Web App Deploy'
+            inputs:
+              WebSiteName: '$(_Web_Site_Nome)'
+              VirtualApplication: '$(_Nome_Aplicacao)'
+              Package: '$(Pipeline.Workspace)/drop/**/*.zip'
+              RemoveAdditionalFilesFlag: true
+              ExcludeFilesFromAppDataFlag: true
+              TakeAppOfflineFlag: true
+              XmlVariableSubstitution: true
+              JSONFiles: 'appsettings.json'
+          - powershell: |
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "appsettings"
+                  Write-Host ""
+                  type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\appsettings.json
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "web.config"
+                  Write-Host ""
+                  type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\web.config
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)"
+                  Write-Host ""
+                  Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img"
+                  Write-Host ""
+                  Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
+            displayName: 'Verificação do arquivo de configuração'
 
-- stage: verificacaoMudanca
-  displayName: 'Verificação da RDM no Helix'
-  dependsOn: verificacaoLiberacao
-  variables:
-      HELIXRDMHMLID: $[stageDependencies.verificacaoLiberacao.numeroLiberacao.outputs['taskPostApproval.HELIXRDMHMLID']]
-  jobs:
-  - job: numeroLiberacao
-    displayName: 'Número da RDM no Helix'
+- stage: EncerramentoRDMHML
+  displayName: 'Encerramento da RDM HML no Helix'
+  dependsOn: Hml
+  jobs: 
+  - job: EncerramentoRDMHML
     pool:
       name: Release PRD
     steps:
     - checkout: none
-    - task: PowerShell@2
-      name: taskVerificarMudanca
-      displayName: 'Buscar variável HELIXRDMHMLID'
+    - download: none
+    - task: Helix - Encerramento de Mudanca (RDM)@2
+      displayName: 'Encerramento da RDM HML'
       inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host "RDM: $(HELIXRDMHMLID)"
+        Ambiente_Deploy: 'hml'
+        Ambiente_Helix: 'hml'
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+- stage: CriacaoRDMPRD
+  displayName: 'Criação de RDM PRD no Helix'
+  dependsOn: EncerramentoRDMHML
+  condition: succeeded()
+  jobs: 
+  - deployment: deploymentPostApproval
+    displayName: 'Aprovação para criação da RDM em produção no Helix'
+    environment: AprovacaoDev
+    pool:
+      name: Release PRD
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: none
+          - task: Helix - Criacao de Mudanca (RDM)@2
+            displayName: 'Criação de RDM PRD'
+            inputs:
+              SFZ_RDM_Sumario: 'Deploy automatizado - $(Nome_Aplicacao) em HML'
+              Servico: '$(Servico_Helix)'
+              Acompanhamento: 'nao'
+              loginResponsavel: '$(Scrum_Master)'
+              Ambiente_Deploy: 'prd'
+              Ambiente_Helix: 'hml'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+- stage: Prd
+  displayName: 'Deploy Prd'
+  dependsOn: CriacaoRDMPRD
+  condition: succeeded()
+  variables:
+  - group: 'modelo_core_mvc-web'
+  - group: 'SefazIdentity'
+  jobs:
+  - deployment: IIS
+    variables:
+    - name: '_Web_Site_Nome'
+      value: 'seguro'
+    - name: '_Nome_Aplicacao'
+      value: 'modelo_core_mvc-prd'
+    environment: 
+      name: Deploy-webdesenv
+      resourceName: SRV72208
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            displayName: 'Download dos artefatos para o agent'
+            env:
+              NODE_TLS_REJECT_UNAUTHORIZED: 0
+            artifact: drop
+            patterns: '**/*.zip'
+          - task: IISWebAppManagementOnMachineGroup@0
+            displayName: 'IIS Web App Manage'
+            inputs:
+              IISDeploymentType: 'IISWebApplication'
+              WebsiteName: '$(_Web_Site_Nome)'
+              ParentWebsiteNameForVD: '$(_Web_Site_Nome)'
+              VirtualPathForVD: '/$(_Nome_Aplicacao)'
+              ParentWebsiteNameForApplication: '$(_Web_Site_Nome)'
+              VirtualPathForApplication: '/$(_Nome_Aplicacao)'
+              PhysicalPathForApplication: '$(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)'
+              AddBinding: true
+              Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"8088","hostname":"","sslThumbprint":"","sniFlag":false}]}'
+              CreateOrUpdateAppPoolForApplication: true
+              AppPoolNameForApplication: '$(_Nome_Aplicacao)'
+              DotNetVersionForApplication: 'No Managed Code'
+              AppPoolName: '$(_Nome_Aplicacao)'
+              AppPoolNameForWebsite: '$(_Nome_Aplicacao)'
+          - task: IISWebAppDeploymentOnMachineGroup@0
+            displayName: 'IIS Web App Deploy'
+            inputs:
+              WebSiteName: '$(_Web_Site_Nome)'
+              VirtualApplication: '$(_Nome_Aplicacao)'
+              Package: '$(Pipeline.Workspace)/drop/**/*.zip'
+              RemoveAdditionalFilesFlag: true
+              ExcludeFilesFromAppDataFlag: true
+              TakeAppOfflineFlag: true
+              XmlVariableSubstitution: true
+              JSONFiles: 'appsettings.json'
+          - powershell: |
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "appsettings"
+                  Write-Host ""
+                  type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\appsettings.json
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "web.config"
+                  Write-Host ""
+                  type $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\web.config
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)"
+                  Write-Host ""
+                  Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)
+                  
+                  Write-Host "_________________________________________________________________ "
+                  Write-Host "Dir $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img"
+                  Write-Host ""
+                  Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
+            displayName: 'Verificação do arquivo de configuração'
+
+- stage: EncerramentoRDMPRD
+  displayName: 'Encerramento da RDM PRD no Helix'
+  dependsOn: Prd
+  jobs: 
+  - job: EncerramentoRDMPRD
+    pool:
+      name: Release PRD
+    steps:
+    - checkout: none
+    - download: none
+    - task: Helix - Encerramento de Mudanca (RDM)@2
+      displayName: 'Encerramento da RDM PRD'
+      inputs:
+        Ambiente_Deploy: 'prd'
+        Ambiente_Helix: 'hml'
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+- stage: EncerramentoLiberacao
+  displayName: 'Encerramento da Liberacao no Helix'
+  dependsOn: EncerramentoRDMPRD
+  jobs: 
+  - deployment: deploymentPostApproval
+    displayName: 'Aprovação após encerramento da RDM HML'
+    environment: AprovacaoDev
+    pool:
+      name: Release PRD
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: none
+          - task: Helix - Encerramento de Liberacao (RLM)@2
+            displayName: 'Encerramento da Liberação no Helix'
+            inputs:
+              Ambiente_Helix: 'hml'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
