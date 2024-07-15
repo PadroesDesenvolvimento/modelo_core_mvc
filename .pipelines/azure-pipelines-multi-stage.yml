@@ -23,6 +23,7 @@ stages:
       name: Visual Studio
     steps:
     - checkout: self
+    - clean: true
     - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
       - task: SonarQubePrepare@4
         displayName: Prepare analysis on SonarQube
