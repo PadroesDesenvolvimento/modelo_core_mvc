@@ -85,6 +85,7 @@ stages:
   - group: 'SefazIdentity-DEV'
   jobs:
   - deployment: IIS
+    displayName: 'Deploy Dev'
     variables:
     - name: '_Web_Site_Nome'
       value: 'Seguro'
@@ -151,14 +152,13 @@ stages:
                   Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
             displayName: 'Verificação do arquivo de configuração'
 
-
 - stage: CriacaoLiberacao
   displayName: 'Criação de Liberação e RDM HML no Helix'
   dependsOn: Dev
   condition: succeeded()
   jobs: 
-  - deployment: deploymentPostApproval
-    displayName: 'Aprovação para criação da liberação no Helix'
+  - deployment: AprovacaoHelix
+    displayName: 'Criação da liberação e RDM HML no Helix'
     environment: AprovacaoDev
     pool:
       name: Release PRD
@@ -269,29 +269,34 @@ stages:
 
 - stage: EncerramentoRDMHML
   displayName: 'Encerramento da RDM HML no Helix'
-  dependsOn: Hml
+  dependsOn: CriacaoLiberacao
   jobs: 
-  - job: EncerramentoRDMHML
+  - deployment: AprovacaoHelix
+    displayName: 'Encerramento da RDM HML no Helix'
+    environment: AprovacaoDev
     pool:
       name: Release PRD
-    steps:
-    - checkout: none
-    - download: none
-    - task: Helix - Encerramento de Mudanca (RDM)@2
-      displayName: 'Encerramento da RDM HML'
-      inputs:
-        Ambiente_Deploy: 'hml'
-        Ambiente_Helix: 'hml'
-      env:
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none
+          - download: none
+          - task: Helix - Encerramento de Mudanca (RDM)@2
+            displayName: 'Encerramento da RDM HML'
+            inputs:
+              Ambiente_Deploy: 'hml'
+              Ambiente_Helix: 'hml'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - stage: CriacaoRDMPRD
   displayName: 'Criação de RDM PRD no Helix'
   dependsOn: EncerramentoRDMHML
   condition: succeeded()
   jobs: 
-  - deployment: deploymentPostApproval
-    displayName: 'Aprovação para criação da RDM em produção no Helix'
+  - deployment: AprovacaoHelix
+    displayName: 'Criação da RDM em produção no Helix'
     environment: AprovacaoDev
     pool:
       name: Release PRD
@@ -409,9 +414,9 @@ stages:
 
 - stage: EncerramentoLiberacao
   displayName: 'Encerramento da Liberacao no Helix'
-  dependsOn: EncerramentoRDMPRD
+  dependsOn: EncerramentoRDMHML
   jobs: 
-  - deployment: deploymentPostApproval
+  - deployment: AprovacaoHelix
     displayName: 'Aprovação após encerramento da RDM HML'
     environment: AprovacaoDev
     pool:
