@@ -174,7 +174,7 @@ stages:
               Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
               Servico: '$(Servico_Helix)'
               loginResponsavel: '$(Scrum_Master)'
-              Ambiente_Helix: 'hml'
+              Ambiente_Helix: '$(ambiente_helix)'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
@@ -186,7 +186,7 @@ stages:
               Acompanhamento: 'nao'
               loginResponsavel: '$(Scrum_Master)'
               Ambiente_Deploy: 'hml'
-              Ambiente_Helix: 'hml'
+              Ambiente_Helix: '$(ambiente_helix)'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
@@ -287,7 +287,7 @@ stages:
             displayName: 'Encerramento da RDM HML'
             inputs:
               Ambiente_Deploy: 'hml'
-              Ambiente_Helix: 'hml'
+              Ambiente_Helix: '$(ambiente_helix)'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
@@ -314,7 +314,7 @@ stages:
               Acompanhamento: 'nao'
               loginResponsavel: '$(Scrum_Master)'
               Ambiente_Deploy: 'prd'
-              Ambiente_Helix: 'hml'
+              Ambiente_Helix: '$(ambiente_helix)'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
@@ -411,7 +411,7 @@ stages:
       displayName: 'Encerramento da RDM PRD'
       inputs:
         Ambiente_Deploy: 'prd'
-        Ambiente_Helix: 'hml'
+        Ambiente_Helix: '$(ambiente_helix)'
       env:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
@@ -432,6 +432,6 @@ stages:
           - task: Helix - Encerramento de Liberacao (RLM)@2
             displayName: 'Encerramento da Liberação'
             inputs:
-              Ambiente_Helix: 'hml'
+              Ambiente_Helix: '$(ambiente_helix)'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
