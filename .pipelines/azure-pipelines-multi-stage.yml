@@ -421,7 +421,7 @@ stages:
 
 - stage: EncerramentoLiberacao
   displayName: 'Encerramento da Liberacao'
-  dependsOn: CriacaoLiberacao
+  dependsOn: EncerramentoRDMHML
   jobs: 
   - deployment: AprovacaoHelix
     displayName: 'Encerramento da Liberação'
