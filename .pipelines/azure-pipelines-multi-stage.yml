@@ -85,6 +85,7 @@ stages:
   - group: 'SefazIdentity-DEV'
   jobs:
   - deployment: IIS
+    displayName: 'Dev'
     variables:
     - name: '_Web_Site_Nome'
       value: 'Seguro'
@@ -151,14 +152,13 @@ stages:
                   Get-ChildItem -Path $(_Local_IIS)\$(_Web_Site_Local)\$(_Nome_Aplicacao)\wwwroot\img
             displayName: 'Verificação do arquivo de configuração'
 
-
 - stage: CriacaoLiberacao
-  displayName: 'Criação de Liberação e RDM HML no Helix'
+  displayName: 'Criação de Liberação e RDM HML'
   dependsOn: Dev
   condition: succeeded()
   jobs: 
-  - deployment: deploymentPostApproval
-    displayName: 'Aprovação para criação da liberação no Helix'
+  - deployment: AprovacaoHelix
+    displayName: 'Criação da liberação e RDM HML'
     environment: AprovacaoDev
     pool:
       name: Release PRD
@@ -168,7 +168,7 @@ stages:
           steps:
           - download: none
           - task: Helix - Criacao de Liberacao (RLM)@2
-            displayName: 'Criação de Liberação no Helix'
+            displayName: 'Criação de Liberação'
             name: CriacaoLiberacao
             inputs:
               Sumario: 'Deploy automatizado - $(_Nome_Aplicacao)'
@@ -199,6 +199,7 @@ stages:
   - group: 'SefazIdentity-DEV'
   jobs:
   - deployment: IIS
+    displayName: 'Hml'
     variables:
     - name: '_Web_Site_Nome'
       value: 'seguro'
@@ -268,30 +269,35 @@ stages:
             displayName: 'Verificação do arquivo de configuração'
 
 - stage: EncerramentoRDMHML
-  displayName: 'Encerramento da RDM HML no Helix'
-  dependsOn: Hml
+  displayName: 'Encerramento da RDM HML'
+  dependsOn: CriacaoLiberacao
   jobs: 
-  - job: EncerramentoRDMHML
+  - deployment: AprovacaoHelix
+    displayName: 'Encerramento da RDM HML'
+    environment: AprovacaoDev
     pool:
       name: Release PRD
-    steps:
-    - checkout: none
-    - download: none
-    - task: Helix - Encerramento de Mudanca (RDM)@2
-      displayName: 'Encerramento da RDM HML'
-      inputs:
-        Ambiente_Deploy: 'hml'
-        Ambiente_Helix: 'hml'
-      env:
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none
+          - download: none
+          - task: Helix - Encerramento de Mudanca (RDM)@2
+            displayName: 'Encerramento da RDM HML'
+            inputs:
+              Ambiente_Deploy: 'hml'
+              Ambiente_Helix: 'hml'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - stage: CriacaoRDMPRD
-  displayName: 'Criação de RDM PRD no Helix'
+  displayName: 'Criação de RDM PRD'
   dependsOn: EncerramentoRDMHML
   condition: succeeded()
   jobs: 
-  - deployment: deploymentPostApproval
-    displayName: 'Aprovação para criação da RDM em produção no Helix'
+  - deployment: AprovacaoHelix
+    displayName: 'Criação da RDM em produção'
     environment: AprovacaoDev
     pool:
       name: Release PRD
@@ -321,6 +327,7 @@ stages:
   - group: 'SefazIdentity'
   jobs:
   - deployment: IIS
+    displayName: 'Prd'
     variables:
     - name: '_Web_Site_Nome'
       value: 'seguro'
@@ -390,10 +397,11 @@ stages:
             displayName: 'Verificação do arquivo de configuração'
 
 - stage: EncerramentoRDMPRD
-  displayName: 'Encerramento da RDM PRD no Helix'
-  dependsOn: Prd
+  displayName: 'Encerramento da RDM PRD'
+  dependsOn: CriacaoRDMPRD
   jobs: 
   - job: EncerramentoRDMPRD
+    displayName: 'Encerramento da RDM PRD'
     pool:
       name: Release PRD
     steps:
@@ -408,11 +416,11 @@ stages:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - stage: EncerramentoLiberacao
-  displayName: 'Encerramento da Liberacao no Helix'
-  dependsOn: EncerramentoRDMPRD
+  displayName: 'Encerramento da Liberacao'
+  dependsOn: CriacaoLiberacao
   jobs: 
-  - deployment: deploymentPostApproval
-    displayName: 'Aprovação após encerramento da RDM HML'
+  - deployment: AprovacaoHelix
+    displayName: 'Encerramento da Liberação'
     environment: AprovacaoDev
     pool:
       name: Release PRD
@@ -422,7 +430,7 @@ stages:
           steps:
           - download: none
           - task: Helix - Encerramento de Liberacao (RLM)@2
-            displayName: 'Encerramento da Liberação no Helix'
+            displayName: 'Encerramento da Liberação'
             inputs:
               Ambiente_Helix: 'hml'
             env:
