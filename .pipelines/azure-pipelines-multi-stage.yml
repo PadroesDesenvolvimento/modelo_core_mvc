@@ -400,20 +400,24 @@ stages:
   displayName: 'Encerramento da RDM PRD'
   dependsOn: CriacaoRDMPRD
   jobs: 
-  - job: EncerramentoRDMPRD
+  - deployment: AprovacaoHelix
     displayName: 'Encerramento da RDM PRD'
+    environment: AprovacaoDev
     pool:
       name: Release PRD
-    steps:
-    - checkout: none
-    - download: none
-    - task: Helix - Encerramento de Mudanca (RDM)@2
-      displayName: 'Encerramento da RDM PRD'
-      inputs:
-        Ambiente_Deploy: 'prd'
-        Ambiente_Helix: '$(ambiente_helix)'
-      env:
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none
+          - download: none
+          - task: Helix - Encerramento de Mudanca (RDM)@2
+            displayName: 'Encerramento da RDM PRD'
+            inputs:
+              Ambiente_Deploy: 'prd'
+              Ambiente_Helix: '$(ambiente_helix)'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - stage: EncerramentoLiberacao
   displayName: 'Encerramento da Liberacao'
