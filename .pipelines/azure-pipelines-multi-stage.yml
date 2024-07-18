@@ -65,13 +65,6 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
-    - task: PowerShell@2
-      displayName: 'Informacoes do stage'
-      inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host "Variaveis da execucao:"
-          Get-ChildItem ENV:
 
 - stage: Dev
   displayName: 'Deploy Dev'
