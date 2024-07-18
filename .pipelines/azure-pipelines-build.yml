@@ -1,12 +1,8 @@
-trigger: 
-  branches:
-    include:
-    - Pipelines_YAML
+trigger: none
 name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
-- name: BuildParameters.RestoreBuildProjects
-  value: '**/*modelo_core_mvc.csproj'
+- group: 'Pipeline'
 
 stages:
 - stage: build

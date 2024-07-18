@@ -1,7 +1,4 @@
-trigger: 
-  branches:
-    include:
-    - Pipelines_YAML
+trigger: none
 name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
