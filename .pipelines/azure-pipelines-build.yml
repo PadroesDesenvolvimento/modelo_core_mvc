@@ -1,60 +1,110 @@
 trigger: none
-variables:
-  BuildParameters.RestoreBuildProjects: '**/*modelo_core_mvc.csproj'
-  buildConfiguration: release
 name: $(date:yyyyMMdd)$(rev:.r)
-jobs:
-- job:
-  pool:
-    name: Visual Studio
-  steps:
-  - checkout: self
-  - task: SonarQubePrepare@4
-    displayName: Prepare analysis on SonarQube
-    continueOnError: True
-    inputs:
-      SonarQube: 86a0aeb0-42e0-4aeb-bb38-c46e0b00b615
-      projectKey: Layout_Padrao_modelo_core_mvc_AYICN6jAipiVWg4CBkqP
-      projectName: modelo_core_mvc
-      extraProperties: "# Additional properties that will be passed to the scanner, \n# Put one key=value per line, example:\nsonar.exclusions=**/wwwroot/**, **/docker/**"
-  - task: DotNetCoreCLI@2
-    displayName: Restore
-    inputs:
-      command: restore
-      projects: $(BuildParameters.RestoreBuildProjects)
-      selectOrConfig: config
-      feedRestore: 4eb34145-aff0-41ad-a936-1f3645390db5
-      nugetConfigPath: D:\Nuget\nuget.config
-      noCache: true
-  - task: DotNetCoreCLI@2
-    displayName: Build
-    inputs:
-      projects: $(BuildParameters.RestoreBuildProjects)
-      arguments: '--configuration $(BuildConfiguration) --no-restore '
-  - task: DotNetCoreCLI@2
-    displayName: dotnet test
-    inputs:
-      command: test
-      projects: '**/*[Tt]ests/*.csproj'
-      arguments: --configuration $(BuildConfiguration)
-  - task: SonarQubeAnalyze@4
-    displayName: Run Code Analysis
-    continueOnError: True
-  - task: SonarQubePublish@4
-    displayName: Publish Quality Gate Result
-    continueOnError: True
-  - task: DotNetCoreCLI@2
-    displayName: Publish
-    inputs:
-      command: publish
-      publishWebProjects: false
-      projects: $(BuildParameters.RestoreBuildProjects)
-      arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --no-build --no-restore
-      zipAfterPublish: True
-  - task: PublishBuildArtifacts@1
-    displayName: Publish Artifact
-    condition: succeededOrFailed()
-    inputs:
-      PathtoPublish: $(build.artifactstagingdirectory)
-      TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
+
+variables:
+- group: 'Pipeline'
+
+stages:
+- stage: build
+  displayName: 'Criação dos artefatos'
+  jobs:
+  - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
+    - job: Fortify
+      displayName: Analise de Segurança
+      pool:
+        name: Fortify-SCA
+      steps:
+      - checkout: self
+        clean: true
+      - task: FortifyScanCentralSAST@7
+        displayName: Fortify ScanCentral SAST Assessment
+        inputs:
+          scanCentralCtrlUrl: https://ssc-fortify.intra.fazenda.sp.gov.br:8443/scancentral-ctrl
+          sscUrl: https://ssc-fortify.intra.fazenda.sp.gov.br:8443/ssc
+          sscCiToken: dae18f45-818b-4ffb-bbab-43d3ef144769
+          uploadToSSC: true
+          applicationName: ICT-modelo_core_mvc
+          applicationVersion: 'master '
+          buildFailureCriteria: '[fortify priority order]:critical [fortify priority order]:high'
+          buildTool: none
+          skipBuild: false
+          excludeDisabledProjects: false
+          includeTest: false
+          includeNodeModules: false
+          email: devsec_fortify@fazenda.sp.gov.br
+          block: true
+          outputFile: ICT-modelo_core_mvc.fpr
+          logFile: ICT-modelo_core_mvc.log
+          overwrite: true
+          quiet: false
+      - task: dependency-check-build-task@6
+        displayName: Dependency Check
+        condition: succeededOrFailed()
+        inputs:
+          projectName: ICT-modelo_core_mvc
+          scanPath: $(Agent.BuildDirectory)/s
+          format: HTML,JUNIT
+          failOnCVSS: 5
+          warnOnCVSSViolation: true
+          enableVerbose: true
+          additionalArguments: --disableOssIndex --disableNodeAudit --noupdate --exclude **/*.zip --exclude **/*.jar --disableCentral
+          localInstallPath: D:\dependency-check\
+      - task: PublishTestResults@2
+        displayName: Publish Test Results *junit.xml
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '*junit.xml'
+          searchFolder: $(Common.TestResultsDirectory)\dependency-check\
+          testRunTitle: ICT-modelo_core_mvc
+  - job: Build
+    displayName: 'Build'
+    pool:
+      name: Visual Studio
+    steps:
+    - checkout: self
+      clean: true
+    - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
+      - task: SonarQubePrepare@4
+        displayName: Prepare analysis on SonarQube
+        continueOnError: True
+        inputs:
+          SonarQube: 86a0aeb0-42e0-4aeb-bb38-c46e0b00b615
+          projectKey: Layout_Padrao_modelo_core_mvc_AYICN6jAipiVWg4CBkqP
+          projectName: modelo_core_mvc
+          extraProperties: "# Additional properties that will be passed to the scanner, \n# Put one key=value per line, example:\nsonar.exclusions=**/wwwroot/**, **/docker/**"
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: $(projectsToBuild)
+        selectOrConfig: config
+        feedRestore: 4eb34145-aff0-41ad-a936-1f3645390db5
+        nugetConfigPath: D:\Nuget\nuget.config
+        noCache: true
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: $(projectsToBuild)
+        arguments: '--configuration $(BuildConfiguration) --no-restore '
+    - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
+      - task: SonarQubeAnalyze@4
+        displayName: Run Code Analysis
+        continueOnError: True
+      - task: SonarQubePublish@4
+        displayName: Publish Quality Gate Result
+        continueOnError: True
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: $(projectsToBuild)
+        arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --no-build --no-restore
+        zipAfterPublish: True
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 
