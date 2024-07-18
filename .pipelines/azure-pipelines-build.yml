@@ -54,12 +54,12 @@ stages:
           additionalArguments: --disableOssIndex --disableNodeAudit --noupdate --exclude **/*.zip --exclude **/*.jar --disableCentral
           localInstallPath: D:\dependency-check\
       - task: PublishTestResults@2
-      displayName: Publish Test Results *junit.xml
-      condition: succeededOrFailed()
-      inputs:
-        testResultsFiles: '*junit.xml'
-        searchFolder: $(Common.TestResultsDirectory)\dependency-check\
-        testRunTitle: ICT-modelo_core_mvc
+        displayName: Publish Test Results *junit.xml
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '*junit.xml'
+          searchFolder: $(Common.TestResultsDirectory)\dependency-check\
+          testRunTitle: ICT-modelo_core_mvc
   - job: Build
     displayName: 'Build'
     pool:
