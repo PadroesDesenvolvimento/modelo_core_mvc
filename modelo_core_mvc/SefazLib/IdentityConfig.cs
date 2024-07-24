@@ -70,8 +70,6 @@ namespace SefazLib.IdentityCfg
 
             WSFederationOptions = options =>
             {
-                options.TokenHandlers.Clear();
-                options.TokenHandlers.Add(new CustomSaml2SecurityTokenHandler());
                 options.Wtrealm = configuration["identity:realm"];
                 options.MetadataAddress = configuration["identity:metadataaddress"];
 
