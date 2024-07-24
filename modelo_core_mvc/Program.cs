@@ -69,6 +69,16 @@ services.AddSingleton(async provider =>
 services.AddTransient<IdentityConfig>();
 services.AddHttpClient<ProjetosApiClient>();
 services.AddTransient<AzureUtil>();
+services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 
