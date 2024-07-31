@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
+using System.Security.Cryptography;
 using System.Xml;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,52 +14,47 @@ namespace SefazLib.SamlToJwt
         {
             var issuer = configuration["identity:metadataaddress"];
             var audience = configuration["identity:realm"];
-            var clientSecret = configuration["identity:ClientSecret"]; 
+
+            var privateKey = configuration["identity:PrivateKey"];
+            var rsa = new RSACryptoServiceProvider();
+            rsa.FromXmlString(privateKey);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = new RsaSecurityKey(rsa);
 
             var samlTokenXml = new XmlDocument();
             samlTokenXml.LoadXml(samlToken);
 
-            if (!string.IsNullOrEmpty(clientSecret))
+            var handler = new JwtSecurityTokenHandler();
+            try
             {
-                var handler = new JwtSecurityTokenHandler();
-                try
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    var tokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        Issuer = issuer,
-                        Audience = audience,
-                        Expires = DateTime.UtcNow.AddMinutes(60),
-                        SigningCredentials = new SigningCredentials(
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clientSecret)), 
-                            SecurityAlgorithms.HmacSha256Signature)
-                    };
+                    Issuer = issuer,
+                    Audience = audience,
+                    Expires = DateTime.UtcNow.AddMinutes(60),
+                    SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256)
+                };
 
-                    // Extrai as reivindicações do token SAML
-                    var claims = new ClaimsIdentity();
-                    var samlAssertionNode = samlTokenXml.SelectSingleNode("//*[local-name()='Assertion']");
-                    var samlAttributeNodes = samlAssertionNode.SelectNodes("//*[local-name()='Attribute']");
+                // Extrai as reivindicações do token SAML
+                var claims = new ClaimsIdentity();
+                var samlAssertionNode = samlTokenXml.SelectSingleNode("//*[local-name()='Assertion']");
+                var samlAttributeNodes = samlAssertionNode.SelectNodes("//*[local-name()='Attribute']");
 
-                    foreach (XmlNode attributeNode in samlAttributeNodes)
-                    {
-                        var attributeName = attributeNode.Attributes["Name"].Value;
-                        var attributeValue = attributeNode.FirstChild.InnerText;
-                        claims.AddClaim(new Claim(attributeName, attributeValue));
-                    }
-
-                    tokenDescriptor.Subject = claims;
-
-                    var jwtToken = handler.CreateJwtSecurityToken(tokenDescriptor);
-
-                    return handler.WriteToken(jwtToken);
-                }
-                catch
+                foreach (XmlNode attributeNode in samlAttributeNodes)
                 {
-                    return samlTokenXml.InnerText;
+                    var attributeName = attributeNode.Attributes["Name"].Value;
+                    var attributeValue = attributeNode.FirstChild.InnerText;
+                    claims.AddClaim(new Claim(attributeName, attributeValue));
                 }
+
+                tokenDescriptor.Subject = claims;
+                var signedToken = tokenHandler.CreateToken(tokenDescriptor);
+
+                return handler.WriteToken(signedToken);
             }
-            else
+            catch
             {
-                return "ClientSecret not provided."; // Tratar a situação em que o ClientSecret é nulo ou vazio
+                return samlTokenXml.InnerText;
             }
         }
     }
