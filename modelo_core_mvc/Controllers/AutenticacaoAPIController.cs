@@ -4,9 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using SefazLib.IdentityCfg;
-using SefazLib.SamlToJwt;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -39,42 +39,40 @@ namespace exemplo_autenticador_bff.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                if (configuration["identity:type"] == "azuread")
+                switch (configuration["identity:type"])
                 {
-                    try
-                    {
-                        token = await identityConfig.obterAccessToken(null);
-                    }
-                    catch { }
-                }
-                else
-                {
-                    var claims = User.Claims;
-                    foreach (var claim in User.Claims)
-                    {
-                        if (claim.Type.Contains("id_token")) { token = claim.Value; }
-                    }
-
-                    if (token == "")
-                    {
-                        var xml = new XmlDocument();
-                        var bootstapContext = (string)User.Identities.First().BootstrapContext;
-                        xml.LoadXml(bootstapContext);
-                        var assertionNode = xml.SelectSingleNode("//*[local-name()='Assertion']");
-
-                        if (assertionNode != null)
+                    case "azuread":
+                        // o token é jwt e pode ser repassado para o front-end
+                        try { token = await identityConfig.obterAccessToken(null); }
+                        catch { }
+                        break;
+                
+                    case "sefazidentity":
+                        // o token é SAML e precisa ser criado um jwt para ser repassado para o front-end
+                        var claims = User.Claims;
+                        foreach (var claim in User.Claims)
                         {
-                            string samlToken = assertionNode.OuterXml;
-                            var jwtToken = SamlToJwt.ConvertSamlToJwt(samlToken, configuration);
-                            token = jwtToken;
+                            if (claim.Type.Contains("id_token")) { token = claim.Value; }
                         }
-                    }
+
+                        if (token == "")
+                        {
+                            var xml = new XmlDocument();
+                            var bootstapContext = (string)User.Identities.First().BootstrapContext;
+                            xml.LoadXml(bootstapContext);
+                            var assertionNode = xml.SelectSingleNode("//*[local-name()='Assertion']");
+
+                            if (assertionNode != null)
+                            {
+                                string samlToken = assertionNode.OuterXml;
+                                var jwtToken = ConvertSamlToJwt(samlToken, configuration);
+                                token = jwtToken;
+                            }
+                        }
+                        break;
                 }
             }
-            else
-            {
-                return Unauthorized();
-            }
+            else { return Unauthorized(); }
 
             if (!string.IsNullOrEmpty(returnUrl))
             {
@@ -88,7 +86,76 @@ namespace exemplo_autenticador_bff.Controllers
             return Ok(new { token });
         }
 
-        [HttpGet("validar-token")]
+        private string ConvertSamlToJwt(string samlToken, IConfiguration configuration)
+        {
+            var issuer = configuration["identity:metadataaddress"];
+            var audience = configuration["identity:realm"];
+            var privateKeyXml = configuration["identity:PrivateKey"];
+            var rsa = new RSACryptoServiceProvider();
+            rsa.FromXmlString(privateKeyXml);
+            var key = new RsaSecurityKey(rsa);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256);
+            var samlTokenXml = new XmlDocument();
+            samlTokenXml.LoadXml(samlToken);
+
+            var claims = new ClaimsIdentity();
+            var samlAssertionNode = samlTokenXml.SelectSingleNode("//*[local-name()='Assertion']");
+            var samlAttributeNodes = samlAssertionNode.SelectNodes("//*[local-name()='Attribute']");
+
+            foreach (XmlNode attributeNode in samlAttributeNodes)
+            {
+                var attributeName = attributeNode.Attributes["Name"].Value;
+                var attributeValue = attributeNode.FirstChild.InnerText;
+                claims.AddClaim(new Claim(attributeName, attributeValue));
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = claims,
+                Issuer = configuration["identity:issuer"],
+                Audience = audience,
+                Expires = DateTime.UtcNow.AddMinutes(60),
+                SigningCredentials = credentials
+            };
+
+            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+            var jwtToken = tokenHandler.WriteToken(securityToken);
+
+            return jwtToken;
+        }
+
+        private bool IsValidToken(string jwtToken)
+        {
+            try
+            {
+                var xmlPublicKey = configuration["identity:PublicKey"];
+                var rsa = new RSACryptoServiceProvider();
+                rsa.FromXmlString(xmlPublicKey);
+
+                var tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new RsaSecurityKey(rsa)
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                SecurityToken securityToken;
+
+                tokenHandler.ValidateToken(jwtToken, tokenValidationParameters, out securityToken);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("Erro ao validar o token: {Message}", ex.Message);
+                return false;
+            }
+        }
+
+        [HttpGet("validar")]
         public IActionResult ValidarToken()
         {
             // Obter o token do cabeçalho Authorization
@@ -96,10 +163,10 @@ namespace exemplo_autenticador_bff.Controllers
 
             if (string.IsNullOrEmpty(authorizationHeader))
             {
-                return BadRequest("Token JWT não encontrado no cabeçalho Authorization.");
+                return BadRequest("Token JWT não encontrado no cabeçalho.");
             }
 
-            // O cabeçalho Authorization tem o formato "Bearer {token}", onde {token}" é o token JWT
+            // O cabeçalho Authorization tem o formato "Bearer {token}"
             string[] tokenParts = authorizationHeader.Split(' ');
 
             if (tokenParts.Length != 2 || !tokenParts[0].Equals("Bearer", StringComparison.OrdinalIgnoreCase))
@@ -126,54 +193,46 @@ namespace exemplo_autenticador_bff.Controllers
             }
         }
 
-        private string SignToken(string token)
+        [HttpGet(".well-known/openid-configuration")]
+        public IActionResult GetOidcConfiguration()
         {
-            var privateKey = configuration["identity:PrivateKey"];
-            var rsa = new RSACryptoServiceProvider();
-            rsa.FromXmlString(privateKey);
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = new RsaSecurityKey(rsa);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var baseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/AutenticacaoAPI";
+            var oidcConfig = new
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("jwt", token) }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256)
+                issuer = baseUrl,
+                token_endpoint = $"{baseUrl}/token",
+                verificacao_endpoint = $"{baseUrl}/validar",
+                id_token_signing_alg_values_supported = new[] { "RS256" },
+                chave_publica = ConvertXmlToJwk(configuration["identity:PublicKey"]),
             };
 
-            var signedToken = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(signedToken);
+            return Ok(oidcConfig);
         }
 
-        private bool IsValidToken(string jwtToken)
+        private object ConvertXmlToJwk(string xmlKey)
         {
-            var publicKey = configuration["identity:PublicKey"];
             var rsa = new RSACryptoServiceProvider();
-            rsa.FromXmlString(publicKey);
+            rsa.FromXmlString(xmlKey);
+            var parameters = rsa.ExportParameters(false);
 
-            var tokenValidationParameters = new TokenValidationParameters
+            var modulus = Convert.ToBase64String(parameters.Modulus)
+                .TrimEnd('=')
+                .Replace('+', '-')
+                .Replace('/', '_');
+
+            var exponent = Convert.ToBase64String(parameters.Exponent)
+                .TrimEnd('=')
+                .Replace('+', '-')
+                .Replace('/', '_');
+
+            var jwk = new
             {
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new RsaSecurityKey(rsa)
+                kty = "RSA",
+                n = modulus,
+                e = exponent
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken securityToken;
-
-            try
-            {
-                tokenHandler.ValidateToken(jwtToken, tokenValidationParameters, out securityToken);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError("Erro ao validar o token: {Message}", ex.Message);
-                return false;
-            }
+            return jwk;
         }
     }
 }
