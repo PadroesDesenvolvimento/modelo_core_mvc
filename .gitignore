@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/modelo_core_mvc/SefazLib/privateKey.xml
+/modelo_core_mvc/SefazLib/publicKey.xml
+/modelo_core_mvc/SefazLib/privateKey.xml
