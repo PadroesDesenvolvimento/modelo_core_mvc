@@ -2,8 +2,6 @@
 @using Microsoft.Extensions.Configuration
 @using SefazLib.IdentityCfg;
 @using SefazLib.usuarios
-@using SefazLib.AzureUtils;
-@inject AzureUtil azureUtil;
 @inject IConfiguration Configuration
 @{
     var nomeExibicao = "Não Autenticado";
@@ -11,16 +9,6 @@
     if (User.Identity.IsAuthenticated)
     {
         nomeExibicao = @User.Identity.Name.Split(":")[0];
-
-        if (Configuration["identity:type"] == "azuread")
-        {
-            try
-            {
-                Usuario usuario = await azureUtil.GetUserAsync();
-                nomeExibicao = usuario.nomeCompleto;
-            }
-            catch { }
-        }
 
         var authenticationResult = await Context.AuthenticateAsync();
         var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == ".Token.access_token").Value;

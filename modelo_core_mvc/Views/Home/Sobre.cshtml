@@ -20,11 +20,6 @@
             <li>Endereço: @Configuration["identity:metadataaddress"]</li>
             <li>Aplicação: @Configuration["identity:realm"]</li>
         }
-        @if (@Configuration["identity:type"] == "azuread")
-        {
-            <li>Endereço: @Configuration["AzureAd:Instance"]/@Configuration["AzureAd:TenantId"]</li>
-            <li>ClientID: @Configuration["AzureAd:ClientId"]</li>
-        }
         @if (@Configuration["identity:type"] == "loginsefaz")
         {
             <li>Authority: @Configuration["LoginSefaz:ServerRealm"]</li>

@@ -10,15 +10,10 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Net.Http;
 using System.Collections.Generic;
-using Microsoft.Identity.Web;
 using System.Net.Http.Headers;
-using Azure.Identity;
-using Azure.Core;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using TokenWS;
 using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens.Saml2;
 using System.Threading;
 
 namespace SefazLib.IdentityCfg
@@ -36,7 +31,6 @@ namespace SefazLib.IdentityCfg
         public string erro;
         public string[] scopes;
         public Dictionary<string, string> tokenInfo;
-        private readonly ITokenAcquisition tokenAcquisition;
 
         public IdentityConfig(string accessToken)
         {
@@ -52,10 +46,6 @@ namespace SefazLib.IdentityCfg
             {
                 switch (Configuration["identity:type"])
                 {
-                    case ("azuread"):
-                        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-                        break;
                     case ("loginsefaz"):
                         options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -79,6 +69,13 @@ namespace SefazLib.IdentityCfg
                     options.Events.OnRedirectToIdentityProvider = OnRedirectToIdentityProvider;
                     options.Events.OnSecurityTokenReceived = OnSecurityTokenReceived;
                     options.TokenValidationParameters = new TokenValidationParameters { SaveSigninToken = true };
+                    // Remove todos os TokenHandlers registrados, que por padrão são 3:
+                    options.TokenHandlers.Clear();
+                    // Acrescenta os TokenHandlers customizados para tokens SAML2 e SAML
+                    options.TokenHandlers.Add(new CustomSaml2SecurityTokenHandler());
+                    options.TokenHandlers.Add(new CustomSamlSecurityTokenHandler());
+                    // Acrescenta novamente o TokenHandler para tokens JWT
+                    options.TokenHandlers.Add(new Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler());
                 }
             };
 
@@ -129,12 +126,8 @@ namespace SefazLib.IdentityCfg
             };
         }
 
-        public async Task<AuthenticationHeaderValue> AuthenticationHeader()
+        public AuthenticationHeaderValue AuthenticationHeader()
         {
-            if (configuration["identity:type"] == "azuread")
-            {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await obterAccessToken(null));
-            }
             if (configuration["identity:type"] == "loginsefaz")
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
@@ -143,91 +136,43 @@ namespace SefazLib.IdentityCfg
             return httpClient.DefaultRequestHeaders.Authorization;
         }
 
-        public class CustomSaml2SecurityTokenHandler : Saml2SecurityTokenHandler
+        public class CustomSaml2SecurityTokenHandler : Microsoft.IdentityModel.Tokens.Saml2.Saml2SecurityTokenHandler
         {
-            public override async Task<TokenValidationResult> ValidateTokenAsync(string token, TokenValidationParameters _validationParameters)
+            public override async Task<TokenValidationResult> ValidateTokenAsync(string token,
+            TokenValidationParameters tokenValidationParameters)
             {
-                var validationParameters = _validationParameters.Clone();
-                var configuration = await validationParameters.ConfigurationManager.GetBaseConfigurationAsync(CancellationToken.None).ConfigureAwait(false);
-                var issuers = new[] { configuration.Issuer };
-                validationParameters.ValidIssuers = (validationParameters.ValidIssuers == null ? issuers : validationParameters.ValidIssuers.Concat(issuers));
-                validationParameters.IssuerSigningKeys = (validationParameters.IssuerSigningKeys == null ? configuration.SigningKeys : validationParameters.IssuerSigningKeys.Concat(configuration.SigningKeys));
-
-                return await base.ValidateTokenAsync(token, validationParameters);
-            }
-        }
-
-        #region Azure AD
-        public IdentityConfig(IConfiguration Configuration, ITokenAcquisition TokenAcquisition)
-        {
-            tokenAcquisition = TokenAcquisition;
-            httpClient = new HttpClient();
-            configuration = Configuration;
-            Logoff = false;
-
-            AuthenticationOptions = options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            };
-
-            WSFederationOptions = options =>
-            {
-                options.Wtrealm = configuration["identity:realm"];
-                options.MetadataAddress = configuration["identity:metadataaddress"];
-            };
-
-        }
-
-        public void SetScope(string callApi)
-        {
-            scopes = configuration.GetValue<string>("CallApi:" + callApi)?.Split(' ').ToArray();
-        }
-
-        public async Task<string> obterAccessToken(ClientSecretCredential clientSecretCredential)
-        {
-            try
-            {
-                if (clientSecretCredential is null)
+                if ((string.IsNullOrEmpty(tokenValidationParameters.ValidIssuer) &&
+                (tokenValidationParameters.ValidIssuers?.Any() != true)) ||
+                (tokenValidationParameters.IssuerSigningKeys?.Any() != true))
                 {
-                    if (scopes is null)
-                    {
-                        SetScope("ScopeForAccessToken");
-                    }
-                    jwtToken = await tokenAcquisition.GetAccessTokenForUserAsync(scopes);
-
+                    var baseConfiguration = await
+                    tokenValidationParameters.ConfigurationManager.GetBaseConfigurationAsync(
+                    CancellationToken.None);
+                    tokenValidationParameters.ValidIssuer = baseConfiguration.Issuer;
+                    tokenValidationParameters.IssuerSigningKeys = baseConfiguration.SigningKeys;
                 }
-                else
-                {
-                    jwtToken = clientSecretCredential!.GetTokenAsync(new TokenRequestContext(scopes)).Result.Token;
-                }
-                tokenInfo = GetTokenInfo(jwtToken);
+                return await base.ValidateTokenAsync(token, tokenValidationParameters);
             }
-            catch (Exception ex)
-            {
-                erro = ex.Message;
-            }
-            return jwtToken;
         }
-        protected Dictionary<string, string> GetTokenInfo(string token)
+        public class CustomSamlSecurityTokenHandler :
+         Microsoft.IdentityModel.Tokens.Saml.SamlSecurityTokenHandler
         {
-            var TokenInfo = new Dictionary<string, string>();
-
-            var handler = new JwtSecurityTokenHandler();
-            var jwtSecurityToken = handler.ReadJwtToken(token);
-            var claims = jwtSecurityToken.Claims.ToList();
-
-            foreach (var claim in claims)
+            public override async Task<TokenValidationResult> ValidateTokenAsync(string token,
+            TokenValidationParameters tokenValidationParameters)
             {
-                if (!TokenInfo.ContainsKey(claim.Type))
+                if ((string.IsNullOrEmpty(tokenValidationParameters.ValidIssuer) &&
+                (tokenValidationParameters.ValidIssuers?.Any() != true)) ||
+                (tokenValidationParameters.IssuerSigningKeys?.Any() != true))
                 {
-                    TokenInfo.Add(claim.Type, claim.Value);
+                    var baseConfiguration = await
+                    tokenValidationParameters.ConfigurationManager.GetBaseConfigurationAsync(
+                    CancellationToken.None);
+                    tokenValidationParameters.ValidIssuer = baseConfiguration.Issuer;
+                    tokenValidationParameters.IssuerSigningKeys = baseConfiguration.SigningKeys;
                 }
+                return await base.ValidateTokenAsync(token, tokenValidationParameters);
             }
-
-            return TokenInfo;
         }
-        #endregion
 
         public static async Task Logout(HttpContext httpContext, IConfiguration Configuration)
         {

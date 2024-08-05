@@ -9,7 +9,6 @@ using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using modelo_core_mvc.Models;
 using modelo_core_mvc.ProjetosApi;
-using SefazLib.AzureUtils;
 using SefazLib.IdentityCfg;
 using System;
 using System.Linq;
@@ -28,15 +27,6 @@ var opcoesAutenticacao = identityConfig.AuthenticationOptions;
 // Esse switch e' so' para exemplificar os diversos tipos possiveis na Sefaz
 switch (Configuration["identity:type"])
 {
-    case "azuread":
-        services.AddControllersWithViews().AddMicrosoftIdentityUI();
-        string[] initialScopes = Configuration.GetValue<string>("CallApi:ScopeForAccessToken")?.Split(' ').ToArray();
-        services.AddMicrosoftIdentityWebAppAuthentication(Configuration)
-                .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
-                .AddInMemoryTokenCaches();
-        services.AddTransient<ListModel>();
-        break;
-
     case ("loginsefaz"):
         services.AddControllersWithViews();
         services.AddAuthentication(opcoesAutenticacao)
@@ -68,7 +58,6 @@ services.AddSingleton(async provider =>
 });
 services.AddTransient<IdentityConfig>();
 services.AddHttpClient<ProjetosApiClient>();
-services.AddTransient<AzureUtil>();
 services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
