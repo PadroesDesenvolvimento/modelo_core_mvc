@@ -33,7 +33,7 @@ namespace exemplo_autenticador_bff.Controllers
 
         [Authorize]
         [HttpGet("token")]
-        public async Task<IActionResult> Obter_Token(string returnUrl)
+        public IActionResult ObterToken(string returnUrl)
         {
             var token = "";
 
@@ -41,12 +41,6 @@ namespace exemplo_autenticador_bff.Controllers
             {
                 switch (configuration["identity:type"])
                 {
-                    case "azuread":
-                        // o token é jwt e pode ser repassado para o front-end
-                        try { token = await identityConfig.obterAccessToken(null); }
-                        catch { }
-                        break;
-                
                     case "sefazidentity":
                         // o token é SAML e precisa ser criado um jwt para ser repassado para o front-end
                         var claims = User.Claims;
@@ -83,6 +77,7 @@ namespace exemplo_autenticador_bff.Controllers
                 return Redirect(uriBuilder.ToString());
             }
 
+            var chavePublica = ConvertXmlToJwk(configuration["identity:PublicKey"]);
             return Ok(new { token });
         }
 

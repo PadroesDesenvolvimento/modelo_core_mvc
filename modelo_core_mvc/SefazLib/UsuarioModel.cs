@@ -1,12 +1,7 @@
-﻿using AdaptiveCards;
-using AdaptiveCards.Rendering.Html;
-using AdaptiveCards.Templating;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -22,7 +17,6 @@ namespace SefazLib.usuarios
         [Display(Name = "Foto")]
         public string foto { get; set; }
 
-        //Azure properties
         public string nomeCompleto { get; set; }
         public string cargo { get; }
         public string email { get; }
@@ -85,28 +79,5 @@ namespace SefazLib.usuarios
         {
             return JsonConvert.DeserializeObject<IEnumerable<Usuario>>(UsuarioJson);
         }
-
-        public RenderedAdaptiveCard GetAdaptiveCard()
-        {
-            var templateJson = File.ReadAllText(@".\SefazLib\AdaptiveCard.json");
-
-            AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
-            var textoTemplate = template.Expand(this);
-
-            var jObject = JObject.Parse(textoTemplate);
-            if (!jObject.TryGetValue("version", out var _))
-                jObject["version"] = "1.5";
-
-            // Parse the Adaptive Card JSON
-            AdaptiveCardParseResult parseResult = AdaptiveCard.FromJson(jObject.ToString());
-            AdaptiveCard card = parseResult.Card;
-
-            AdaptiveCardRenderer renderer = new();
-            RenderedAdaptiveCard renderedCard = renderer.RenderCard(card);
-            var html = renderedCard.Html;
-
-            return renderedCard;
-        }
-
     }
 }

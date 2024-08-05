@@ -3,66 +3,36 @@
 @using Microsoft.Extensions.Configuration
 @using SefazLib.IdentityCfg;
 @using SefazLib.usuarios
-@using SefazLib.AzureUtils;
 @inject IConfiguration Configuration
-@inject AzureUtil azureUtil;
 @inject IdentityConfig identityConfig;
 
 @{
     var nomeExibicao = "Não autenticado";
-    var foto = "";
     var jwt = "";
     if (User.Identity.IsAuthenticated)
     {
         nomeExibicao = @User.Identity.Name.Split(":")[0];
-        if (Configuration["identity:type"] == "azuread")
-        {
-            try
-            {
-                Usuario usuario = await azureUtil.GetUserAsync();
-                nomeExibicao = usuario.nomeCompleto;
-                foto = usuario.foto;
-                identityConfig.SetScope("ScopeForAccessToken");
-                jwt = await identityConfig.obterAccessToken(null);
-            }
-            catch { }
-        }
     }
 }
 
 <div>
     <p class="titulo_formulario">Usuário autenticado:</p>
     <div class="usuario-info">
-        @if (Configuration["identity:type"] == "azuread")
-        {
-            @if (!string.IsNullOrEmpty(foto))
+        <div>
+            <p>Nome: @ViewData["Nome"]</p>
+            @if (ViewData["Login"] != null)
             {
-                <div class="foto-usuario">
-                    <img src="data:image;base64,@foto" alt="Foto do usuário" />
-                </div>
+                <p>Login: @ViewData["Login"]</p>
             }
-            <div class="texto-usuario">
-                @Html.Raw(@ViewData["html"])
-            </div>
-        }
-        else
-        {
-            <div>
-                <p>Nome de exibição: @nomeExibicao </p>
-                @if (ViewData["Login"] != null)
-                {
-                    <p>Login: @ViewData["Login"]</p>
-                }
-                @if (ViewData["Cpf"] != null)
-                {
-                    <p>Identificação: @ViewData["Cpf"]</p>
-                }
-                @if (ViewData["Nascimento"] != null)
-                {
-                    <p>Nascimento: @ViewData["Nascimento"]</p>
-                }
-            </div>
-        }
+            @if (ViewData["Cpf"] != null)
+            {
+                <p>Identificação: @ViewData["Cpf"]</p>
+            }
+            @if (ViewData["Nascimento"] != null)
+            {
+                <p>Nascimento: @ViewData["Nascimento"]</p>
+            }
+        </div>
     </div>
     @if (!string.IsNullOrEmpty(jwt))
     {
