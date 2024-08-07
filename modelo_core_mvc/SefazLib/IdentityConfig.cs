@@ -15,6 +15,9 @@ using System.Linq;
 using TokenWS;
 using System.Security.Claims;
 using System.Threading;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using System.Xml;
 
 namespace SefazLib.IdentityCfg
 {
@@ -27,7 +30,7 @@ namespace SefazLib.IdentityCfg
         public Action<OpenIdConnectOptions> OpenIdConnectOptions { get; private set; }
         public static Boolean Logoff { get; private set; }
         public HttpClient httpClient;
-        public static string jwtToken;
+        public static string jwtToken { get; set; }
         public string erro;
         public string[] scopes;
         public Dictionary<string, string> tokenInfo;
@@ -126,11 +129,57 @@ namespace SefazLib.IdentityCfg
             };
         }
 
+        public static string ConvertSamlToJwt(string samlToken, IConfiguration configuration)
+        {
+            var audience = configuration["identity:realm"];
+            var privateKeyXml = configuration["identity:PrivateKey"];
+            var rsa = new RSACryptoServiceProvider();
+            rsa.FromXmlString(privateKeyXml);
+            var key = new RsaSecurityKey(rsa);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256);
+            var samlTokenXml = new XmlDocument();
+            samlTokenXml.LoadXml(samlToken);
+
+            var claims = new ClaimsIdentity();
+            var samlAssertionNode = samlTokenXml.SelectSingleNode("//*[local-name()='Assertion']");
+            var samlAttributeNodes = samlAssertionNode.SelectNodes("//*[local-name()='Attribute']");
+
+            foreach (XmlNode attributeNode in samlAttributeNodes)
+            {
+                var attributeName = attributeNode.Attributes["Name"].Value;
+                var attributeValue = attributeNode.FirstChild.InnerText;
+                claims.AddClaim(new Claim(attributeName, attributeValue));
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = claims,
+                Issuer = configuration["identity:issuer"],
+                Audience = audience,
+                Expires = DateTime.UtcNow.AddMinutes(60),
+                SigningCredentials = credentials
+            };
+
+            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+            var jwtToken = tokenHandler.WriteToken(securityToken);
+
+            return jwtToken;
+        }
+
         public AuthenticationHeaderValue AuthenticationHeader()
         {
-            if (configuration["identity:type"] == "loginsefaz")
+            if (jwtToken != "" && jwtToken is not null)
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                try
+                {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                }
+                catch (Exception ex)
+                {
+                    // registrar no log o erro
+                    erro = ex.Message;
+                }
             }
 
             return httpClient.DefaultRequestHeaders.Authorization;

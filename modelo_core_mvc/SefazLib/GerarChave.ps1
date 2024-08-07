@@ -9,4 +9,3 @@ Set-Content -Path "privateKey.xml" -Value $privateKey
 $publicKey = $rsa.ToXmlString($false)
 Set-Content -Path "publicKey.xml" -Value $publicKey
 
-Write-Output "Chaves RSA geradas e salvas como 'privateKey.xml' e 'publicKey.xml'"

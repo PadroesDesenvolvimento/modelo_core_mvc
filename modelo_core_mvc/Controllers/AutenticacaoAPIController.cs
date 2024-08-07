@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using SefazLib.IdentityCfg;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 
-namespace exemplo_autenticador_bff.Controllers
+namespace autenticacaoAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -59,7 +56,7 @@ namespace exemplo_autenticador_bff.Controllers
                             if (assertionNode != null)
                             {
                                 string samlToken = assertionNode.OuterXml;
-                                var jwtToken = ConvertSamlToJwt(samlToken, configuration);
+                                var jwtToken = IdentityConfig.ConvertSamlToJwt(samlToken, configuration);
                                 token = jwtToken;
                             }
                         }
@@ -77,47 +74,7 @@ namespace exemplo_autenticador_bff.Controllers
                 return Redirect(uriBuilder.ToString());
             }
 
-            var chavePublica = ConvertXmlToJwk(configuration["identity:PublicKey"]);
             return Ok(new { token });
-        }
-
-        private string ConvertSamlToJwt(string samlToken, IConfiguration configuration)
-        {
-            var issuer = configuration["identity:metadataaddress"];
-            var audience = configuration["identity:realm"];
-            var privateKeyXml = configuration["identity:PrivateKey"];
-            var rsa = new RSACryptoServiceProvider();
-            rsa.FromXmlString(privateKeyXml);
-            var key = new RsaSecurityKey(rsa);
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256);
-            var samlTokenXml = new XmlDocument();
-            samlTokenXml.LoadXml(samlToken);
-
-            var claims = new ClaimsIdentity();
-            var samlAssertionNode = samlTokenXml.SelectSingleNode("//*[local-name()='Assertion']");
-            var samlAttributeNodes = samlAssertionNode.SelectNodes("//*[local-name()='Attribute']");
-
-            foreach (XmlNode attributeNode in samlAttributeNodes)
-            {
-                var attributeName = attributeNode.Attributes["Name"].Value;
-                var attributeValue = attributeNode.FirstChild.InnerText;
-                claims.AddClaim(new Claim(attributeName, attributeValue));
-            }
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = claims,
-                Issuer = configuration["identity:issuer"],
-                Audience = audience,
-                Expires = DateTime.UtcNow.AddMinutes(60),
-                SigningCredentials = credentials
-            };
-
-            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            var jwtToken = tokenHandler.WriteToken(securityToken);
-
-            return jwtToken;
         }
 
         private bool IsValidToken(string jwtToken)
@@ -228,6 +185,28 @@ namespace exemplo_autenticador_bff.Controllers
             };
 
             return jwk;
+        }
+
+        [HttpGet("chave-publica")]
+        public IActionResult GetJwks()
+        {
+            var xmlPublicKey = configuration["identity:PublicKey"];
+            var rsa = new RSACryptoServiceProvider();
+            rsa.FromXmlString(xmlPublicKey);
+
+            var key = new RsaSecurityKey(rsa);
+            var parameters = key.Rsa.ExportParameters(false);
+
+            var jwk = new
+            {
+                kty = "RSA",
+                n = Base64UrlEncoder.Encode(parameters.Modulus),
+                e = Base64UrlEncoder.Encode(parameters.Exponent)
+            };
+
+            var jwks = new { keys = new[] { jwk } };
+
+            return Ok(jwks.keys[0]);
         }
     }
 }

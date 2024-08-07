@@ -1,13 +1,10 @@
+using autenticacaoAPI.Controllers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
-using modelo_core_mvc.Models;
 using modelo_core_mvc.ProjetosApi;
 using SefazLib.IdentityCfg;
 using System;
@@ -56,7 +53,8 @@ services.AddSingleton(async provider =>
 
     return accessToken;
 });
-services.AddTransient<IdentityConfig>();
+services.AddSingleton<IdentityConfig>();
+services.AddSingleton<AutenticacaoAPIController>();
 services.AddHttpClient<ProjetosApiClient>();
 services.AddCors(options =>
 {
