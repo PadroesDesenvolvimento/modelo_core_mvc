@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using modelo_core_mvc.Helpers;
-using SefazLib.IdentityCfg;
+using SefazLib;
 using System.Xml;
 
 namespace modelo_core_mvc.Controllers;

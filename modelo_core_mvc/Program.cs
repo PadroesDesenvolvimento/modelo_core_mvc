@@ -1,14 +1,14 @@
-using autenticacaoAPI.Controllers;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using modelo_core_mvc.ProjetosApi;
-using SefazLib.IdentityCfg;
 using System;
 using System.Linq;
+using SefazLib;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
@@ -35,6 +35,22 @@ switch (Configuration["identity:type"])
                     cookie.SlidingExpiration = true;
                 })
                 .AddOpenIdConnect(identityConfig.OpenIdConnectOptions);
+        services.AddSingleton(async provider =>
+        {
+            var authenticationResult = await provider.GetRequiredService<IHttpContextAccessor>().HttpContext.AuthenticateAsync();
+            var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == "Token.access_token").Value;
+
+            return accessToken;
+        });
+        break;
+
+    case ("jwt"):
+        var autenticacao = new Autenticacao(Configuration);
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    autenticacao.ConfigureJwtBearerOptions(options);
+                });
         break;
 
     default:
@@ -46,26 +62,8 @@ switch (Configuration["identity:type"])
 }
 #endregion
 
-services.AddSingleton(async provider =>
-{
-    var authenticationResult = await provider.GetRequiredService<IHttpContextAccessor>().HttpContext.AuthenticateAsync();
-    var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == "Token.access_token").Value;
-
-    return accessToken;
-});
 services.AddSingleton<IdentityConfig>();
-services.AddSingleton<AutenticacaoAPIController>();
 services.AddHttpClient<ProjetosApiClient>();
-services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-});
 
 var app = builder.Build();
 

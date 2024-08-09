@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Authentication
 @using Microsoft.Extensions.Configuration
-@using SefazLib.IdentityCfg;
+@using SefazLib;
 @inject IdentityConfig identityConfig;
 @inject IConfiguration Configuration
 
@@ -39,11 +39,11 @@
     @if (!string.IsNullOrEmpty(ViewData["Authority"].ToString()))
     {
         <p>
-            Authority: @Configuration["LoginSefaz:ServerRealm"] -
+            Authority: @Configuration["loginsefaz:ServerRealm"] -
             @ViewData["Authority"]
         </p>
         <p>
-            Metadata: @Configuration["LoginSefaz:Metadata"] -
+            Metadata: @Configuration["loginsefaz:Metadata"] -
             @ViewData["Metadata"]
         </p>
     }

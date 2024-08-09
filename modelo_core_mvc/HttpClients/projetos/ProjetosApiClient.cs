@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using modelo_core_mvc.projetos;
-using SefazLib.IdentityCfg;
+using SefazLib;
 
 namespace modelo_core_mvc.ProjetosApi
 {

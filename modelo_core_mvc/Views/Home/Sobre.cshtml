@@ -17,15 +17,20 @@
         <li>Tipo: @Configuration["identity:type"]</li>
         @if (@Configuration["identity:type"] == "sefazidentity")
         {
-            <li>Endereço: @Configuration["identity:metadataaddress"]</li>
-            <li>Aplicação: @Configuration["identity:realm"]</li>
+            <li>Endereço: @Configuration["sefazidentity:metadataaddress"]</li>
+            <li>Aplicação: @Configuration["sefazidentity:realm"]</li>
         }
         @if (@Configuration["identity:type"] == "loginsefaz")
         {
-            <li>Authority: @Configuration["LoginSefaz:ServerRealm"]</li>
-            <li>Metadata: @Configuration["LoginSefaz:Metadata"]</li>
+            <li>Authority: @Configuration["loginsefaz:ServerRealm"]</li>
+            <li>Metadata: @Configuration["loginsefaz:Metadata"]</li>
         }
-
+        @if (@Configuration["identity:type"] == "jwt")
+        {
+            <li>Autenticador: @Configuration["jwt:issuer"]</li>
+            <li>Audience: @Configuration["jwt:audience"]</li>
+            <li>Chave pública: @Configuration["jwt:chave-publica"]</li>
+        }
     </ul>
     <p>______________________________________________</p>
     <h2>Dados da conexão</h2>
