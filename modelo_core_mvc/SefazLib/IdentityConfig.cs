@@ -18,6 +18,7 @@ using System.Threading;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Xml;
+using System.Net.Security;
 
 namespace SefazLib;
 
@@ -134,7 +135,11 @@ public class IdentityConfig
 
                 options.BackchannelHttpHandler = new HttpClientHandler
                 {
-                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+                    {
+                        // Implementar a lógica de validação personalizada aqui
+                        return errors == SslPolicyErrors.None;
+                    }
                 };
             };
         }
@@ -150,8 +155,12 @@ public class IdentityConfig
     {
         var issuer = configuration["jwt:issuer"]; // endpoint dessa aplicacao
         var audience = configuration["jwt:audience"];  // endpoint da aplicacao cliente que vai usar esse servico
-        var privateKeyXml = configuration["jwt:PrivateKey"];
-        var rsa = new RSACryptoServiceProvider();
+        var privateKeyXml = configuration["identity:PrivateKey"];
+        if (privateKeyXml is null)
+        {
+            throw new Exception("Chave privada não configurada. Verifique se existe jwt:PrivateKey no appSettings.json");
+        }
+        var rsa = RSA.Create(2048); 
         rsa.FromXmlString(privateKeyXml);
         var key = new RsaSecurityKey(rsa);
         var credentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256);
