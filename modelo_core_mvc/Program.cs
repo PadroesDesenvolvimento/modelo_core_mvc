@@ -1,17 +1,14 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
-using modelo_core_mvc.Models;
 using modelo_core_mvc.ProjetosApi;
-using SefazLib.IdentityCfg;
 using System;
 using System.Linq;
+using SefazLib;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
@@ -38,6 +35,22 @@ switch (Configuration["identity:type"])
                     cookie.SlidingExpiration = true;
                 })
                 .AddOpenIdConnect(identityConfig.OpenIdConnectOptions);
+        services.AddSingleton(async provider =>
+        {
+            var authenticationResult = await provider.GetRequiredService<IHttpContextAccessor>().HttpContext.AuthenticateAsync();
+            var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == "Token.access_token").Value;
+
+            return accessToken;
+        });
+        break;
+
+    case ("jwt"):
+        var autenticacao = new Autenticacao(Configuration);
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    autenticacao.ConfigureJwtBearerOptions(options);
+                });
         break;
 
     default:
@@ -49,25 +62,8 @@ switch (Configuration["identity:type"])
 }
 #endregion
 
-services.AddSingleton(async provider =>
-{
-    var authenticationResult = await provider.GetRequiredService<IHttpContextAccessor>().HttpContext.AuthenticateAsync();
-    var accessToken = authenticationResult.Properties.Items.FirstOrDefault(prop => prop.Key == "Token.access_token").Value;
-
-    return accessToken;
-});
-services.AddTransient<IdentityConfig>();
+services.AddSingleton<IdentityConfig>();
 services.AddHttpClient<ProjetosApiClient>();
-services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-});
 
 var app = builder.Build();
 

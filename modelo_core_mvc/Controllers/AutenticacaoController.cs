@@ -9,8 +9,8 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using modelo_core_mvc.Helpers;
-using SefazLib.usuarios;
-using SefazLib.IdentityCfg;
+using SefazLib;
+using System.Xml;
 
 namespace modelo_core_mvc.Controllers;
 
@@ -51,10 +51,12 @@ public class AutenticacaoController : BaseController
         }
         if (String.IsNullOrEmpty(token))
         {
-            ViewData["token"] = await AuthenticationAsync();
+            token = await AuthenticationAsync();
         }
 
         ViewData["token"] = token;
+
+        IdentityConfig.jwtToken = token;
 
         return View();
     }
@@ -83,34 +85,63 @@ public class AutenticacaoController : BaseController
         string idToken = await HttpContext.GetTokenAsync("id_token");
         string refreshToken = await HttpContext.GetTokenAsync("refresh_token");
         string newAccessToken = "";
-        if (configuration["identity:type"] == "loginsefaz")
+        switch (configuration["identity:type"])
         {
-            var currentUserName = "Não identificado";
-            ClaimsPrincipal currentUser = this.User;
-            if (currentUser != null)
-            {
-                var claim = currentUser.FindFirst(ClaimTypes.NameIdentifier);
-                if (claim != null)
+            case "loginsefaz":
+                var currentUserName = "Não identificado";
+                ClaimsPrincipal currentUser = this.User;
+                if (currentUser != null)
                 {
-                    currentUserName = claim.Value;
-                    _logger.LogError(currentUserName);
+                    var claim = currentUser.FindFirst(ClaimTypes.NameIdentifier);
+                    if (claim != null)
+                    {
+                        currentUserName = claim.Value;
+                        _logger.LogError(currentUserName);
+                    }
                 }
-            }
 
-            TokenExchangeHelper exchange = new TokenExchangeHelper(configuration);
-            newAccessToken = await exchange.GetRefreshTokenAsync(refreshToken);
-            var serviceAccessToken = await exchange.GetTokenExchangeAsync(newAccessToken);
-            IEnumerable<Claim> roleClaims = User.FindAll(ClaimTypes.Role);
-            IEnumerable<string> roles = roleClaims.Select(r => r.Value);
-            foreach (var role in roles)
-            {
-                _logger.LogError(role);
-            }
-            var currentClaims = currentUser.FindAll(ClaimTypes.Role).ToList();
-            foreach (var claim in currentClaims)
-            {
-                _logger.LogError(claim.ToString());
-            }
+                TokenExchangeHelper exchange = new TokenExchangeHelper(configuration);
+                newAccessToken = await exchange.GetRefreshTokenAsync(refreshToken);
+                var serviceAccessToken = await exchange.GetTokenExchangeAsync(newAccessToken);
+                IEnumerable<Claim> roleClaims = User.FindAll(ClaimTypes.Role);
+                IEnumerable<string> roles = roleClaims.Select(r => r.Value);
+                foreach (var role in roles)
+                {
+                    _logger.LogError(role);
+                }
+                var currentClaims = currentUser.FindAll(ClaimTypes.Role).ToList();
+                foreach (var claim in currentClaims)
+                {
+                    _logger.LogError(claim.ToString());
+                }
+                break;
+
+            case "sefazidentity":
+                if (User.Identity.IsAuthenticated)
+                {
+                    // o token é SAML e precisa ser criado um jwt para ser repassado para o front-end
+                    var claims = User.Claims;
+                    foreach (var claim in User.Claims)
+                    {
+                        if (claim.Type.Contains("id_token")) { newAccessToken = claim.Value; }
+                    }
+
+                    if (newAccessToken == "")
+                    {
+                        var xml = new XmlDocument();
+                        var bootstapContext = (string)User.Identities.First().BootstrapContext;
+                        xml.LoadXml(bootstapContext);
+                        var assertionNode = xml.SelectSingleNode("//*[local-name()='Assertion']");
+
+                        if (assertionNode != null)
+                        {
+                            string samlToken = assertionNode.OuterXml;
+                            var jwtToken = IdentityConfig.ConvertSamlToJwt(samlToken, configuration);
+                            newAccessToken = jwtToken;
+                        }
+                    }
+                }
+                break;
         }
 
         return newAccessToken;

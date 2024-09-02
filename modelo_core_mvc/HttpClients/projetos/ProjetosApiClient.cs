@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using modelo_core_mvc.projetos;
-using SefazLib.IdentityCfg;
+using SefazLib;
 
 namespace modelo_core_mvc.ProjetosApi
 {
@@ -20,6 +20,7 @@ namespace modelo_core_mvc.ProjetosApi
             configuration = Configuration;
             identityConfig = IdentityConfig;
             httpClient = HttpClient;
+            httpClient.DefaultRequestHeaders.Authorization = identityConfig.AuthenticationHeader();
             httpClient.BaseAddress = new System.Uri(configuration["apiendereco:projetos"]);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -27,7 +28,6 @@ namespace modelo_core_mvc.ProjetosApi
         //Consultar
         public async Task<ProjetosModel> GetProjetoAsync(long id)
         {
-            httpClient.DefaultRequestHeaders.Authorization = identityConfig.AuthenticationHeader();
             var resposta = await httpClient.GetAsync($"Projetos/{id}");
             resposta.EnsureSuccessStatusCode();
             return new ProjetosModel().ToModel(await resposta.Content.ReadAsStringAsync());
@@ -61,7 +61,6 @@ namespace modelo_core_mvc.ProjetosApi
         {
             if (id != 0)
             {
-                httpClient.DefaultRequestHeaders.Authorization = identityConfig.AuthenticationHeader();
                 var resposta = await httpClient.DeleteAsync($"Projetos/{id}");
                 resposta.EnsureSuccessStatusCode();
             }
@@ -70,7 +69,6 @@ namespace modelo_core_mvc.ProjetosApi
         //Incluir
         public async Task PostProjetoAsync(ProjetosModel projeto)
         {
-            httpClient.DefaultRequestHeaders.Authorization = identityConfig.AuthenticationHeader();
             var resposta = await httpClient.PostAsync("Projetos", projeto.ToJson());
             resposta.EnsureSuccessStatusCode();
         }
@@ -78,7 +76,6 @@ namespace modelo_core_mvc.ProjetosApi
         //Alterar
         public async Task PutProjetoAsync(ProjetosModel projeto)
         {
-            httpClient.DefaultRequestHeaders.Authorization = identityConfig.AuthenticationHeader();
             var id = projeto.id;
             var resposta = await httpClient.PutAsync($"Projetos/{id}", projeto.ToJson());
             resposta.EnsureSuccessStatusCode();

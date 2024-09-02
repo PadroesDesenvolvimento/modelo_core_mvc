@@ -33,9 +33,9 @@ public class TokenExchangeHelper
                 string client_secret = "";
                 string token = refreshToken;
 
-                url = configuration["LoginSefaz:TokenExchange"];
-                client_id = configuration["LoginSefaz:ClientId"];
-                client_secret = configuration["LoginSefaz:ClientSecret"];
+                url = configuration["loginsefaz:TokenExchange"];
+                client_id = configuration["loginsefaz:ClientId"];
+                client_secret = configuration["loginsefaz:ClientSecret"];
 
                 var form = new Dictionary<string, string>
             {
