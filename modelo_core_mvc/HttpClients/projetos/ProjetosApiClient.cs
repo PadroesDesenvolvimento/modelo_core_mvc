@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using modelo_core_mvc.projetos;
 using SefazLib;
+using System;
 
 namespace modelo_core_mvc.ProjetosApi
 {
@@ -44,17 +45,31 @@ namespace modelo_core_mvc.ProjetosApi
         //Verificar api
         public async Task<string> GetStatusAsync()
         {
-            var resposta = await httpClient.GetAsync($"projetos/status");
-            resposta.EnsureSuccessStatusCode();
-            return await resposta.Content.ReadAsStringAsync();
+            try
+            {
+                var resposta = await httpClient.GetAsync($"projetos/status");
+                resposta.EnsureSuccessStatusCode();
+                return await resposta.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         //Verificar conexão
         public async Task<string> GetConexaoAsync()
         {
-            var resposta = await httpClient.GetAsync($"projetos/conexao");
-            resposta.EnsureSuccessStatusCode();
-            return await resposta.Content.ReadAsStringAsync();
+            try
+            {
+                var resposta = await httpClient.GetAsync($"projetos/conexao");
+                resposta.EnsureSuccessStatusCode();
+                return await resposta.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public async Task DeleteProjetoAsync(long id)

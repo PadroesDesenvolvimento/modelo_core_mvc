@@ -23,7 +23,15 @@ public class ProjetosController : BaseController
     {
         ViewData["Title"] = "Projetos";
         ViewData["Message"] = "Projetos do DTI";
-        return View(await api.GetProjetosAsync());
+        try
+        {
+            return View(await api.GetProjetosAsync());
+        }
+        catch (Exception ex)
+        {
+            ViewData["Erro"] = "Falha ao listar os registros: " + ex.Message;
+            return View();
+        }
     }
 
     [AllowAnonymous]

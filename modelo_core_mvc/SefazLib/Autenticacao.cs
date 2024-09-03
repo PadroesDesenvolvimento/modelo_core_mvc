@@ -94,7 +94,7 @@ public class Autenticacao
                 Exponent = Base64UrlEncoder.DecodeBytes(parameters["e"])
             };
 
-            var rsa = RSA.Create();
+            var rsa = RSA.Create(2048);
             rsa.ImportParameters(rsaParameters);
 
             return new RsaSecurityKey(rsa);
