@@ -177,6 +177,7 @@ stages:
               loginResponsavel: '$(Scrum_Master)'
               Ambiente_Deploy: 'hml'
               Ambiente_Helix: '$(ambiente_helix)'
+              Grupo_Execucao: 'Infraestrutura'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
