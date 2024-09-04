@@ -171,7 +171,7 @@ stages:
           - task: Helix - Criacao de Mudanca (RDM)@2
             displayName: 'Criação de RDM HML'
             inputs:
-              SFZ_RDM_Sumario: 'Deploy automatizado - $(Nome_Aplicacao) em HML'
+              SFZ_RDM_Sumario: 'Deploy automatizado - $(_Nome_Aplicacao) em HML'
               Servico: '$(Servico_Helix)'
               Acompanhamento: 'nao'
               loginResponsavel: '$(Scrum_Master)'
@@ -300,7 +300,7 @@ stages:
           - task: Helix - Criacao de Mudanca (RDM)@2
             displayName: 'Criação de RDM PRD'
             inputs:
-              SFZ_RDM_Sumario: 'Deploy automatizado - $(Nome_Aplicacao) em HML'
+              SFZ_RDM_Sumario: 'Deploy automatizado - $(_Nome_Aplicacao) em HML'
               Servico: '$(Servico_Helix)'
               Acompanhamento: 'nao'
               loginResponsavel: '$(Scrum_Master)'
