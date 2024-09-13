@@ -85,7 +85,7 @@ public class Autenticacao
         using var client = new HttpClient();
         try
         {
-            var publicKeyJwk = client.GetStringAsync(configuration["identity:chave-publica"]).Result;
+            var publicKeyJwk = client.GetStringAsync(configuration["identity:PublicKey"]).Result;
             var parameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(publicKeyJwk);
 
             var rsaParameters = new RSAParameters
