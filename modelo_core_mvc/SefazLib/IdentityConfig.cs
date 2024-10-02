@@ -156,11 +156,12 @@ public class IdentityConfig
         var issuer = configuration["jwt:issuer"]; // endpoint dessa aplicacao
         var audience = configuration["jwt:audience"];  // endpoint da aplicacao cliente que vai usar esse servico
         var privateKeyXml = configuration["identity:PrivateKey"];
-        if (privateKeyXml is null)
+        if (string.IsNullOrEmpty(privateKeyXml))
         {
-            throw new Exception("Chave privada não configurada. Verifique se existe jwt:PrivateKey no appSettings.json");
+            throw new Exception("Chave privada não configurada.");
         }
-        var rsa = RSA.Create(2048); 
+
+        var rsa = RSA.Create(2048);
         rsa.FromXmlString(privateKeyXml);
         var key = new RsaSecurityKey(rsa);
         var credentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256);
@@ -169,13 +170,23 @@ public class IdentityConfig
 
         var claims = new ClaimsIdentity();
         var samlAssertionNode = samlTokenXml.SelectSingleNode("//*[local-name()='Assertion']");
+        if (samlAssertionNode == null)
+        {
+            return "Token SAML inválido.";
+        }
         var samlAttributeNodes = samlAssertionNode.SelectNodes("//*[local-name()='Attribute']");
-
+        if (samlAttributeNodes == null)
+        {
+            return "Token SAML não possui claims.";
+        }
         foreach (XmlNode attributeNode in samlAttributeNodes)
         {
-            var attributeName = attributeNode.Attributes["Name"].Value;
-            var attributeValue = attributeNode.FirstChild.InnerText;
-            claims.AddClaim(new Claim(attributeName, attributeValue));
+            var attributeValue = attributeNode.FirstChild?.InnerText;
+            var attributeName = attributeNode.Attributes?["Name"]?.Value;
+            if (attributeName is not null && attributeValue is not null)
+            {
+                claims.AddClaim(new Claim(attributeName, attributeValue));
+            }
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();
