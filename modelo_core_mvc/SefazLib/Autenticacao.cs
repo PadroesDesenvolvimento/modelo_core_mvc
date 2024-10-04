@@ -58,28 +58,6 @@ public class Autenticacao
         };
     }
 
-    public async Task<bool> ValidarTokenAsync(string token)
-    {
-        using var client = new HttpClient();
-        try
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, configuration["identity:validar-token"]);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            var response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-        }
-        catch (Exception)
-        {
-        }
-
-        return false;
-    }
-
     public RsaSecurityKey LoadPublicKey()
     {
         using var client = new HttpClient();
