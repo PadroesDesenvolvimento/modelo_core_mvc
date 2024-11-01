@@ -2,9 +2,8 @@
 @import "bootstrap/bootstrap.min.css";
 @import "font-awesome/css/all.css";
 @import "_variaveis.scss";
-@import "components/person-card.scss";
 @import "site.scss";
-@import "alto-contraste.scss";
+@import "alternar-cores.scss";
 @import "components/barra-acessibilidade.scss";
 @import "components/breadcrumb.scss";
 @import "components/painel-lateral.scss";
@@ -15,12 +14,12 @@
 @import "components/aguarde.scss";
 
 @font-face {
-    font-family: "Montserrat";
-    src: url(assets/font/Montserrat-VariableFont_wght.ttf);
+    font-family: 'Montserrat';
+    src: url('../font/montserrat-variablefont_wght.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: "Open Sans";
-    src: url(assets/font/OpenSans-VariableFont_wdth.ttf);
+    font-family: 'sans-serif';
+    src: url('../font/opensans-variablefont_wdth.ttf') format('truetype');
 }
 

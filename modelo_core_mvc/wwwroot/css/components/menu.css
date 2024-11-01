@@ -3,61 +3,42 @@
   display: flex;
   flex-direction: column;
 }
-#menu_lateral li {
+#menu_lateral .botaoMenu {
   display: block;
   margin: 5px 0;
   background-color: transparent;
   border-radius: calc(var(--altura-botao-menu) / 2);
   height: var(--altura-botao-menu);
 }
-#menu_lateral li a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  text-align: left;
-  font-size: 1em;
-  color: var(--cor-menu-invertida-texto);
-  line-height: var(--altura-botao-menu);
-  margin: 0;
-}
-#menu_lateral li a.selected {
-  color: var(--cor-menu-texto);
-  background-color: var(--cor-fundo-selecionado);
-}
-#menu_lateral li a em {
-  margin: 0 1em;
-  font-size: 1.7em;
-  text-align: center;
-  height: 30px;
-  width: 30px;
-}
-#menu_lateral li:hover, #menu_lateral li:focus {
+#menu_lateral .botaoMenu:hover, #menu_lateral .botaoMenu:focus {
   background-color: var(--cor-fundo-hover);
   color: var(--cor-menu-texto);
   outline: none;
 }
-#menu_lateral li:hover a, #menu_lateral li:hover em, #menu_lateral li:focus a, #menu_lateral li:focus em {
+#menu_lateral .botaoMenu:hover a, #menu_lateral .botaoMenu:hover em, #menu_lateral .botaoMenu:focus a, #menu_lateral .botaoMenu:focus em {
   color: var(--cor-menu-texto);
+}
+#menu_lateral .botaoMenu a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  text-align: left;
+  font-size: 0.75rem;
+  color: var(--cor-menu-invertida-texto);
+  line-height: var(--altura-botao-menu);
+  margin: 0;
+}
+#menu_lateral .botaoMenu a.selected {
+  color: var(--cor-menu-texto);
+  background-color: var(--cor-fundo-selecionado);
+}
+#menu_lateral .botaoMenu a em {
+  margin: 0 1em;
+  font-size: 1.7em;
+  text-align: center;
 }
 
 /*Desktop*/
-@media (min-width: 767.99px) {
-  #painel_lateral.recolhido li {
-    height: var(--altura-botao-menu-recolhido);
-    border-radius: calc(var(--altura-botao-menu-recolhido) / 4);
-  }
-  #painel_lateral.recolhido li a {
-    flex-direction: column;
-    font-size: 0.7em;
-    padding-top: calc(var(--altura-botao-menu-recolhido) / 4);
-  }
-  #painel_lateral.recolhido li a em {
-    font-size: 1.8em;
-  }
-  #painel_lateral.recolhido li a span {
-    line-height: normal;
-  }
-}
 #itens_nav {
   display: block;
   background-color: transparent;
@@ -112,6 +93,10 @@
 #menu_popup #itens_menu {
   display: flex;
   flex-direction: row;
+}
+#menu_popup #itens_menu a {
+  display: flex;
+  align-items: center;
 }
 #menu_popup.oculto {
   display: none;

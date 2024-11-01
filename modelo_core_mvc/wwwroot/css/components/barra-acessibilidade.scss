@@ -22,13 +22,21 @@
             margin: 0;
         }
 
-        &:hover,
-        &:focus {
+        &:hover {
             background-color: var(--cor-apoio-cinza-claro);
+        }
+
+        &.disabled {
+            span {
+                color: var(--cor-apoio-cinza-claro);
+            }
+
+            border-color: var(--cor-apoio-cinza-claro);
+            background-color: var(--cor-fundo);
         }
     }
 
-    #icone_vlibras {
+    #exibirLibras {
         background-image: url("https://dev-cdn-caeeh2eyhmh6cbd4.z01.azurefd.net/v01/img/vlibras.png");
         background-size: cover;
         background-position: center;

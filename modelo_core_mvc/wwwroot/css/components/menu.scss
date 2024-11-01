@@ -3,19 +3,30 @@
     display: flex;
     flex-direction: column;
 
-    li {
+    .botaoMenu {
         display: block;
         margin: 5px 0;
         background-color: transparent;
         border-radius: calc(var(--altura-botao-menu)/2);
         height: var(--altura-botao-menu);
 
+        &:hover,
+        &:focus {
+            background-color: var(--cor-fundo-hover);
+            color: var(--cor-menu-texto);
+            outline: none;
+
+            a, em {
+                color: var(--cor-menu-texto);
+            }
+        }
+
         a {
             display: flex;
             align-items: center;
             text-decoration: none;
             text-align: left;
-            font-size: 1em;
+            font-size: 0.75rem;
             color: var(--cor-menu-invertida-texto);
             line-height: var(--altura-botao-menu);
 
@@ -28,50 +39,14 @@
                 margin: 0 1em;
                 font-size: 1.7em;
                 text-align: center;
-                height: 30px;
-                width: 30px;
             }
 
             margin: 0;
-        }
-
-        &:hover,
-        &:focus {
-            background-color: var(--cor-fundo-hover);
-            color: var(--cor-menu-texto);
-            outline: none;
-
-            a, em {
-                color: var(--cor-menu-texto);
-            }
         }
     }
 }
 
 /*Desktop*/
-@media (min-width: 767.99px) {
-    #painel_lateral.recolhido {
-        li {
-            height: var(--altura-botao-menu-recolhido);
-            border-radius: calc(var(--altura-botao-menu-recolhido)/4);
-
-            a {
-                flex-direction: column;
-                font-size: 0.7em;
-                padding-top: calc(var(--altura-botao-menu-recolhido)/4);
-
-                em {
-                    font-size: 1.8em;
-                }
-
-                span {
-                    line-height: normal;
-                }
-            }
-        }
-    }
-}
-
 #itens_nav {
     display: block;
     background-color: transparent;
@@ -131,6 +106,11 @@
     #itens_menu {
         display: flex;
         flex-direction: row;
+
+        a {
+            display: flex;
+            align-items: center;
+        }
     }
 
     &.oculto {
