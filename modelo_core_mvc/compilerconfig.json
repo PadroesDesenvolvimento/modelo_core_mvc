@@ -4,8 +4,8 @@
     "inputFile": "wwwroot/css/_variaveis.scss"
   },
   {
-    "outputFile": "wwwroot/css/alto-contraste.css",
-    "inputFile": "wwwroot/css/alto-contraste.scss"
+    "outputFile": "wwwroot/css/alternar-cores.css",
+    "inputFile": "wwwroot/css/alternar-cores.scss"
   },
   {
     "outputFile": "wwwroot/css/outros.css",
@@ -58,5 +58,9 @@
   {
     "outputFile": "wwwroot/css/components/Aguarde.css",
     "inputFile": "wwwroot/css/components/Aguarde.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/alternar-cores.css",
+    "inputFile": "wwwroot/css/alternar-cores.scss"
   }
 ]

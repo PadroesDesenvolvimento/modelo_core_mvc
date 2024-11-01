@@ -7,30 +7,33 @@
         </div>
     </div>
     <div id="botoes_acessibilidade" class="ms-2 d-flex align-items-center">
-        <button id="icone_vlibras"
+        <button id="exibirLibras"
                 class="rounded-circle d-flex align-items-center justify-content-center"
                 title="Abrir leitor de Libras"
                 aria-label="Abrir leitor de Libras"
                 accesskey="7"
                 onclick="alternarClasse(['vlibras'],'enabled',false)">
         </button>
-        <button class="botaoZoom rounded-circle d-flex align-items-center justify-content-center"
+        <button id="aumentarLetra"
+                class="botaoZoom rounded-circle d-flex align-items-center justify-content-center"
                 title="Aumentar caracteres (Alt +)"
                 aria-label="Aumentar caracteres (Alt +)"
                 accesskey="9"
                 onclick="aumentarCaracter()">
             <span>A+</span>
         </button>
-        <button class="botaoZoom rounded-circle d-flex align-items-center justify-content-center"
+        <button id="diminuirLetra"
+                class="botaoZoom rounded-circle d-flex align-items-center justify-content-center"
                 title="Diminuir caracteres (Alt -)"
                 aria-label="Diminuir caracteres (Alt -)"
                 accesskey="0"
                 onclick="diminuirCaracter()">
             <span>A-</span>
         </button>
-        <button class="rounded-circle d-flex align-items-center justify-content-center"
-                title="Aumentar o contraste (Alt *)"
-                aria-label="Alto contraste"
+        <button id="alternarContraste"
+                class="rounded-circle d-flex align-items-center justify-content-center"
+                title="Alternar cores (Alt *)"
+                aria-label="Alternar cores"
                 accesskey="*"
                 onclick="window.toggleContrast()">
             <svg xmlns="http://www.w3.org/2000/svg" height="10" viewBox="16.667 36.667 166.666 166.666" width="10">

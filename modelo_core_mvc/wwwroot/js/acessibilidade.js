@@ -6,7 +6,7 @@ let contrastState = "false";
 function alterarZoom() {
     if (valorMudanca < 0) { valorMudanca = 0 }
     else if (valorMudanca > 5) { valorMudanca = 5 }
-    document.cookie = "valorMudanca=" + valorMudanca + "; path=/";
+    setCookie("valorMudanca", valorMudanca, 7);
     document.documentElement.style.setProperty('--desconto', desconto[valorMudanca] + 'em');
     document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca]);
 
@@ -29,6 +29,18 @@ function atualizarBotoesZoom() {
         const ariaLabel = button.getAttribute('aria-label');
         const zoomValue = Math.round(valores[valorMudanca] * 100);
         button.title = `${ariaLabel} - ${zoomValue}%`;
+        if (button.id == "aumentarLetra") {
+            button.disabled = (valorMudanca == 5)
+        }
+        if (button.id == "diminuirLetra") {
+            button.disabled = (valorMudanca == 0)
+        }
+        if (button.disabled) {
+            button.classList.add('disabled');
+        }
+        else {
+            button.classList.remove('disabled');
+        }
     });
 };
 

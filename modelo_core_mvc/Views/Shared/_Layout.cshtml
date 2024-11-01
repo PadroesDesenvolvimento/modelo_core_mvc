@@ -48,7 +48,7 @@
 </head>
 
 <body style="zoom: @valorZoom;">
-    <script src="~/js/acessibilidade.js"></script>
+    <script src="~/js/acessibilidade.js?v=@DateTime.Now.Ticks"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {
             contrastState = @contrastState;
@@ -64,10 +64,12 @@
 
         <div id="painel_aplicacao">
             <section id="painel_lateral" class="oculto @(estaRecolhido ? "recolhido" : "")">
-                <header id="brasao">
-                    <img src="https://dev-cdn-caeeh2eyhmh6cbd4.z01.azurefd.net/v01/img/BrasaoSP.png" alt="Brasão do Estado de São Paulo">
+                <div id="brasaoPainel">
+                    <div id="fundoBrasaoDesktop" class="fundoBrasao">
+                        <img class="brasao" src="https://devbsacdn.blob.core.windows.net/v01/img/BRASAO_GOV_SP_Original.svg" alt="Brasão do Estado de São Paulo">
+                    </div>
                     <span id="orgao">Secretaria da Fazenda e Planejamento</span>
-                </header>
+                </div>
                 <button id="botao_expandir"
                         type="button"
                         title="Botão para expandir ou recolher o menu"

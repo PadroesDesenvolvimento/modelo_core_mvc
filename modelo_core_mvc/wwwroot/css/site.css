@@ -1,5 +1,16 @@
-﻿body {
+﻿html {
+  font-size: 16px;
+}
+
+body {
   overflow-y: hidden;
+  font-size: 0.813rem;
+  color: #585858;
+  font-family: Verdana, sans-serif;
+}
+
+p, li, dt, dd, em, span {
+  font-family: "Montserrat", sans-serif;
 }
 
 #aplicacao {
@@ -11,23 +22,6 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-}
-#painel_aplicacao #painel_lateral {
-  background-color: var(--cor-primaria);
-  display: flex;
-  flex-direction: column;
-  width: var(--largura-menu-expandido);
-  height: 100vh;
-  transition: all 0.3s;
-}
-#painel_aplicacao #painel_lateral.recolhido {
-  width: var(--largura-menu-recolhido);
-}
-#painel_aplicacao #painel_lateral.recolhido #botao_expandir {
-  margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botao_expandir) / 2);
-}
-#painel_aplicacao #painel_lateral.recolhido #orgao {
-  display: none;
 }
 
 #painel_conteudo {
@@ -75,16 +69,6 @@
     padding: 0;
     margin: 0;
     height: auto;
-  }
-  #aplicacao #painel_lateral {
-    transition: all 0.3s;
-    width: 100%;
-    z-index: 1;
-    top: 0;
-    bottom: 0;
-  }
-  #aplicacao #painel_lateral.oculto {
-    display: none;
   }
   #aplicacao #painel_principal {
     display: flex;
