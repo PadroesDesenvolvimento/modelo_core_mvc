@@ -38,6 +38,7 @@
   margin-top: 1.75rem;
 }
 #brasaoPainel #orgao {
+  font-family: Verdana, sans-serif;
   font-size: 0.6875rem;
   padding-left: 0.63rem;
   color: var(--cor-fundo);
