@@ -1,6 +1,6 @@
 function setCookie(name, value, days=7) {
     var expires = "";
-    if (days) {
+    if (days > 0) {
         var date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
@@ -73,7 +73,7 @@ function _selecionar() {
             // Salvar o estado do item selecionado em um cookie
             const action = this.outerText;
             if (action) {
-                setCookie('itemSelecionado', action, 7);
+                setCookie('itemSelecionado', action, 0);
             }
         });
     });
