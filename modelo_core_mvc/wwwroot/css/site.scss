@@ -46,7 +46,6 @@ p, li, dt, dd, em, span {
     #painel_principal {
         display: flex;
         flex-direction: column;
-        padding: 0 0.5em;
         height: 100vh;
         width: calc(100% - var(--largura-menu-expandido) - 0.5em);
 
