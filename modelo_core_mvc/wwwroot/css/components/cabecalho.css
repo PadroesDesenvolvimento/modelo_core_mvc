@@ -1,16 +1,17 @@
 ﻿.painel_cabecalho {
-  margin: 0 0 0 1em;
+  margin: 0;
 }
 
 #tituloCabecalho {
   display: flex;
   flex-direction: row;
   height: var(--altura-Titulo-Desktop);
-  font-size: 1.5rem;
+  font-size: 1rem;
   align-items: center;
-  padding-right: 0.5em;
+  padding: 1rem;
+  padding-right: 1.5rem;
   width: 100%;
-  box-shadow: -5px 10px 15px var(--cor-sombra);
+  box-shadow: 2px 8px 10px var(--cor-sombra);
   border-color: var(--cor-borda-clara);
   border-style: solid;
   border-block-width: thin;
@@ -20,7 +21,7 @@
   display: block;
   flex-grow: 1;
   color: var(--cor-primaria);
-  font-size: 1.5rem;
+  font-size: 1rem;
   transition: opacity 0.3s;
   align-items: center;
 }

@@ -30,6 +30,7 @@
   outline: solid;
   outline-style: auto;
   outline-width: 1px;
+  font-weight: bold;
 }
 #menu_lateral .botaoMenu em {
   margin: 0 1em;
@@ -56,6 +57,7 @@
   }
   #painel_lateral.recolhido .botaoMenu span {
     line-height: normal;
+    font-weight: bold;
   }
 }
 #itens_nav {
@@ -91,7 +93,7 @@
   display: block;
   position: absolute;
   right: 20px;
-  top: 100px;
+  top: 70px;
   background-color: var(--cor-fundo);
   min-width: 180px;
   padding: 10px;
@@ -129,9 +131,9 @@
   border-radius: 0.8em;
   cursor: pointer;
   color: var(--cor-invertida-texto);
-  background-color: var(--cor-primaria);
+  background-color: var(--cor-apoio-vermelho);
   border: solid thin;
-  border-color: var(--cor-primaria);
+  border-color: var(--cor-apoio-vermelho);
 }
 #botao_popup.dropdown-toggle::after {
   display: none;
