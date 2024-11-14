@@ -1,10 +1,25 @@
-﻿#menu_lateral {
-  height: 100%;
+﻿#itens_menu {
   display: flex;
   flex-direction: column;
-  margin-top: var(--margem-superior_menu);
 }
-#menu_lateral .botaoMenu {
+
+#itens_nav {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 5px;
+  margin: 7px 0 4px 0;
+  transition: background-color 0.3s;
+}
+
+.menu-divider {
+  border: 0;
+  height: 1px;
+  background: var(--cor-primaria-texto);
+  margin: 10px 0;
+}
+
+.botaoMenu {
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -18,30 +33,43 @@
   border-radius: calc(var(--altura-botao-menu) / 2);
   height: var(--altura-botao-menu);
 }
-#menu_lateral .botaoMenu:hover, #menu_lateral .botaoMenu:focus, #menu_lateral .botaoMenu.selecionado {
+.botaoMenu:hover, .botaoMenu:focus, .botaoMenu.selecionado {
   background-color: var(--cor-fundo-hover);
   color: var(--cor-menu-texto);
   outline: none;
 }
-#menu_lateral .botaoMenu:hover span, #menu_lateral .botaoMenu:hover em, #menu_lateral .botaoMenu:focus span, #menu_lateral .botaoMenu:focus em, #menu_lateral .botaoMenu.selecionado span, #menu_lateral .botaoMenu.selecionado em {
+.botaoMenu:hover span, .botaoMenu:hover em, .botaoMenu:focus span, .botaoMenu:focus em, .botaoMenu.selecionado span, .botaoMenu.selecionado em {
   color: var(--cor-primaria);
 }
-#menu_lateral .botaoMenu:focus {
+.botaoMenu:focus {
   outline: solid;
   outline-style: auto;
   outline-width: 1px;
   font-weight: bold;
 }
-#menu_lateral .botaoMenu em {
+.botaoMenu em {
   margin: 0 1em;
   font-size: 1.25em;
   text-align: center;
   width: 0.81rem;
 }
 
-/*Desktop*/
+#menu_lateral {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--margem-superior_menu);
+  /*Desktop*/
+}
 @media (min-width: 767.99px) {
-  #painel_lateral.recolhido .botaoMenu {
+  #menu_lateral #itens_popup {
+    display: none;
+  }
+}
+
+/*desktop*/
+@media (min-width: 767.99px) {
+  #painel_lateral.recolhido #menu_lateral .botaoMenu {
     height: var(--altura-botao-menu-recolhido);
     border-radius: calc(var(--altura-botao-menu-recolhido) / 10);
     flex-direction: column;
@@ -51,75 +79,53 @@
     margin: 0.25rem 0.25rem;
     padding-left: 0;
   }
-  #painel_lateral.recolhido .botaoMenu em {
+  #painel_lateral.recolhido #menu_lateral .botaoMenu em {
     margin-top: 0.25rem;
     font-size: 1rem;
+    width: auto;
   }
-  #painel_lateral.recolhido .botaoMenu span {
+  #painel_lateral.recolhido #menu_lateral .botaoMenu span {
     line-height: normal;
-    font-weight: bold;
+    margin-top: 0.25rem;
   }
 }
-#itens_nav {
-  display: block;
-  background-color: transparent;
-  border-radius: 5px;
-  margin: 7px 0 4px 0;
-  transition: background-color 0.3s;
-}
-
-#itens_popup {
-  display: none;
-  width: 100%;
-}
-#itens_popup a {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  text-decoration: none;
-  color: var(--cor-principal);
-  background-color: transparent;
-  padding: 8px;
-  border-radius: 16px;
-  font-size: 0.9rem;
-}
-#itens_popup a:hover {
-  background-color: #ccc;
-  cursor: pointer;
-}
-
 #menu_popup {
   display: block;
   position: absolute;
-  right: 20px;
-  top: 70px;
+  right: 2rem;
+  top: 4.3rem;
   background-color: var(--cor-fundo);
-  min-width: 180px;
-  padding: 10px;
-  border-radius: 5px;
+  width: 10rem;
+  border-radius: 8px;
   border: 1px solid var(--cor-apoio-cinza-claro);
   box-shadow: 2px 4px 6px var(--cor-sombra);
+  padding: 0.5rem;
 }
-#menu_popup .fas {
-  padding-right: 0.5em;
-}
-#menu_popup #itens_nav {
+#menu_popup.oculto {
   display: none;
-}
-#menu_popup #itens_popup {
-  display: block;
 }
 #menu_popup #itens_menu {
   display: flex;
   flex-direction: row;
 }
-#menu_popup #itens_menu a {
-  display: flex;
-  align-items: center;
+#menu_popup #itens_menu .botaoMenu {
+  font-size: 0.7rem;
+  color: var(--cor-primaria-texto);
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  height: 1.5rem;
 }
-#menu_popup.oculto {
+#menu_popup #itens_menu .botaoMenu:hover, #menu_popup #itens_menu .botaoMenu:focus, #menu_popup #itens_menu .botaoMenu.selecionado {
+  background-color: var(--cor-fundo-hover-popup);
+}
+#menu_popup #itens_menu #itens_nav {
   display: none;
+}
+#menu_popup #itens_menu #itens_popup {
+  display: block;
+  margin: 0;
+  width: 100%;
 }
 
 #botao_popup {
@@ -140,7 +146,7 @@
 }
 
 #iniciais_popup {
-  font-size: 0.8em;
+  font-size: 0.7em;
   font-style: normal;
 }
 
@@ -153,11 +159,16 @@
   #itens_popup {
     display: block;
   }
-  #itens_nav a, #itens_popup a {
+  .botaoMenu {
     width: 100%;
     text-align: center;
-  }
-  #itens_nav .fas, #itens_popup .fas {
     padding-right: 0.5em;
+    margin: 0.5rem 0;
+    border-radius: 0;
+    font-size: 0.8rem;
+  }
+  .menu-divider {
+    background: var(--cor-invertida-texto);
+    margin: 0.7rem 1rem;
   }
 }

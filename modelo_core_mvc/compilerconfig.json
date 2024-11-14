@@ -62,5 +62,9 @@
   {
     "outputFile": "wwwroot/css/alternar-cores.css",
     "inputFile": "wwwroot/css/alternar-cores.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/painel-lateral.css",
+    "inputFile": "wwwroot/css/components/painel-lateral.scss"
   }
 ]

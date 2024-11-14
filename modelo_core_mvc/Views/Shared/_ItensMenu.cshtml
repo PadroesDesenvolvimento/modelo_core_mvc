@@ -27,6 +27,7 @@
             <em class="fas fa-info-circle"></em>
             <span>Sobre</span>
         </a>
+        <hr class="menu-divider">
         <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
             <em class="fas fa-address-card"></em>
             @if (User.Identity.IsAuthenticated)
