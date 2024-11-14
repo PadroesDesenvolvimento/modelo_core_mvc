@@ -79,4 +79,26 @@ function _selecionar() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', _selecionar);
+document.addEventListener('DOMContentLoaded', function () {
+    _selecionar(); // Selecionar o item do menu
+
+    const painel_principal = document.getElementById('painel_principal');
+    const botaoTopo = document.getElementById('topoDaPagina');
+    if (painel_principal && botaoTopo) {
+        painel_principal.addEventListener('scroll', function () {
+            if (painel_principal.scrollTop > 20) {
+                botaoTopo.style.display = 'block';
+            } else {
+                botaoTopo.style.display = 'none';
+            }
+        });
+
+        botaoTopo.addEventListener('click', function (e) {
+            e.preventDefault();
+            painel_principal.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+});

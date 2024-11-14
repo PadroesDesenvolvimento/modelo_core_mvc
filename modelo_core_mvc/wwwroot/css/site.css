@@ -1,9 +1,11 @@
 ﻿html {
   font-size: 16px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 body {
-  overflow-y: hidden;
   font-size: 0.813rem;
   color: #585858;
   font-family: Verdana, sans-serif;
@@ -24,72 +26,61 @@ p, li, dt, dd, em, span {
   width: 100%;
 }
 
+#painel_principal {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow: auto;
+  height: 100vh;
+}
+
 #painel_conteudo {
   display: flex;
   flex-direction: column;
-  padding: 1em 0 0 1em;
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 1rem;
 }
 
 #conteudo {
-  padding: 0.5em 0 0 0.5em;
-  box-shadow: -5px 10px 15px var(--cor-sombra);
-  border-color: var(--cor-borda-clara);
-  border-style: solid;
-  border-block-width: thin;
-  overflow-y: auto;
-  height: 100vh;
-  max-height: calc(100vh - var(--desconto));
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  box-shadow: 0 0.5rem 1rem var(--cor-sombra);
 }
 
-/**desktop**/
-@media (min-width: 767.98px) {
-  #painel_principal {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: calc(100% - var(--largura-menu-expandido) - 0.5em);
-  }
-  #painel_principal.recolhido {
-    transition: all 0.3s;
-    width: calc(100% - var(--largura-menu-recolhido) - 0.5em);
-  }
+#topoDaPagina {
+  display: none;
+  text-align: right;
+  margin: 1rem;
 }
+
 /*mobile*/
 @media (max-width: 767.98px) {
   #aplicacao {
     display: block;
   }
-  #aplicacao #cabecalho_mobile {
+  #cabecalho_mobile {
     display: block;
   }
-  #aplicacao #painel_aplicacao {
+  #painel_aplicacao {
     display: block;
     width: 100%;
     padding: 0;
     margin: 0;
-    height: auto;
   }
-  #aplicacao #painel_principal {
-    display: flex;
-    transition: height 1s ease;
-    width: 100%;
+  #painel_principal {
     padding: 0;
-    margin: 0;
-    height: auto;
+    margin: 0 0 1rem 0;
+    height: 90vh;
   }
-  #aplicacao #painel_principal.oculto {
+  #painel_principal.oculto {
     display: none;
   }
-  #aplicacao #painel_principal #painel_conteudo {
+  #painel_conteudo {
     padding: 0;
-    height: auto;
   }
-  #aplicacao #painel_principal #painel_conteudo #conteudo {
-    height: auto;
-    max-height: initial;
+  #conteudo {
     border-style: none;
     box-shadow: none !important;
-    max-height: calc(100vh - var(--desconto));
   }
 }
 /*Alteracao de configuracoes de terceiros*/
@@ -104,4 +95,19 @@ li, dt, dd {
 .tooltip-custom-bg .tooltip-inner {
   background-color: yellow;
   color: black;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--cor-primaria);
+  border-radius: 10px;
+  border: 2px solid var(--cor-primaria);
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #c0c0c0;
 }

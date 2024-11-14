@@ -103,13 +103,17 @@
                     <main id="conteudo" class="shadow" tabindex="0">
                         @RenderBody()
                     </main>
+                </div>
 
-                    <div id="mensagem_erro">
-                        @if (ViewData["Erro"] != null)
-                        {
-                            @ViewData["Erro"]
-                        }
-                    </div>
+                <div id="topoDaPagina" title="Voltar ao topo">
+                    <a href="#">Topo da página</a>
+                </div>
+
+                <div id="mensagem_erro">
+                    @if (ViewData["Erro"] != null)
+                    {
+                        @ViewData["Erro"]
+                    }
                 </div>
             </section>
         </div>

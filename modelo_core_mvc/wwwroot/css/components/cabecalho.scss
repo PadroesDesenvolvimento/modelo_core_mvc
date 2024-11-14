@@ -11,10 +11,8 @@
     padding: 1rem;
     padding-right: 1.5rem;
     width: 100%;
-    box-shadow: 2px 8px 10px var(--cor-sombra);
-    border-color: var(--cor-borda-clara);
-    border-style: solid;
-    border-block-width: thin;
+    box-shadow: 0 .5rem 1rem var(--cor-sombra);
+    border-style: none;
 }
 
 #tituloApp {
@@ -66,6 +64,12 @@
     }
 }
 
+#usuarioAutenticado {
+    font-size: 0.7rem;
+    margin: 0.5em 0.5em 0 0;
+    text-align: center;
+}
+
 /*desktop*/
 @media (min-width: 767.99px) {
     #cabecalho-desktop {
@@ -106,32 +110,31 @@
     #subtitulo {
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
 
     #tituloSefaz,
     #usuarioAutenticado {
         display: block;
         color: var(--cor-fundo);
-        font-size: 1.3rem;
         transition: opacity 0.3s;
-        align-items: center;
+        margin: 0;
+        text-align: left;
     }
 
     #tituloSefaz {
-        text-align: center;
+        font-size: 0.75rem;
         line-height: 1;
-        margin: 0;
+        font-weight: 500;
     }
 
     #usuarioAutenticado {
-        font-size: 0.7rem;
-        margin: 0.5em 0.5em 0 0;
-        text-align: center;
+        font-size: 0.4rem;
     }
 
     #botao-hamburguinho {
         display: block;
-        font-size: 1.5rem;
+        font-size: 2rem;
         cursor: pointer;
         color: var(--cor-invertida-texto);
     }
