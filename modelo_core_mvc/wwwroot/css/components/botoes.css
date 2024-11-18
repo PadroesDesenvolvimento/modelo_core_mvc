@@ -1,7 +1,7 @@
 ﻿#barraBotoes {
   display: flex;
   flex-direction: row;
-  margin: 1em 0 0 0;
+  margin-top: 1em;
   width: 100%;
 }
 
@@ -13,10 +13,9 @@
   width: var(--largura-botao);
   height: 3em;
   box-shadow: -2px 5px 10px var(--cor-sombra);
-  border-color: var(--cor-sombra);
-  border-style: solid;
-  border-block-width: thin;
+  border: thin solid var(--cor-sombra);
   margin-right: 0.5em;
+  transition: color 0.3s, background-color 0.3s;
 }
 .btn a {
   text-decoration: none;

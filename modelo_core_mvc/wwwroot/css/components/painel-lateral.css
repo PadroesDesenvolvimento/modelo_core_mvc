@@ -1,6 +1,6 @@
 ﻿#painel_lateral {
-  background-color: var(--cor-primaria);
   display: flex;
+  background-color: var(--cor-primaria);
   flex-direction: column;
   width: var(--largura-menu-expandido);
   height: 100vh;
@@ -14,6 +14,14 @@
 }
 #painel_lateral.recolhido #orgao {
   display: none;
+}
+@media (max-width: 767.98px) {
+  #painel_lateral {
+    width: 100% !important;
+  }
+  #painel_lateral.oculto {
+    display: none;
+  }
 }
 
 #botao_expandir {
@@ -47,26 +55,8 @@
 #botao_expandir span.recolhido {
   display: none;
 }
-
-/*mobile*/
-@media (max-width: 767.98px) {
+@media (max-width: 767.99px) {
   #botao_expandir {
-    display: none;
-  }
-  #painel_lateral {
-    display: flex;
-    width: 100%;
-    height: 0;
-    left: 0;
-    right: 0;
-    bottom: auto;
-    height: 100vh;
-    transition: height 0.3s ease;
-  }
-  #painel_lateral.recolhido {
-    width: 100%;
-  }
-  #painel_lateral.oculto {
     display: none;
   }
 }
