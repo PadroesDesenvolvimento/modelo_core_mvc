@@ -8,8 +8,7 @@
   height: var(--altura-Titulo-Desktop);
   font-size: 1rem;
   align-items: center;
-  padding: 1rem;
-  padding-right: 1.5rem;
+  padding: 1rem 1.5rem 1rem 1rem;
   width: 100%;
   box-shadow: 0 0.5rem 1rem var(--cor-sombra);
   border-style: none;
@@ -53,13 +52,27 @@
   height: 4rem;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
-  padding-right: 17px;
-  padding-left: 10px;
+  padding: 0 17px 0 10px;
 }
 .fundoBrasao .brasao {
   width: 2.5rem;
   height: 2.9rem;
   transition: opacity 0.3s;
+}
+
+#botao_popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  color: var(--cor-invertida-texto);
+  background-color: var(--cor-apoio-vermelho);
+}
+#botao_popup.dropdown-toggle::after {
+  display: none;
 }
 
 #usuarioAutenticado {
@@ -68,7 +81,6 @@
   text-align: center;
 }
 
-/*desktop*/
 @media (min-width: 767.99px) {
   #cabecalho-desktop {
     display: block;
@@ -80,7 +92,6 @@
     display: none;
   }
 }
-/*mobile*/
 @media (max-width: 767.98px) {
   #cabecalho-desktop,
   #brasaoPainel,
@@ -95,7 +106,7 @@
   }
   #tituloCabecalho {
     background-color: var(--cor-primaria);
-    padding: 0.5em 1em 0.5em 0;
+    padding: 0.5em 1em;
     justify-content: space-between;
     box-shadow: none;
     border: none;
@@ -130,8 +141,7 @@
   .fundoBrasao {
     width: 3.19rem;
     height: 2.85rem;
-    padding-right: 17px;
-    padding-left: 10px;
+    padding: 0 17px 0 10px;
   }
   .fundoBrasao .brasao {
     height: 1.73rem;

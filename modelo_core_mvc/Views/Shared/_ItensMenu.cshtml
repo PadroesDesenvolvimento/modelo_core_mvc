@@ -1,50 +1,47 @@
-﻿<div id="itens_menu">
-    <ul id="itens_nav" class="list-unstyled components">
-        <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Index">
-            <em class="fas fa-home"></em>
-            <span>Home</span>
-        </a>
-        <a class="botaoMenu" asp-area="" asp-controller="Projetos" asp-action="Index" onclick="_aguarde()">
-            <em class="fas fa-table"></em>
-            <span>Lista de Projetos</span>
-        </a>
-        <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Privacidade">
-            <em class="fas fa-user-secret"></em>
-            <span>Privacidade</span>
-        </a>
-    </ul>
+﻿<ul id="itens_nav" class="list-unstyled components">
+    <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Index">
+        <em class="fas fa-home"></em>
+        <span>Home</span>
+    </a>
+    <a class="botaoMenu" asp-area="" asp-controller="Projetos" asp-action="Index" onclick="_aguarde()">
+        <em class="fas fa-table"></em>
+        <span>Lista de Projetos</span>
+    </a>
+    <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Privacidade">
+        <em class="fas fa-user-secret"></em>
+        <span>Privacidade</span>
+    </a>
+</ul>
 
-    <ul id="itens_popup" class="list-unstyled components">
-        <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Contato">
-            <em class="fas fa-mail-bulk"></em>
-            <span>Contato</span>
+<ul id="itens_popup" class="list-unstyled components">
+    <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Contato">
+        <em class="fas fa-mail-bulk"></em>
+        <span>Contato</span>
+    </a>
+    <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity" onclick="_aguarde()">
+        <em class="fas fa-id-card"></em>
+        <span>Teste do Identity</span>
+    </a>
+    <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Sobre" onclick="_aguarde()">
+        <em class="fas fa-info-circle"></em>
+        <span>Sobre</span>
+    </a>
+    @if (User.Identity.IsAuthenticated) {
+        <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
+            <em class="fas fa-address-card"></em>
+            <span>Identificação</span>
         </a>
-        <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity" onclick="_aguarde()">
-            <em class="fas fa-id-card"></em>
-            <span>Teste do Identity</span>
+        <hr class="menu-divider">
+        <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
+            <em class="fas fa-door-open"></em>
+            <span>Sair</span>
         </a>
-        <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Sobre" onclick="_aguarde()">
-            <em class="fas fa-info-circle"></em>
-            <span>Sobre</span>
-        </a>
+    }
+    else {
         <hr class="menu-divider">
         <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
             <em class="fas fa-address-card"></em>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <span>Identificação</span>
-            }
-            else
-            {
-                <span>Entrar</span>
-            }
+            <span>Entrar</span>
         </a>
-        @if (User.Identity.IsAuthenticated)
-        {
-            <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
-                <em class="fas fa-door-open"></em>
-                <span>Sair</span>
-            </a>
-        }
-    </ul>
-</div>
+    }
+</ul>
