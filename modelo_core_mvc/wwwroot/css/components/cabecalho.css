@@ -49,14 +49,14 @@
   justify-content: center;
   align-items: center;
   background-color: var(--cor-menu-invertida-texto);
-  height: 4rem;
+  height: 3.5rem;
+  width: 3.5rem;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
   padding: 0 17px 0 10px;
 }
 .fundoBrasao .brasao {
-  width: 2.5rem;
-  height: 2.9rem;
+  height: 85%;
   transition: opacity 0.3s;
 }
 
@@ -96,6 +96,7 @@
   #cabecalho-desktop,
   #brasaoPainel,
   #fundoBrasaoDesktop,
+  #botao_popup,
   #tituloApp {
     display: none;
   }
@@ -106,7 +107,7 @@
   }
   #tituloCabecalho {
     background-color: var(--cor-primaria);
-    padding: 0.5em 1em;
+    padding: 0.5rem 1rem 0.5rem 0;
     justify-content: space-between;
     box-shadow: none;
     border: none;
@@ -139,12 +140,8 @@
     color: var(--cor-invertida-texto);
   }
   .fundoBrasao {
-    width: 3.19rem;
-    height: 2.85rem;
+    width: 3rem;
+    height: 3rem;
     padding: 0 17px 0 10px;
-  }
-  .fundoBrasao .brasao {
-    height: 1.73rem;
-    width: 1.5rem;
   }
 }

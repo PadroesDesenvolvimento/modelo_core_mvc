@@ -9,8 +9,8 @@
     &.recolhido {
         width: var(--largura-menu-recolhido);
 
-        #botao_expandir {
-            margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botao_expandir)/2);
+        #botao-expandir {
+            margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botao-expandir)/2);
         }
 
         #orgao {
@@ -27,12 +27,12 @@
     }
 }
 
-#botao_expandir {
-    width: var(--largura-botao_expandir);
-    height: var(--largura-botao_expandir);
-    margin-left: calc(var(--largura-menu-expandido) - var(--largura-botao_expandir)/2);
+#botao-expandir {
+    width: var(--largura-botao-expandir);
+    height: var(--largura-botao-expandir);
+    margin-left: calc(var(--largura-menu-expandido) - var(--largura-botao-expandir)/2);
     stroke: #000;
-    border-radius: calc(var(--largura-botao_expandir)/2);
+    border-radius: calc(var(--largura-botao-expandir)/2);
     border: none;
     background-color: var(--cor-secundaria);
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
