@@ -1,8 +1,13 @@
 ﻿html {
-  font-size: 16px;
+  font-size: var(--tamanho-fonte-base);
   margin: 0;
   padding: 0;
   overflow: hidden;
+}
+@media (max-width: 767.98px) {
+  html {
+    font-size: calc(var(--tamanho-fonte-base) * 0.75);
+  }
 }
 
 body {
@@ -20,13 +25,13 @@ p, li, dt, dd, em, span {
   flex-direction: row;
 }
 
-#painel_aplicacao {
+#painelAplicacao {
   display: flex;
   flex-direction: row;
   width: 100%;
 }
 
-#painel_principal {
+#painelPrincipal {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -35,7 +40,7 @@ p, li, dt, dd, em, span {
   height: 100vh;
 }
 
-#painel_conteudo {
+#painelConteudo {
   display: flex;
   flex-direction: column;
   padding: 0.5rem 0.8rem;
@@ -58,24 +63,24 @@ p, li, dt, dd, em, span {
   #aplicacao {
     display: block;
   }
-  #cabecalho_mobile {
+  #cabecalhoMobile {
     display: block;
   }
-  #painel_aplicacao {
+  #painelAplicacao {
     display: block;
     width: 100%;
     padding: 0;
     margin: 0;
   }
-  #painel_principal {
+  #painelPrincipal {
     padding: 0;
     margin: 0 0 1rem 0;
     height: 90vh;
   }
-  #painel_principal.oculto {
+  #painelPrincipal.oculto {
     display: none;
   }
-  #painel_conteudo {
+  #painelConteudo {
     padding: 0;
   }
   #conteudo {

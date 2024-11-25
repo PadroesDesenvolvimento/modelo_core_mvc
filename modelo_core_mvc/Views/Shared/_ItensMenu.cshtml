@@ -1,4 +1,4 @@
-﻿<ul id="itens_nav" class="list-unstyled components">
+﻿<ul id="itensNav" class="list-unstyled components">
     <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Index">
         <em class="fas fa-home"></em>
         <span>Home</span>
@@ -13,7 +13,7 @@
     </a>
 </ul>
 
-<ul id="itens_popup" class="list-unstyled components">
+<ul id="itensPopup" class="list-unstyled components">
     <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Contato">
         <em class="fas fa-mail-bulk"></em>
         <span>Contato</span>
@@ -31,14 +31,14 @@
             <em class="fas fa-address-card"></em>
             <span>Identificação</span>
         </a>
-        <hr class="menu-divider">
+        <hr class="menuDivider">
         <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
             <em class="fas fa-door-open"></em>
             <span>Sair</span>
         </a>
     }
     else {
-        <hr class="menu-divider">
+        <hr class="menuDivider">
         <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
             <em class="fas fa-address-card"></em>
             <span>Entrar</span>

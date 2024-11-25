@@ -1,14 +1,14 @@
-#menu_lateral {
+#menuLateral {
     margin-top: var(--margem-superior-menu);
 
     @media (min-width: 767.99px) {
-        #itens_popup {
+        #itensPopup {
             display: none;
         }
     }
 }
 
-.menu-divider {
+.menuDivider {
     border: 0;
     height: 1px;
     background: var(--cor-primaria-texto);
@@ -57,7 +57,7 @@
     }
 }
 
-#itens_nav {
+#itensNav {
     display: block;
     width: 100%;
     background-color: transparent;
@@ -67,7 +67,7 @@
 }
 
 @media (min-width: 767.99px) {
-    #painel_lateral.recolhido #menu_lateral .botaoMenu {
+    #painelLateral.recolhido #menuLateral .botaoMenu {
         height: var(--altura-botao-menu-recolhido);
         border-radius: calc(var(--altura-botao-menu-recolhido)/10);
         flex-direction: column;
@@ -90,7 +90,7 @@
     }
 }
 
-#menu_popup {
+#menuPopup {
     display: block;
     position: absolute;
     right: 2rem;
@@ -122,29 +122,29 @@
         }
     }
 
-    #itens_nav {
+    #itensNav {
         display: none;
     }
 
-    #itens_popup {
+    #itensPopup {
         display: block;
         margin: 0;
         width: 100%;
     }
 }
 
-#iniciais_popup {
+#iniciaisPopup {
     font-size: 0.7em;
     font-style: normal;
 }
 
 @media (max-width: 767.98px) {
-    #menu_popup,
-    #botao_popup {
+    #menuPopup,
+    #botaoPopup {
         display: none;
     }
 
-    #itens_popup {
+    #itensPopup {
         display: block;
     }
 
@@ -157,7 +157,7 @@
         font-size: 0.8rem;
     }
 
-    .menu-divider {
+    .menuDivider {
         background: var(--cor-invertida-texto);
         margin: 0.7rem 1rem;
     }

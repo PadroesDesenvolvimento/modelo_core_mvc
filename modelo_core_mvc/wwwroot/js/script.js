@@ -1,13 +1,3 @@
-function setCookie(name, value, days=7) {
-    var expires = "";
-    if (days > 0) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-
 function getCookie(name) {
     let nameEQ = name + "=";
     let ca = document.cookie.split(';');
@@ -82,11 +72,11 @@ function _selecionar() {
 document.addEventListener('DOMContentLoaded', function () {
     _selecionar(); // Selecionar o item do menu
 
-    const painel_principal = document.getElementById('painel_principal');
+    const painelPrincipal = document.getElementById('painelPrincipal');
     const botaoTopo = document.getElementById('topoDaPagina');
-    if (painel_principal && botaoTopo) {
-        painel_principal.addEventListener('scroll', function () {
-            if (painel_principal.scrollTop > 20) {
+    if (painelPrincipal && botaoTopo) {
+        painelPrincipal.addEventListener('scroll', function () {
+            if (painelPrincipal.scrollTop > 20) {
                 botaoTopo.style.display = 'block';
             } else {
                 botaoTopo.style.display = 'none';
@@ -95,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         botaoTopo.addEventListener('click', function (e) {
             e.preventDefault();
-            painel_principal.scrollTo({
+            painelPrincipal.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });

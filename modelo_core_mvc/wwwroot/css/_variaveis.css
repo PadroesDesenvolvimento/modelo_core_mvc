@@ -2,7 +2,7 @@
   --tamanho-fonte-base: 16px;
   --largura-menu-expandido: 13rem;
   --largura-menu-recolhido: 4.5rem;
-  --largura-botao-expandir: 1.2rem;
+  --largura-botaoExpandir: 1.2rem;
   --largura-botao: 12rem;
   --largura-botao-menu: 11rem;
   --largura-botao-menu-recolhido: 4rem;
@@ -44,7 +44,7 @@ html {
   }
 }
 
-.titulo_formulario {
+.tituloFormulario {
   font-size: 1.3rem;
   font-weight: bold;
 }

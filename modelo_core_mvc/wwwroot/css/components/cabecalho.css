@@ -1,8 +1,4 @@
-﻿.painel_cabecalho {
-  margin: 0;
-}
-
-#tituloCabecalho {
+﻿#tituloCabecalho {
   display: flex;
   flex-direction: row;
   height: var(--altura-Titulo-Desktop);
@@ -60,7 +56,7 @@
   transition: opacity 0.3s;
 }
 
-#botao_popup {
+#botaoPopup {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +67,7 @@
   color: var(--cor-invertida-texto);
   background-color: var(--cor-apoio-vermelho);
 }
-#botao_popup.dropdown-toggle::after {
+#botaoPopup.dropdown-toggle::after {
   display: none;
 }
 
@@ -82,25 +78,26 @@
 }
 
 @media (min-width: 767.99px) {
-  #cabecalho-desktop {
+  #cabecalhoDesktop {
     display: block;
+    margin: 0;
   }
   #fundoBrasaoMobile,
   #tituloSefaz,
-  #cabecalho_mobile,
-  #botao-hamburguinho {
+  #cabecalhoMobile,
+  #botaoHamburguinho {
     display: none;
   }
 }
 @media (max-width: 767.98px) {
-  #cabecalho-desktop,
+  #cabecalhoDesktop,
   #brasaoPainel,
   #fundoBrasaoDesktop,
-  #botao_popup,
+  #botaoPopup,
   #tituloApp {
     display: none;
   }
-  .painel_cabecalho {
+  .painelCabecalho {
     margin-left: 0;
     flex: 1;
     flex-grow: 1;
@@ -126,14 +123,14 @@
     text-align: left;
   }
   #tituloSefaz {
-    font-size: 0.75rem;
+    font-size: 1rem;
     line-height: 1;
     font-weight: 500;
   }
   #usuarioAutenticado {
-    font-size: 0.4rem;
+    font-size: 0.6rem;
   }
-  #botao-hamburguinho {
+  #botaoHamburguinho {
     display: block;
     font-size: 2rem;
     cursor: pointer;

@@ -3,6 +3,16 @@ let valores = [1, 1.1, 1.3, 1.5, 1.75, 1.9]
 let desconto = [13, 18, 26, 32, 37.3, 39.8]
 let contrastState = "false";
 
+function setCookie(name, value, days = 7) {
+    var expires = "";
+    if (days > 0) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
 function alterarZoom() {
     if (valorMudanca < 0) { valorMudanca = 0 }
     else if (valorMudanca > 5) { valorMudanca = 5 }

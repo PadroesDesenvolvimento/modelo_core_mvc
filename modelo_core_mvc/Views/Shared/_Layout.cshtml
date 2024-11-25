@@ -6,7 +6,7 @@
 
 @{
     var cookies = Context.Request.Cookies;
-    var estaRecolhido = cookies.ContainsKey("classe|painel_lateral|recolhido") && cookies["classe|painel_lateral|recolhido"] == "true";
+    var estaRecolhido = cookies.ContainsKey("classe|painelLateral|recolhido") && cookies["classe|painelLateral|recolhido"] == "true";
     int valorMudanca = 0;
     var valorZoom = "1";
     double[] valores = { 1, 1.1, 1.3, 1.5, 1.75, 1.9 };
@@ -58,46 +58,46 @@
     </script>
 
     <div id="aplicacao">
-        <header id="cabecalho_mobile" class="painel_cabecalho">
+        <header id="cabecalhoMobile" class="painelCabecalho">
             <partial name="_Cabecalho" />
         </header>
 
-        <div id="painel_aplicacao">
-            <section id="painel_lateral" class="oculto @(estaRecolhido ? "recolhido" : "")">
+        <div id="painelAplicacao">
+            <section id="painelLateral" class="oculto @(estaRecolhido ? "recolhido" : "")">
                 <div id="brasaoPainel">
                     <div id="fundoBrasaoDesktop" class="fundoBrasao">
                         <img class="brasao" src="https://devbsacdn.blob.core.windows.net/v01/img/BRASAO_GOV_SP_Original.svg" alt="Brasão do Estado de São Paulo">
                     </div>
                     <span id="orgao">Secretaria da Fazenda e Planejamento</span>
                 </div>
-                <button id="botao-expandir"
+                <button id="botaoExpandir"
                         type="button"
                         title="Botão para expandir ou recolher o menu (<alt c>)"
                         aria-label="Botão para expandir ou recolher o menu"
                         accesskey="c"
-                        onclick="alternarClasse(['painel_lateral', 'icone_expandir', 'icone_recolher'],'recolhido')">
-                    <span id="icone_expandir" class="@(!estaRecolhido ? "recolhido" : "")">
+                        onclick="alternarClasse(['painelLateral', 'iconeExpandir', 'iconeRecolher'],'recolhido')">
+                    <span id="iconeExpandir" class="@(!estaRecolhido ? "recolhido" : "")">
                         <i class="fas fa-angle-right"></i>
                     </span>
-                    <span id="icone_recolher" class="@(estaRecolhido ? "recolhido" : "")">
+                    <span id="iconeRecolher" class="@(estaRecolhido ? "recolhido" : "")">
                         <i class="fas fa-angle-left"></i>
                     </span>
                 </button>
 
-                <div id="menu_lateral" onclick="alternarClasse(['painel_lateral', 'painel_principal'],'oculto',false)">
+                <nav id="menuLateral" onclick="alternarClasse(['painelLateral', 'painelPrincipal'],'oculto',false)">
                     <partial name="_ItensMenu" />
-                </div>
+                </nav>
             </section>
 
-            <section id="painel_principal" class="@(estaRecolhido ? "recolhido" : "")">
-                <header id="cabecalho-desktop" class="painel_cabecalho">
+            <section id="painelPrincipal" class="@(estaRecolhido ? "recolhido" : "")">
+                <header id="cabecalhoDesktop" class="painelCabecalho">
                     <partial name="_Cabecalho" />
-                    <nav id="menu_popup" class="oculto">
+                    <nav id="menuPopup" class="oculto">
                         <partial name="_ItensMenu" />
                     </nav>
                 </header>
 
-                <div id="painel_conteudo">
+                <div id="painelConteudo">
                     <partial name="_BreadCrumb" />
 
                     <main id="conteudo" class="shadow" tabindex="0">
@@ -109,7 +109,7 @@
                     <a href="#">Topo da página</a>
                 </div>
 
-                <div id="mensagem_erro">
+                <div id="mensagemErro">
                     @if (ViewData["Erro"] != null)
                     {
                         @ViewData["Erro"]
