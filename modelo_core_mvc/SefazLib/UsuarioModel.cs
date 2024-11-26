@@ -54,16 +54,19 @@ namespace SefazLib.usuarios
             string[] partesNome = nomeCompleto.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             string iniciais = "";
 
-            for (int i = 0; i < partesNome.Length; i++)
+            if (partesNome.Length > 0 && !palavrasExcluidas.Contains(partesNome[0], StringComparer.OrdinalIgnoreCase))
             {
-                if (!palavrasExcluidas.Contains(partesNome[i], StringComparer.OrdinalIgnoreCase))
-                {
-                    iniciais += partesNome[i][0];
-                }
+                iniciais += partesNome[0][0];
+            }
+
+            if (partesNome.Length > 1 && !palavrasExcluidas.Contains(partesNome[^1], StringComparer.OrdinalIgnoreCase))
+            {
+                iniciais += partesNome[^1][0];
             }
 
             return iniciais;
         }
+
 
         public StringContent ToJson()
         {

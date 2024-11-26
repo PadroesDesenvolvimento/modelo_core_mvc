@@ -92,7 +92,7 @@
             <section id="painelPrincipal" class="@(estaRecolhido ? "recolhido" : "")">
                 <header id="cabecalhoDesktop" class="painelCabecalho">
                     <partial name="_Cabecalho" />
-                    <nav id="menuPopup" class="oculto">
+                    <nav id="menuPopup" class="oculto" onmouseleave="alternarClasse(['menuPopup'],'oculto',true)">
                         <partial name="_ItensMenu" />
                     </nav>
                 </header>
