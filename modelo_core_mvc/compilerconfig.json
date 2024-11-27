@@ -4,8 +4,8 @@
     "inputFile": "wwwroot/css/_variaveis.scss"
   },
   {
-    "outputFile": "wwwroot/css/alternar-cores.css",
-    "inputFile": "wwwroot/css/alternar-cores.scss"
+    "outputFile": "wwwroot/css/alternarCores.css",
+    "inputFile": "wwwroot/css/alternarCores.scss"
   },
   {
     "outputFile": "wwwroot/css/outros.css",
@@ -60,11 +60,15 @@
     "inputFile": "wwwroot/css/components/Aguarde.scss"
   },
   {
-    "outputFile": "wwwroot/css/alternar-cores.css",
-    "inputFile": "wwwroot/css/alternar-cores.scss"
+    "outputFile": "wwwroot/css/alternarCores.css",
+    "inputFile": "wwwroot/css/alternarCores.scss"
   },
   {
-    "outputFile": "wwwroot/css/components/painel-lateral.css",
-    "inputFile": "wwwroot/css/components/painel-lateral.scss"
+    "outputFile": "wwwroot/css/components/painelLateral.css",
+    "inputFile": "wwwroot/css/components/painelLateral.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/barraAcessibilidade.css",
+    "inputFile": "wwwroot/css/components/barraAcessibilidade.scss"
   }
 ]

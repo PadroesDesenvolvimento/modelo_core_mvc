@@ -1,13 +1,13 @@
-﻿#menu_lateral {
-  margin-top: var(--margem-superior_menu);
+﻿#menuLateral {
+  margin-top: var(--margem-superior-menu);
 }
 @media (min-width: 767.99px) {
-  #menu_lateral #itens_popup {
+  #menuLateral #itensPopup {
     display: none;
   }
 }
 
-.menu-divider {
+.menuDivider {
   border: 0;
   height: 1px;
   background: var(--cor-primaria-texto);
@@ -50,7 +50,7 @@
   width: 0.81rem;
 }
 
-#itens_nav {
+#itensNav {
   display: block;
   width: 100%;
   background-color: transparent;
@@ -60,7 +60,7 @@
 }
 
 @media (min-width: 767.99px) {
-  #painel_lateral.recolhido #menu_lateral .botaoMenu {
+  #painelLateral.recolhido #menuLateral .botaoMenu {
     height: var(--altura-botao-menu-recolhido);
     border-radius: calc(var(--altura-botao-menu-recolhido) / 10);
     flex-direction: column;
@@ -70,17 +70,17 @@
     margin: 0.25rem 0.25rem;
     padding-left: 0;
   }
-  #painel_lateral.recolhido #menu_lateral .botaoMenu em {
+  #painelLateral.recolhido #menuLateral .botaoMenu em {
     margin-top: 0.25rem;
     font-size: 1rem;
     width: auto;
   }
-  #painel_lateral.recolhido #menu_lateral .botaoMenu span {
+  #painelLateral.recolhido #menuLateral .botaoMenu span {
     line-height: normal;
     margin-top: 0.25rem;
   }
 }
-#menu_popup {
+#menuPopup {
   display: block;
   position: absolute;
   right: 2rem;
@@ -93,10 +93,10 @@
   padding: 0.5rem;
   transition: display 0.3s;
 }
-#menu_popup.oculto {
+#menuPopup.oculto {
   display: none;
 }
-#menu_popup .botaoMenu {
+#menuPopup .botaoMenu {
   font-size: 0.7rem;
   color: var(--cor-primaria-texto);
   border-radius: 0;
@@ -104,29 +104,29 @@
   margin: 0;
   height: 1.5rem;
 }
-#menu_popup .botaoMenu:hover, #menu_popup .botaoMenu:focus, #menu_popup .botaoMenu.selecionado {
+#menuPopup .botaoMenu:hover, #menuPopup .botaoMenu:focus, #menuPopup .botaoMenu.selecionado {
   background-color: var(--cor-fundo-hover-popup);
 }
-#menu_popup #itens_nav {
+#menuPopup #itensNav {
   display: none;
 }
-#menu_popup #itens_popup {
+#menuPopup #itensPopup {
   display: block;
   margin: 0;
   width: 100%;
 }
 
-#iniciais_popup {
-  font-size: 0.7em;
+#iniciaisPopup {
+  font-size: 0.7rem;
   font-style: normal;
 }
 
 @media (max-width: 767.98px) {
-  #menu_popup,
-  #botao_popup {
+  #menuPopup,
+  #botaoPopup {
     display: none;
   }
-  #itens_popup {
+  #itensPopup {
     display: block;
   }
   .botaoMenu {
@@ -137,7 +137,7 @@
     border-radius: 0;
     font-size: 0.8rem;
   }
-  .menu-divider {
+  .menuDivider {
     background: var(--cor-invertida-texto);
     margin: 0.7rem 1rem;
   }

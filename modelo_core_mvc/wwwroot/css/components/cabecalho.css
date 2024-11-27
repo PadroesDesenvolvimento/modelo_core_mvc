@@ -1,8 +1,4 @@
-﻿.painel_cabecalho {
-  margin: 0;
-}
-
-#tituloCabecalho {
+﻿#tituloCabecalho {
   display: flex;
   flex-direction: row;
   height: var(--altura-Titulo-Desktop);
@@ -49,18 +45,18 @@
   justify-content: center;
   align-items: center;
   background-color: var(--cor-menu-invertida-texto);
-  height: 4rem;
+  height: 3.5rem;
+  width: 3.5rem;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
   padding: 0 17px 0 10px;
 }
 .fundoBrasao .brasao {
-  width: 2.5rem;
-  height: 2.9rem;
+  height: 85%;
   transition: opacity 0.3s;
 }
 
-#botao_popup {
+#botaoPopup {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +67,7 @@
   color: var(--cor-invertida-texto);
   background-color: var(--cor-apoio-vermelho);
 }
-#botao_popup.dropdown-toggle::after {
+#botaoPopup.dropdown-toggle::after {
   display: none;
 }
 
@@ -82,31 +78,33 @@
 }
 
 @media (min-width: 767.99px) {
-  #cabecalho-desktop {
+  #cabecalhoDesktop {
     display: block;
+    margin: 0;
   }
   #fundoBrasaoMobile,
   #tituloSefaz,
-  #cabecalho_mobile,
-  #botao-hamburguinho {
+  #cabecalhoMobile,
+  #botaoHamburguinho {
     display: none;
   }
 }
 @media (max-width: 767.98px) {
-  #cabecalho-desktop,
+  #cabecalhoDesktop,
   #brasaoPainel,
   #fundoBrasaoDesktop,
+  #botaoPopup,
   #tituloApp {
     display: none;
   }
-  .painel_cabecalho {
+  .painelCabecalho {
     margin-left: 0;
     flex: 1;
     flex-grow: 1;
   }
   #tituloCabecalho {
     background-color: var(--cor-primaria);
-    padding: 0.5em 1em;
+    padding: 0.5rem 1rem 0.5rem 0;
     justify-content: space-between;
     box-shadow: none;
     border: none;
@@ -125,26 +123,22 @@
     text-align: left;
   }
   #tituloSefaz {
-    font-size: 0.75rem;
+    font-size: 1rem;
     line-height: 1;
     font-weight: 500;
   }
   #usuarioAutenticado {
-    font-size: 0.4rem;
+    font-size: 0.6rem;
   }
-  #botao-hamburguinho {
+  #botaoHamburguinho {
     display: block;
     font-size: 2rem;
     cursor: pointer;
     color: var(--cor-invertida-texto);
   }
   .fundoBrasao {
-    width: 3.19rem;
-    height: 2.85rem;
+    width: 3rem;
+    height: 3rem;
     padding: 0 17px 0 10px;
-  }
-  .fundoBrasao .brasao {
-    height: 1.73rem;
-    width: 1.5rem;
   }
 }
