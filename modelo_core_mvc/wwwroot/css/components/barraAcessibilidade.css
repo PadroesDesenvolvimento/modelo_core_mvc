@@ -2,7 +2,7 @@
   position: relative;
   display: block;
   width: 100%;
-  height: var(--altura-barra-acessibilidade);
+  height: var(--altura-barraAcessibilidade);
 }
 #barraAcessibilidade button {
   background-color: var(--cor-fundo);

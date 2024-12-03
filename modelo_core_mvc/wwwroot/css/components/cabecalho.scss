@@ -86,9 +86,17 @@
         margin: 0;
     }
 
+    #cabecalhoMobile {
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin-bottom: calc(var(--altura-barraAcessibilidade) + var(--altura-cabecalho) + 0.5em);
+        z-index: 2;
+    }
+
     #fundoBrasaoMobile,
     #tituloSefaz,
-    #cabecalhoMobile,
     #botaoHamburguinho {
         display: none;
     }
