@@ -6,6 +6,6 @@ namespace modelo_core_mvc.Errors
     {
         public string RequestId { get; set; }
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-        public Exception Exception { get; set; } // Adicione esta propriedade
+        public Exception Exception { get; set; } 
     }
 }

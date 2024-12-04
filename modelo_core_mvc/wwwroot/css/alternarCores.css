@@ -22,11 +22,6 @@
   color: var(--cor-primaria-texto);
 }
 
-.color-blind .ac-adaptivecard {
-  background-color: black !important;
-  color: white;
-}
-
 .color-blind #botaoExpandir {
   color: #fff;
   border-color: white;
