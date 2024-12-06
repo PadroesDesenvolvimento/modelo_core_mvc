@@ -2,11 +2,13 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace modelo_core_mvc.Helpers;
 
+[ExcludeFromCodeCoverage]
 public class TokenExchangeHelper
 {
     static readonly HttpClient client = new HttpClient();

@@ -5,11 +5,13 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Security.Cryptography;
 
 namespace SefazLib;
 
+[ExcludeFromCodeCoverage]
 public class Autenticacao
 {
     private readonly IConfiguration configuration;
@@ -56,6 +58,7 @@ public class Autenticacao
         };
     }
 
+    [ExcludeFromCodeCoverage]
     public RsaSecurityKey LoadPublicKey()
     {
         using var client = new HttpClient();

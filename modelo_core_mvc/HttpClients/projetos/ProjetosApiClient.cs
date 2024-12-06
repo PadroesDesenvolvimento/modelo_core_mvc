@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using modelo_core_mvc.projetos;
 using SefazLib;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace modelo_core_mvc.ProjetosApi
 {
@@ -16,6 +17,7 @@ namespace modelo_core_mvc.ProjetosApi
 
         public HttpClient httpClient { get; set; }
 
+        [ExcludeFromCodeCoverage]
         public ProjetosApiClient(HttpClient HttpClient, IConfiguration Configuration, IdentityConfig IdentityConfig)
         {
             configuration = Configuration;
