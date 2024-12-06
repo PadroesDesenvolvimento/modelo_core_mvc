@@ -4,11 +4,9 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using modelo_core_mvc.ProjetosApi;
 using modelo_core_mvc.Errors;
-using System.Diagnostics.CodeAnalysis;
 
 namespace modelo_core_mvc.Controllers;
 
-[ExcludeFromCodeCoverage]
 public class HomeController : BaseController
 {
     private readonly IConfiguration configuration;

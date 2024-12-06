@@ -1,8 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace Breadcrumbs.Models;
 
-namespace Breadcrumbs.Models;
-
-[ExcludeFromCodeCoverage]
 public class Breadcrumb
 {
     public string Text { get; set; }

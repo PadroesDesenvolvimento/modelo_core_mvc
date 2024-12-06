@@ -4,11 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using modelo_core_mvc.ProjetosApi;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace modelo_core_mvc.Controllers;
 
-[ExcludeFromCodeCoverage]
 [Authorize]
 public class ProjetosController : BaseController
 {

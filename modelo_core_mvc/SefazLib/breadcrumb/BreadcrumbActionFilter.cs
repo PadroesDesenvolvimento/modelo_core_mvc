@@ -6,11 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Breadcrumbs.Attributes;
 
-[ExcludeFromCodeCoverage]
 public class BreadcrumbActionFilter : ActionFilterAttribute
 {
     public override void OnActionExecuted(ActionExecutedContext context)
