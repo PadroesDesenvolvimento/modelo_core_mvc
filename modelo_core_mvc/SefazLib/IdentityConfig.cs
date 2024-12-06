@@ -19,11 +19,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Xml;
 using System.Net.Security;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SefazLib;
 
-[ExcludeFromCodeCoverage]
 public class IdentityConfig
 {
     private static IConfiguration configuration;

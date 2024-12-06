@@ -42,4 +42,10 @@
 	<ItemGroup>
 		<WCFMetadata Include="Connected Services" />
 	</ItemGroup>
+
+	<PropertyGroup>
+		<CoverletOutputFormat>cobertura</CoverletOutputFormat>
+		<CoverletOutput>$(OutputDirectory)\coverage.cobertura.xml</CoverletOutput>
+		<ExcludeByFile>**/Controllers/**,**/Program.cs,**/modelo_core_mvc.test/**</ExcludeByFile>
+	</PropertyGroup>
 </Project>
