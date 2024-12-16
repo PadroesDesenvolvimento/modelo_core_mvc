@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<DataCollectionRunSettings>
+		<DataCollectors>
+			<DataCollector friendlyName="Code Coverage">
+				<Configuration>
+					<CoverageInclude>
+						<ModulePaths>
+							<Include>
+								<ModulePath>.*modelo_core_mvc.*</ModulePath>
+							</Include>
+							<Exclude>
+								<ModulePath>.*Tests.*</ModulePath>
+								<ModulePath>.*Helpers.*</ModulePath>
+								<ModulePath>.*SefazLib.*</ModulePath>
+								<ModulePath>.*Controllers.*</ModulePath>
+							</Exclude>
+						</ModulePaths>
+					</CoverageInclude>
+				</Configuration>
+			</DataCollector>
+		</DataCollectors>
+	</DataCollectionRunSettings>
+</RunSettings>
