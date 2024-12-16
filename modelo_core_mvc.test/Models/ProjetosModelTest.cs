@@ -1,3 +1,4 @@
+using modelo_core_mvc.Models;
 using modelo_core_mvc.projetos;
 using Newtonsoft.Json;
 
@@ -5,7 +6,7 @@ namespace modelo_core_mvc.test.Models;
 public class ProjetosModelTest
 {
     [Fact]
-    public void ToJson_ReturnsStringContent()
+    public async Task ToJson_ReturnsStringContent()
     {
         // Arrange
         var projeto = new ProjetosModel(1, "Projeto Teste", "Descrição do projeto");
@@ -16,7 +17,7 @@ public class ProjetosModelTest
         // Assert
         Assert.NotNull(result);
         Assert.IsType<StringContent>(result);
-        var jsonString = result.ReadAsStringAsync().Result;
+        var jsonString = await result.ReadAsStringAsync();
         var expectedJson = JsonConvert.SerializeObject(projeto);
         Assert.Equal(expectedJson, jsonString);
     }

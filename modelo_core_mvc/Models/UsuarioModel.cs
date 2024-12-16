@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 
-namespace SefazLib.usuarios;
+namespace modelo_core_mvc.Models;
 
 public class Usuario
 {
