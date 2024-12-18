@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 
 namespace modelo_core_mvc.Models;
 
+[ExcludeFromCodeCoverage]
 public class Usuario
 {
     [Display(Name = "Login")]

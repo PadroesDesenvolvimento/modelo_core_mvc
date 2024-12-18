@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
-using modelo_core_mvc.projetos;
+using modelo_core_mvc.Models;
 using SefazLib;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace modelo_core_mvc.ProjetosApi;
 
@@ -14,8 +15,10 @@ public class ProjetosApiClient
     private readonly IConfiguration configuration;
     private readonly IdentityConfig identityConfig;
 
+    [ExcludeFromCodeCoverage]
     public HttpClient httpClient { get; set; }
 
+    [ExcludeFromCodeCoverage]
     public ProjetosApiClient(HttpClient HttpClient, IConfiguration Configuration, IdentityConfig IdentityConfig)
     {
         configuration = Configuration;

@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5B5896FA-A2AB-44B3-948C-F3670B391C41}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		codecoverage.runsettings = codecoverage.runsettings
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "modelo_core_mvc.test", "modelo_core_mvc.test\modelo_core_mvc.test.csproj", "{9C87E5E6-7570-4DB4-A584-88A49FC73142}"

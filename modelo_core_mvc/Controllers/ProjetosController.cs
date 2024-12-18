@@ -1,4 +1,4 @@
-﻿using modelo_core_mvc.projetos;
+﻿using modelo_core_mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
