@@ -1,5 +1,4 @@
 using modelo_core_mvc.Models;
-using modelo_core_mvc.projetos;
 using Newtonsoft.Json;
 
 namespace modelo_core_mvc.test.Models;

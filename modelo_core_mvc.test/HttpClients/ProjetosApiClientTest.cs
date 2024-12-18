@@ -4,7 +4,7 @@ using Moq;
 using Moq.Protected;
 using System.Net;
 using SefazLib;
-using modelo_core_mvc.projetos;
+using modelo_core_mvc.Models;
 
 namespace modelo_core_mvc.test.HttpClients;
 

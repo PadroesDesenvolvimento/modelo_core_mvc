@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<DataCollectionRunSettings>
+		<DataCollectors>
+			<DataCollector friendlyName="Code Coverage">
+				<Configuration>
+					<CodeCoverage>
+						<Sources>
+							<Exclude>
+								<!-- Excluir namespaces-->
+								<Source>.*modelo_core_mvc.SefazLib.*</Source>
+								<Source>.*modelo_core_mvc.Breadcrumb.*</Source>
+								<Source>.*modelo_core_mvc.Controllers.*</Source>
+								<Source>.*modelo_core_mvc.Helpers.*</Source>
+								<!-- Excluir Program.cs -->
+								<Source>.*Program.cs</Source>
+								<Source>.*Views.*</Source>
+							</Exclude>
+						</Sources>
+						<Functions>
+							<Exclude>
+								<!-- Excluir classes globais -->
+								<Function>.*::.cctor</Function>
+								<Function>.*::.ctor</Function>
+							</Exclude>
+						</Functions>
+						<ModulePaths>
+							<Exclude>
+								<!-- Excluir DLLs -->
+								<ModulePath>.*\.Test\..*</ModulePath>
+							</Exclude>
+						</ModulePaths>
+						<Attributes>
+							<Exclude>
+								<!-- Excluir metodos sinalizados com o atributo [ExcludeFromCodeCoverage] -->
+								<Attribute>ExcludeFromCodeCoverage</Attribute>
+							</Exclude>
+						</Attributes>
+					</CodeCoverage>
+				</Configuration>
+			</DataCollector>
+		</DataCollectors>
+	</DataCollectionRunSettings>
+</RunSettings>

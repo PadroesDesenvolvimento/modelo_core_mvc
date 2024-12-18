@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace modelo_core_mvc.Errors;
 
+[ExcludeFromCodeCoverage]
 public class ErrorViewModel
 {
     public string RequestId { get; set; }
