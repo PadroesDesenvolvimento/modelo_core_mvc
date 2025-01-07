@@ -3,23 +3,23 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Erro.</h1>
-<h2 class="text-danger">Houve um erro ao processar sua chamada.</h2>
+<h1 class="text-danger" aria-label="Erro">Erro.</h1>
+<h2 class="text-danger" aria-label="Houve um erro ao processar sua chamada">Houve um erro ao processar sua chamada.</h2>
 
 @if (Model.ShowRequestId)
 {
-    <p>
+    <p aria-label="ID da Requisição">
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
 }
 
 @if (Model.Exception != null)
 {
-    <h3>Detalhes do Erro:</h3>
-    <p>
+    <h3 aria-label="Detalhes do Erro">Detalhes do Erro:</h3>
+    <p aria-label="Mensagem de Erro">
         <strong>Mensagem de Erro:</strong> @Model.Exception.Message
     </p>
-    <p>
+    <p aria-label="StackTrace">
         <strong>StackTrace:</strong>
         <pre>@Model.Exception.StackTrace</pre>
     </p>

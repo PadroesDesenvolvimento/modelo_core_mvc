@@ -23,6 +23,16 @@ function alternarClasse(elementos, classe, gravarCookie = true, days = 7) {
     });
 }
 
+function atualizarAtributosBotaoExpandir() {
+    var botao = document.getElementById('botaoExpandir');
+    var painelLateral = document.getElementById('painelLateral');
+    var estaRecolhido = painelLateral.classList.contains('recolhido');
+
+    botao.title = "Botao para expandir ou recolher o menu (<alt " + (estaRecolhido ? "." : ",") + ">)";
+    botao.setAttribute('aria-label', "Botao para expandir ou recolher o menu (<alt " + (estaRecolhido ? "." : ",") + ">)");
+    botao.accessKey = estaRecolhido ? "." : ",";
+}
+
 function _aguarde(mostrar = true) {
     var elemento = document.getElementById('_aguarde');
     if (elemento) {
