@@ -8,7 +8,7 @@
             {
                 if (breadcrumb.Active)
                 {
-                    <li class="breadcrumb-item active" aria-current="page">
+                    <li class="breadcrumb-item active" role="link" aria-current="page">
                         <a asp-action="@breadcrumb.Action" asp-controller="@breadcrumb.Controller" aria-label="Link para @breadcrumb.Text">
                             @if (breadcrumb.Text == "Home")
                             {
@@ -23,7 +23,7 @@
                 }
                 else
                 {
-                    <li class="breadcrumb-item" aria-current="page" aria-label="Link inativo">
+                    <li class="breadcrumb-item" role="link" aria-current="page">
                         @if (breadcrumb.Text == "Home")
                         {
                             <i class="fas fa-home" aria-label="Página inicial"></i>
