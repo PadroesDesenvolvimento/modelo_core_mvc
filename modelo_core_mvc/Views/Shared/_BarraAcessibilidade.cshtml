@@ -1,39 +1,47 @@
-﻿<div id="barraAcessibilidade" class="d-flex p-1 justify-content-end">
+﻿<div id="barraAcessibilidade" 
+     class="d-flex p-1 justify-content-end" 
+     role="navigation" 
+     title="Barra de Acessibilidade"
+     aria-label="Barra de Acessibilidade">
     <div id="atalhosDocumento" class="visually-hidden-focusable">
         <div>
-            <span>1</span><a accesskey="1" href="#Main" aria-label="Pular para o conteúdo principal">Conteúdo principal</a>
-            <span>2</span><a accesskey="2" href="#itensNav" aria-label="Pular para o menu lateral">Menu Lateral</a>
-            <span>3</span><a accesskey="3" href="#barraAcessibilidade" aria-label="Pular para a barra de acessibilidade">Barra de acessibilidade</a>
+            <a accesskey="p" href="#conteudo" aria-label="Conteúdo Principal (alt p)"></a>
+            <a accesskey="m" href="#itensNav" aria-label="Menu lateral (alt m)"></a>
+            <a accesskey="a" href="#botoesAcessibilidade" aria-label="Barra de acessibilidade (alt a)"></a>
         </div>
     </div>
     <div id="botoesAcessibilidade" class="ms-2 d-flex align-items-center">
         <button id="exibirLibras"
                 class="rounded-circle d-flex align-items-center justify-content-center"
-                title="Abrir leitor de Libras"
-                aria-label="Abrir leitor de Libras"
-                accesskey="7"
+                role="button"
+                aria-label="Abrir leitor de Libras  (Alt /)"
+                title="Leitor Libras <alt />"
+                accesskey="/"
                 onclick="alternarClasse(['vlibras'],'enabled',false)">
         </button>
         <button id="aumentarLetra"
                 class="botaoZoom rounded-circle d-flex align-items-center justify-content-center"
-                title="Aumentar caracteres (Alt +)"
+                role="button"
                 aria-label="Aumentar caracteres (Alt +)"
-                accesskey="9"
+                title="Zoom+ <alt +>"
+                accesskey="+"
                 onclick="aumentarCaracter()">
             <span>A+</span>
         </button>
         <button id="diminuirLetra"
                 class="botaoZoom rounded-circle d-flex align-items-center justify-content-center"
-                title="Diminuir caracteres (Alt -)"
+                role="button"
                 aria-label="Diminuir caracteres (Alt -)"
-                accesskey="0"
+                title="Zoom- <alt ->"
+                accesskey="-"
                 onclick="diminuirCaracter()">
             <span>A-</span>
         </button>
         <button id="alternarContraste"
                 class="rounded-circle d-flex align-items-center justify-content-center"
-                title="Alternar cores (Alt *)"
-                aria-label="Alternar cores"
+                role="button"
+                aria-label="Alternar cores (Alt *)"
+                title="Alternar cores <alt *>"
                 accesskey="*"
                 onclick="window.toggleContrast()">
             <svg xmlns="http://www.w3.org/2000/svg" height="10" viewBox="16.667 36.667 166.666 166.666" width="10">

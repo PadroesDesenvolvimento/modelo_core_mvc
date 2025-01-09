@@ -24,26 +24,30 @@
 @Html.Hidden("nomeExibicao", nomeExibicao)
 
 <partial name="_BarraAcessibilidade" />
-<div id="tituloCabecalho">
-    <div id ="fundoBrasaoMobile" class="fundoBrasao">
-        <img class="brasao" src="https://devbsacdn.blob.core.windows.net/v01/img/BRASAO_GOV_SP_Original.svg" alt="Brasão do Estado de São Paulo">
+<header id="tituloCabecalho" role="banner">
+    <div id="fundoBrasaoMobile" role="img" class="fundoBrasao">
+        <img class="brasao" 
+             src="https://devbsacdn.blob.core.windows.net/v01/img/BRASAO_GOV_SP_Original.svg" 
+             alt="Brasão do Estado de São Paulo">
     </div>
-    <span id="tituloApp">Aplicação modelo .Net MVC</span>
+    <span id="tituloApp">Aplicação Exemplo .Net MVC</span>
     <div id="subtitulo">
         <span id="tituloSefaz">Secretaria da Fazenda e Planejamento</span>
-        <span id="usuarioAutenticado">@nomeExibicao</span>
+        <span id="usuarioAutenticado" aria-live="polite">@nomeExibicao</span>
     </div>
-    <i id="botaoPopup"
-       alt="Menu Popup"
-       title="Exibe e oculta o menu de ambiente"
-       aria-label="Exibe e oculta o menu de ambiente"
-       onclick="alternarClasse(['menuPopup'],'oculto',false)">
-        <text id="iniciaisPopup">@iniciais</text>
-    </i>
-    <i id="botaoHamburguinho"
-       class="fas fa-bars"
-       alt="Menu Popup"
-       aria-label="Exibe e oculta o Menu da aplicação"
-       onclick="alternarClasse(['painelLateral', 'painelPrincipal'],'oculto',false)">
-    </i>
-</div>
+    <div id="botaoPopup"
+         role="button"
+         aria-haspopup="true"
+         aria-label="Exibe e oculta o menu de configuração popup"
+         title="Exibe e oculta o menu de configuração popup"
+         onclick="alternarClasse(['menuPopup'],'oculto',false)">
+        <span id="iniciaisPopup">@iniciais</span>
+    </div>
+    <div id="botaoHamburguinho"
+         class="fas fa-bars"
+         role="button"
+         aria-label="Exibe e oculta o Menu da aplicação"
+         title="Exibe e oculta o menu da aplicação"
+         onclick="alternarClasse(['painelLateral', 'painelPrincipal'],'oculto',false)">
+    </div>
+</header>
