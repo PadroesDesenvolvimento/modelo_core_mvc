@@ -49,7 +49,6 @@ function _aguarde(mostrar = true) {
     }
 }
 
-window.addEventListener('load', _aguarde(false));
 function _selecionar() {
     const menuItems = document.querySelectorAll('.botaoMenu');
 
@@ -79,8 +78,59 @@ function _selecionar() {
     });
 }
 
+document.addEventListener('keydown', function (event) {
+    if (event.altKey) {
+        switch (event.key) {
+            case '1':
+                irParaElemento('botoesAcessibilidade');
+                break;
+            case '2':
+                irParaElemento('itensNav');
+                break;
+            case '3':
+                alternarPopup();
+                break;
+            case '4':
+                irParaElemento('conteudo');
+                break;
+            case '5':
+                irParaElemento('tabela');
+                break;
+        }
+    }
+});
+
+function alternarPopup() {
+    var menuPopup = document.getElementById('menuPopup');
+    if (menuPopup) {
+        if (!menuPopup.classList.contains('oculto')) {
+            menuPopup.classList.add('oculto');
+        }
+        else {
+            menuPopup.classList.remove('oculto');
+        }
+        menuPopup.focus();
+    }
+};
+
+function irParaElemento(id) {
+    var elementos = document.querySelectorAll(`#${id}`);
+    if (elementos) {
+        const elementoVisivel = Array.from(elementos).find(el => el.offsetParent !== null);
+        if (elementoVisivel) {
+            elementoVisivel.focus();
+        }
+        else {
+            console.error(`Elemento ${id} nao esta visivel.`);
+        }
+    }
+    else {
+        console.error(`Elemento ${id} nao encontrado.`);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-    _selecionar(); // Selecionar o item do menu
+    _aguarde(false);
 
     const painelPrincipal = document.getElementById('painelPrincipal');
     const botaoTopo = document.getElementById('topoDaPagina');
@@ -101,4 +151,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+    irParaElemento('aplicacao');
+});
+
+window.addEventListener('load', function () {
+    _selecionar();
 });

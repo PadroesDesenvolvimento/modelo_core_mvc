@@ -21,8 +21,7 @@ public class ProjetosController : BaseController
     [HttpGet]
     public async Task<ActionResult> Index()
     {
-        ViewData["Title"] = "Projetos";
-        ViewData["Message"] = "Projetos do DTI";
+        ViewData["Title"] = "Formulário";
         try
         {
             return View(await api.GetProjetosAsync());

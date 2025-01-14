@@ -1,42 +1,53 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
-<h1>@ViewData["Message"]</h1>
 
-<section>
-    <h2>Informações dos artefatos</h2>
-    <ul>
-        <li>Build: @Configuration["dadosdeploy:build"]</li>
-        <li>Release: @Configuration["dadosdeploy:release"]</li>
-        <li>Ambiente: @Configuration["dadosdeploy:ambiente"]</li>
-        <li>Tipo de deploy: @Configuration["dadosdeploy:tipodeploy"]</li>
-        <li>Plataforma: @Configuration["dadosdeploy:plataforma"]</li>
-    </ul>
-    <p>______________________________________________</p>
-    <h2>Autenticação</h2>
-    <ul>
-        <li>Tipo: @Configuration["identity:type"]</li>
-        @if (@Configuration["identity:type"] == "sefazidentity")
-        {
-            <li>Endereço: @Configuration["sefazidentity:metadataaddress"]</li>
-            <li>Aplicação: @Configuration["sefazidentity:realm"]</li>
-        }
-        @if (@Configuration["identity:type"] == "loginsefaz")
-        {
-            <li>Authority: @Configuration["loginsefaz:ServerRealm"]</li>
-            <li>Metadata: @Configuration["loginsefaz:Metadata"]</li>
-        }
-        @if (@Configuration["identity:type"] == "jwt")
-        {
-            <li>Autenticador: @Configuration["jwt:issuer"]</li>
-            <li>Audience: @Configuration["jwt:audience"]</li>
-        }
-        <li>Chave pública para JWT: @Configuration["identity:PublicKey"]</li>
-    </ul>
-    <p>______________________________________________</p>
-    <h2>Dados da conexão</h2>
-    <ul>
-        <li>Endereço da API: @ViewData["EnderecoAPI"]</li>
-        <li>@ViewData["status"]</li>
-        <li>@ViewData["conexao"]</li>
-    </ul>
+<section role="status" aria-labelledby="titulo-status">
+    <h1 id="titulo-status">Sobre essa aplicação:</h1>
+
+    <div aria-labelledby="titulo-artefatos">
+        <h2 id="titulo-artefatos">Informações dos artefatos</h2>
+        <ul>
+            <li>Build: @Configuration["dadosdeploy:build"]</li>
+            <li>Release: @Configuration["dadosdeploy:release"]</li>
+            <li>Ambiente: @Configuration["dadosdeploy:ambiente"]</li>
+            <li>Tipo de deploy: @Configuration["dadosdeploy:tipodeploy"]</li>
+            <li>Plataforma: @Configuration["dadosdeploy:plataforma"]</li>
+        </ul>
+    </div>
+
+    <hr aria-hidden="true">
+
+    <div aria-labelledby="titulo-autenticacao">
+        <h2 id="titulo-autenticacao">Autenticação</h2>
+        <ul>
+            <li>Tipo: @Configuration["identity:type"]</li>
+            @if (@Configuration["identity:type"] == "sefazidentity")
+            {
+                <li>Endereço: @Configuration["sefazidentity:metadataaddress"]</li>
+                <li>Aplicação: @Configuration["sefazidentity:realm"]</li>
+            }
+            @if (@Configuration["identity:type"] == "loginsefaz")
+            {
+                <li>Authority: @Configuration["loginsefaz:ServerRealm"]</li>
+                <li>Metadata: @Configuration["loginsefaz:Metadata"]</li>
+            }
+            @if (@Configuration["identity:type"] == "jwt")
+            {
+                <li>Autenticador: @Configuration["jwt:issuer"]</li>
+                <li>Audience: @Configuration["jwt:audience"]</li>
+            }
+            <li>Chave pública para JWT: @Configuration["identity:PublicKey"]</li>
+        </ul>
+    </div>
+
+    <hr aria-hidden="true">
+
+    <div aria-labelledby="titulo-conexao">
+        <h2 id="titulo-conexao">Dados da conexão</h2>
+        <ul>
+            <li>Endereço da API: @ViewData["EnderecoAPI"]</li>
+            <li>@ViewData["status"]</li>
+            <li>@ViewData["conexao"]</li>
+        </ul>
+    </div>
 </section>

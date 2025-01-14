@@ -128,6 +128,20 @@ h4 {
   margin: 1rem;
 }
 
+#privacidade {
+  font-family: "Montserrat", sans-serif;
+}
+#privacidade section {
+  border-top: 1px solid var(--cor-apoio-cinza-claro);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+#privacidade h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cor-primaria);
+}
+
 /*mobile*/
 @media (max-width: 767.98px) {
   #aplicacao {

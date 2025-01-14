@@ -1,20 +1,16 @@
 ﻿@using modelo_core_mvc.Models;
 @model IEnumerable<ProjetosModel>
 
-<h1>@ViewData["Message"]</h1>
-
-<p>
-    <a asp-action="Adicionar" class="btn btn-regular mr-1">+ Adicionar Projeto</a>
-</p>
-
 @if (Model is null)
 {
     <p>@ViewData["Erro"]</p>
 }
 else
 {
-    <div id="tabela">
-        <table class="table">
+    <section role="status" aria-labelledby="titulo-formulario">
+        <h1 id="titulo-formulario">Formulário de manutenção de dados</h1>
+        <a id="tabela-botao-adicionar" class="btn" asp-action="Adicionar">+ Adicionar</a>
+        <table id="tabela" tabindex="-1" class="table">
             <thead>
                 <tr>
                     <th>
@@ -33,23 +29,29 @@ else
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td tabindex="0">
                             @Html.DisplayFor(modelItem => item.id)
                         </td>
-                        <td>
+                        <td tabindex="0">
                             @Html.DisplayFor(modelItem => item.nome)
                         </td>
-                        <td>
+                        <td tabindex="0">
                             @Html.DisplayFor(modelItem => item.descricao)
                         </td>
-                        <td>
-                            @Html.ActionLink("Alterar", "Alterar", new { item.id }) |
-                            @Html.ActionLink("Detalhes", "Detalhes", new { item.id }) |
-                            @Html.ActionLink("Excluir", "Excluir", new { item.id })
+                        <td class="tabela-botoes">
+                            <a id="tabela-botao-alterar" asp-action="Alterar" asp-route-id="@item.id">
+                                <i role="button" title="Alterar" aria-label="Alterar" class="fas fa-edit"></i>
+                            </a>
+                            <a id="tabela-botao-consultar" asp-action="Detalhes" asp-route-id="@item.id">
+                                <i role="button" title="Ver detalhes" aria-label="Ver detalhes" class="fas fa-info-circle"></i>
+                            </a>
+                            <a id="tabela-botao-excluir" asp-action="Excluir" asp-route-id="@item.id">
+                                <i role="button" title="Excluir" aria-label="Excluir" class="fas fa-trash-alt"></i>
+                            </a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-    </div>
+    </section>
 }

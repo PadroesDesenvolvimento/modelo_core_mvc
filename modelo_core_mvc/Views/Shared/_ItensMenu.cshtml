@@ -1,16 +1,16 @@
-﻿<ul id="itensNav" class="list-unstyled components" role="navigation" aria-label="Main Navigation">
-    <li>
+﻿<ul id="itensNav" tabindex="0" class="list-unstyled components" role="navigation" aria-label="Main Navigation">
+    <li role="button">
         <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Index">
             <em class="fas fa-home" aria-hidden="true"></em>
             <span>Home</span>
         </a>
     </li>
-    <li>
+    <li role="button">
         <a class="botaoMenu" asp-area="" asp-controller="Projetos" asp-action="Index" onclick="_aguarde()">
             <em class="fas fa-table" aria-hidden="true"></em>
             <span>Lista de Projetos</span>
         </a>
-    </li>
+    </li role="button">
     <li>
         <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Privacidade">
             <em class="fas fa-user-secret" aria-hidden="true"></em>
@@ -20,36 +20,36 @@
 </ul>
 
 <ul id="itensPopup" class="list-unstyled components" role="navigation" aria-label="Popup Navigation">
-    <li>
+    <li role="button">
         <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Contato">
             <em class="fas fa-mail-bulk" aria-hidden="true"></em>
             <span>Contato</span>
         </a>
     </li>
-    <li>
+    <li role="button">
         <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity" onclick="_aguarde()">
             <em class="fas fa-id-card" aria-hidden="true"></em>
             <span>Teste do Identity</span>
         </a>
     </li>
-    <li>
+    <li role="button">
         <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Sobre" onclick="_aguarde()">
             <em class="fas fa-info-circle" aria-hidden="true"></em>
             <span>Sobre</span>
         </a>
     </li>
-    <li>
-        <hr class="menuDivider" role="separator" aria-orientation="horizontal">
+    <li role="separator">
+        <hr class="menuDivider" aria-orientation="horizontal">
     </li>
     @if (User.Identity.IsAuthenticated)
     {
-        <li>
+        <li role="button">
             <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
                 <em class="fas fa-address-card" aria-hidden="true"></em>
                 <span>Identificação</span>
             </a>
         </li>
-        <li>
+        <li role="button">
             <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
                 <em class="fas fa-door-open" aria-hidden="true"></em>
                 <span>Sair</span>
@@ -58,7 +58,7 @@
     }
     else
     {
-        <li>
+        <li role="button">
             <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
                 <em class="fas fa-address-card" aria-hidden="true"></em>
                 <span>Entrar</span>
