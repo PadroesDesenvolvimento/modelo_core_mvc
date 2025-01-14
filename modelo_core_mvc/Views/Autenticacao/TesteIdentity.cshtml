@@ -6,7 +6,8 @@
 
 <h1>@ViewData["Message"]</h1>
 
-<section>
+<section role="status" aria-labelledby="Autenticacao">
+    <h1 id="Autenticacao">Informações de autenticação</h1>
     @if (!User.Identity.IsAuthenticated)
     {
         <h2>Usuário não autenticado.</h2>

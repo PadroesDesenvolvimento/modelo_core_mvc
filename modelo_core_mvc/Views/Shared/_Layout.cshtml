@@ -47,7 +47,9 @@
         });
     </script>
 
-    <div id="aplicacao" role="application">
+    <div id="aplicacao" 
+         role="application"
+         tabindex="0">
         <header id="cabecalhoMobile" class="painelCabecalho" aria-label="Cabeçalho Mobile">
             <partial name="_Cabecalho" />
         </header>
@@ -81,8 +83,9 @@
             <section id="painelPrincipal" role="group" class="@(estaRecolhido ? "recolhido" : "")">
                 <header id="cabecalhoDesktop" class="painelCabecalho">
                     <partial name="_Cabecalho" />
-                    <nav id="menuPopup" 
+                    <nav id="menuPopup"
                          class="oculto"
+                         tabindex="-1"
                          aria-label="Menu Popup"
                          onmouseleave="alternarClasse(['menuPopup'],'oculto',true)">
                         <partial name="_ItensMenu" />
@@ -103,8 +106,8 @@
                      role="button">
                     <a href="#"
                        accesskey="t">
-                       Topo da página
-                   </a>
+                        Topo da página
+                    </a>
                 </div>
 
                 <div id="mensagemErro" role="alert" aria-label="Mensagem de Erro">
