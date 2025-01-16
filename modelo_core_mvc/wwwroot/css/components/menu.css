@@ -4,18 +4,6 @@
 #menuLateral li {
   padding: 0.2rem 0.5rem;
 }
-@media (min-width: 767.99px) {
-  #menuLateral #itensPopup {
-    display: none;
-  }
-}
-
-.menuDivider {
-  border: 0;
-  height: 1px;
-  background: var(--cor-primaria-texto);
-  margin: 10px 0;
-}
 
 .botaoMenu {
   display: flex;
@@ -32,7 +20,7 @@
   border: none;
   border-radius: calc(var(--altura-botao-menu) / 2);
   height: var(--altura-botao-menu);
-  width: 100%; /* Adiciona largura total */
+  width: 100%;
   transition: background-color 0.3s, color 0.3s;
   cursor: pointer;
 }
@@ -66,28 +54,6 @@
   transition: background-color 0.3s;
 }
 
-@media (min-width: 767.99px) {
-  #painelLateral.recolhido #menuLateral .botaoMenu {
-    height: var(--altura-botao-menu-recolhido);
-    border-radius: calc(var(--altura-botao-menu-recolhido) / 10);
-    flex-direction: column;
-    text-align: center;
-    padding: 0.3rem 0 0 0;
-  }
-  #painelLateral.recolhido #menuLateral .botaoMenu em {
-    margin-top: 0.1rem;
-    font-size: 1.2rem;
-    width: auto;
-  }
-  #painelLateral.recolhido #menuLateral .botaoMenu span {
-    line-height: normal;
-    margin-top: 0.25rem;
-    font-size: 0.6rem;
-  }
-  #painelLateral.recolhido #menuLateral li {
-    padding: 0.3rem;
-  }
-}
 #menuPopup {
   display: block;
   position: absolute;
@@ -129,6 +95,38 @@
   font-style: normal;
 }
 
+.menuDivider {
+  border: 0;
+  height: 1px;
+  background: var(--cor-primaria-texto);
+  margin: 10px 0;
+}
+
+@media (min-width: 767.99px) {
+  #menuLateral #itensPopup {
+    display: none;
+  }
+  #painelLateral.recolhido #menuLateral .botaoMenu {
+    height: var(--altura-botao-menu-recolhido);
+    border-radius: calc(var(--altura-botao-menu-recolhido) / 10);
+    flex-direction: column;
+    text-align: center;
+    padding: 0.3rem 0 0 0;
+  }
+  #painelLateral.recolhido #menuLateral .botaoMenu em {
+    margin-top: 0.1rem;
+    font-size: 1.2rem;
+    width: auto;
+  }
+  #painelLateral.recolhido #menuLateral .botaoMenu span {
+    line-height: normal;
+    margin-top: 0.25rem;
+    font-size: 0.6rem;
+  }
+  #painelLateral.recolhido #menuLateral li {
+    padding: 0.3rem;
+  }
+}
 @media (max-width: 767.98px) {
   #menuPopup,
   #botaoPopup {
