@@ -14,9 +14,14 @@
   display: block;
   flex-grow: 1;
   color: var(--cor-primaria);
-  font-size: 1rem;
   transition: opacity 0.3s;
   align-items: center;
+}
+#tituloApp h1 {
+  font-size: 1rem;
+}
+#tituloApp h2 {
+  font-size: 0.6rem;
 }
 
 #subtitulo {

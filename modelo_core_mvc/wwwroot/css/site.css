@@ -11,12 +11,6 @@
 }
 
 body {
-  font-size: 0.813rem;
-  color: #585858;
-  font-family: Verdana, sans-serif;
-}
-
-p, li, ul, dt, dd, em, span {
   font-family: "Montserrat", sans-serif;
 }
 
@@ -25,11 +19,11 @@ h1 {
 }
 
 h2 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
 }
 
 h3 {
-  font-size: 1.125rem;
+  font-size: 1.1rem;
 }
 
 h4 {
@@ -72,20 +66,6 @@ h4 {
   display: none;
   text-align: right;
   margin: 1rem;
-}
-
-#privacidade {
-  font-family: "Montserrat", sans-serif;
-}
-#privacidade section {
-  border-top: 1px solid var(--cor-apoio-cinza-claro);
-  padding-top: 0.5rem;
-  margin-top: 0.5rem;
-}
-#privacidade h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--cor-primaria);
 }
 
 /*mobile*/
