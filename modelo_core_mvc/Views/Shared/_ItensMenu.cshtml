@@ -1,68 +1,68 @@
 ﻿<ul id="itensNav" tabindex="0" class="list-unstyled components" role="navigation" aria-label="Main Navigation">
-    <li role="button">
-        <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Index">
+    <li>
+        <button class="botaoMenu" onclick="location.href='@Url.Action("Index", "Home")'" aria-label="Home">
             <em class="fas fa-home" aria-hidden="true"></em>
             <span>Home</span>
-        </a>
+        </button>
     </li>
-    <li role="button">
-        <a class="botaoMenu" asp-area="" asp-controller="Projetos" asp-action="Index" onclick="_aguarde()">
-            <em class="fas fa-table" aria-hidden="true"></em>
-            <span>Lista de Projetos</span>
-        </a>
-    </li role="button">
     <li>
-        <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Privacidade">
+        <button class="botaoMenu" onclick="location.href='@Url.Action("Index", "Projetos")'; _aguarde()" aria-label="Lista de Projetos">
+            <em class="fas fa-table" aria-hidden="true"></em>
+            <span>Formulário de Dados</span>
+        </button>
+    </li>
+    <li>
+        <button class="botaoMenu" onclick="location.href='@Url.Action("Privacidade", "Home")'" aria-label="Privacidade">
             <em class="fas fa-user-secret" aria-hidden="true"></em>
             <span>Privacidade</span>
-        </a>
+        </button>
     </li>
 </ul>
 
 <ul id="itensPopup" class="list-unstyled components" role="navigation" aria-label="Popup Navigation">
-    <li role="button">
-        <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Contato">
+    <li>
+        <button class="botaoMenu" onclick="location.href='@Url.Action("Contato", "Home")'" aria-label="Contato">
             <em class="fas fa-mail-bulk" aria-hidden="true"></em>
             <span>Contato</span>
-        </a>
+        </button>
     </li>
-    <li role="button">
-        <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="TesteIdentity" onclick="_aguarde()">
+    <li>
+        <button class="botaoMenu" onclick="location.href='@Url.Action("TesteIdentity", "Autenticacao")'; _aguarde()" aria-label="Teste do Identity">
             <em class="fas fa-id-card" aria-hidden="true"></em>
             <span>Teste do Identity</span>
-        </a>
+        </button>
     </li>
-    <li role="button">
-        <a class="botaoMenu" asp-area="" asp-controller="Home" asp-action="Sobre" onclick="_aguarde()">
+    <li>
+        <button class="botaoMenu" onclick="location.href='@Url.Action("Sobre", "Home")'; _aguarde()" aria-label="Sobre">
             <em class="fas fa-info-circle" aria-hidden="true"></em>
             <span>Sobre</span>
-        </a>
+        </button>
     </li>
     <li role="separator">
         <hr class="menuDivider" aria-orientation="horizontal">
     </li>
     @if (User.Identity.IsAuthenticated)
     {
-        <li role="button">
-            <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
+        <li>
+            <button class="botaoMenu" onclick="location.href='@Url.Action("Entrar", "Autenticacao")'; _aguarde()" aria-label="Identificação">
                 <em class="fas fa-address-card" aria-hidden="true"></em>
                 <span>Identificação</span>
-            </a>
+            </button>
         </li>
-        <li role="button">
-            <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Sair" onclick="_aguarde()">
+        <li>
+            <button class="botaoMenu" onclick="location.href='@Url.Action("Sair", "Autenticacao")'; _aguarde()" aria-label="Sair">
                 <em class="fas fa-door-open" aria-hidden="true"></em>
                 <span>Sair</span>
-            </a>
+            </button>
         </li>
     }
     else
     {
-        <li role="button">
-            <a class="botaoMenu" asp-area="" asp-controller="Autenticacao" asp-action="Entrar" onclick="_aguarde()">
+        <li>
+            <button class="botaoMenu" onclick="location.href='@Url.Action("Entrar", "Autenticacao")'; _aguarde()" aria-label="Entrar">
                 <em class="fas fa-address-card" aria-hidden="true"></em>
                 <span>Entrar</span>
-            </a>
+            </button>
         </li>
     }
 </ul>

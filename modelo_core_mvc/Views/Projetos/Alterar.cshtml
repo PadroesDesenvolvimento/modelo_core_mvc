@@ -10,12 +10,12 @@
         <input asp-for="id" hidden />
         <div class="form-group">
             <label asp-for="nome" class="control-label"></label>
-            <input asp-for="nome" maxlength="20" required class="form-control" />
+            <input asp-for="nome" maxlength="20" requiredaria-required="true" aria-required="true" class="form-control" />
             <span asp-validation-for="nome" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="descricao" class="control-label"></label>
-            <input asp-for="descricao" required class="form-control" />
+            <input asp-for="descricao" required aria-required="true" class="form-control" />
             <span asp-validation-for="descricao" class="text-danger"></span>
         </div>
         <partial name="_Botoes" model='new Tuple<string, string, string, string>("Salvar", "", "", "Cancelar")' />

@@ -1,34 +1,29 @@
 #menuLateral {
     margin-top: var(--margem-superior-menu);
 
-    @media (min-width: 767.99px) {
-        #itensPopup {
-            display: none;
-        }
+    li {
+        padding: 0.2rem 0.5rem;
     }
-}
-
-.menuDivider {
-    border: 0;
-    height: 1px;
-    background: var(--cor-primaria-texto);
-    margin: 10px 0;
 }
 
 .botaoMenu {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     text-decoration: none;
     text-align: left;
     font-size: 0.75rem;
     color: var(--cor-menu-invertida-texto);
     line-height: var(--altura-botao-menu);
-    margin: 0.5rem 1rem;
+    margin: 0;
     padding-left: 0.61rem;
     background-color: transparent;
+    border: none;
     border-radius: calc(var(--altura-botao-menu)/2);
     height: var(--altura-botao-menu);
+    width: 100%;
     transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
 
     &:hover,
     &:focus,
@@ -64,30 +59,6 @@
     border-radius: 5px;
     margin: 7px 0 4px 0;
     transition: background-color 0.3s;
-}
-
-@media (min-width: 767.99px) {
-    #painelLateral.recolhido #menuLateral .botaoMenu {
-        height: var(--altura-botao-menu-recolhido);
-        border-radius: calc(var(--altura-botao-menu-recolhido)/10);
-        flex-direction: column;
-        font-size: 0.5rem;
-        text-align: center;
-        padding-top: calc(var(--altura-botao-menu-recolhido)/6);
-        margin: 0.25rem 0.25rem;
-        padding-left: 0;
-
-        em {
-            margin-top: 0.25rem;
-            font-size: 1rem;
-            width: auto;
-        }
-
-        span {
-            line-height: normal;
-            margin-top: 0.25rem;
-        }
-    }
 }
 
 #menuPopup {
@@ -138,6 +109,47 @@
     font-style: normal;
 }
 
+.menuDivider {
+    border: 0;
+    height: 1px;
+    background: var(--cor-primaria-texto);
+    margin: 10px 0;
+}
+
+// Desktop
+@media (min-width: 767.99px) {
+    #menuLateral #itensPopup {
+        display: none;
+    }
+
+    #painelLateral.recolhido #menuLateral {
+        .botaoMenu {
+            height: var(--altura-botao-menu-recolhido);
+            border-radius: calc(var(--altura-botao-menu-recolhido)/10);
+            flex-direction: column;
+            text-align: center;
+            padding: 0.3rem 0 0 0;
+
+            em {
+                margin-top: 0.1rem;
+                font-size: 1.2rem;
+                width: auto;
+            }
+
+            span {
+                line-height: normal;
+                margin-top: 0.25rem;
+                font-size: 0.6rem;
+            }
+        }
+
+        li {
+            padding: 0.3rem;
+        }
+    }
+}
+
+//Mobile
 @media (max-width: 767.98px) {
     #menuPopup,
     #botaoPopup {
@@ -149,10 +161,8 @@
     }
 
     .botaoMenu {
-        width: 100%;
         text-align: center;
         padding-right: 0.5em;
-        margin: 0.5rem 0;
         border-radius: 0;
         font-size: 0.8rem;
     }
