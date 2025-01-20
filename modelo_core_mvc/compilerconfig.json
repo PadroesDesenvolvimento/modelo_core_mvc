@@ -70,5 +70,9 @@
   {
     "outputFile": "wwwroot/css/components/barraAcessibilidade.css",
     "inputFile": "wwwroot/css/components/barraAcessibilidade.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/components/aplicacao.css",
+    "inputFile": "wwwroot/css/components/aplicacao.scss"
   }
 ]

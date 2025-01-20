@@ -35,22 +35,22 @@
         <h2>Módulo principal</h2>
     </div>
     <div id="tituloMobile">
-        <span id="tituloSefaz">Secretaria da Fazenda e Planejamento</span>
-        <span id="usuarioAutenticado" aria-live="polite">@nomeExibicao</span>
+        <h1 id="tituloSefaz">Secretaria da Fazenda e Planejamento</h1>
+        <h2 id="usuarioAutenticado" aria-live="polite">@nomeExibicao</h2>
     </div>
-    <div id="botaoPopup"
-         role="button"
+    <button id="botaoPopup"
          aria-haspopup="true"
          aria-label="Exibe e oculta o menu de configuração popup"
          title="Exibe e oculta o menu de configuração popup"
+         tabindex="0"
          onclick="alternarClasse(['menuPopup'],'oculto',false)">
         <span id="iniciaisPopup">@iniciais</span>
-    </div>
-    <div id="botaoHamburguinho"
-         class="fas fa-bars"
-         role="button"
-         aria-label="Exibe e oculta o Menu da aplicação"
-         title="Exibe e oculta o menu da aplicação"
-         onclick="alternarClasse(['painelLateral', 'painelPrincipal'],'oculto',false)">
-    </div>
+    </button>
+    <button  id="botaoHamburguinho"
+             class="fas fa-bars"
+             aria-label="Exibe e oculta o Menu da aplicação"
+             title="Exibe e oculta o menu da aplicação"
+             tabindex="0"
+             onclick="alternarClasse(['painelLateral', 'painelPrincipal'],'oculto',false)">
+    </button>
 </header>

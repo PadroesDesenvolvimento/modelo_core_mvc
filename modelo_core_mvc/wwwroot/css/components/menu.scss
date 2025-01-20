@@ -38,10 +38,8 @@
     }
 
     &:focus {
-        outline: solid;
-        outline-style: auto;
-        outline-width: 1px;
-        font-weight: bold;
+        outline: 3px solid var(--cor-foco);
+        outline-offset: 0;
     }
 
     em {
@@ -101,6 +99,10 @@
         display: block;
         margin: 0;
         width: 100%;
+    }
+
+    span {
+        line-height: normal;
     }
 }
 

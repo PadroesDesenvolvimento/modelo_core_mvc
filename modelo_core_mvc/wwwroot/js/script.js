@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
-    irParaElemento('aplicacao');
+    irParaElemento('conteudo');
 });
 
 window.addEventListener('load', function () {

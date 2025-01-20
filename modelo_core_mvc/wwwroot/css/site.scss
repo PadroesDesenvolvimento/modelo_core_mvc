@@ -5,7 +5,7 @@ html {
     overflow: hidden;
 
     @media (max-width: 767.98px) {
-        font-size: calc(var(--tamanho-fonte-base) * 0.75);
+        font-size: calc(var(--tamanho-fonte-base) * 0.9);
     }
 }
 
@@ -29,78 +29,19 @@ h4 {
     font-size: 1rem;
 }
 
-#aplicacao {
-    display: flex;
-    flex-direction: row;
-}
-
-#painelAplicacao {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-#painelPrincipal {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    transition: all 0.3s ease;
-    overflow: auto;
-    height: 100vh;
-}
-
-#painelConteudo {
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem 0.8rem;
-    margin-bottom: 1rem;
-}
-
-#conteudo {
-    padding: 1rem 1.5rem 1rem 1.5rem;
-    box-shadow: 0 .5rem 1rem var(--cor-sombra);
-}
-
-#topoDaPagina {
-    display: none;
-    text-align: right;
-    margin: 1rem;
-}
-
-/*mobile*/
-@media (max-width: 767.98px) {
-    #aplicacao {
-        display: block;
-    }
-
-    #painelAplicacao {
-        display: block;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
-
-    #painelPrincipal {
-        padding: 0;
-        margin: 0 0 1rem 0;
-        height: 90vh;
-
-        &.oculto {
-            display: none;
-        }
-    }
-
-    #painelConteudo {
-        padding: 0;
-    }
-
-    #conteudo {
-        border-style: none;
-        box-shadow: none !important;
-    }
+li,
+dt,
+dd {
+    word-wrap: break-word;
 }
 
 /*Alteracao de configuracoes de terceiros*/
+:focus,
+.btn:focus {
+    outline: 3px solid var(--cor-foco);
+    outline-offset: 2px;
+}
+
 li, dt, dd {
     word-wrap: break-word;
 }

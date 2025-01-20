@@ -2,6 +2,7 @@
   color: var(--cor-primaria-texto);
   width: 100%;
   padding: 0 0.2em 0 0;
+  margin-top: 0.5rem;
   border: none;
   overflow-y: auto;
   max-height: calc(79vh - var(--desconto));
@@ -14,6 +15,24 @@
 }
 #tabela tbody {
   max-height: calc(79vh - var(--desconto));
+}
+#tabela .coluna-botoes {
+  width: 7rem;
+}
+#tabela #tabela-botoes {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+#tabela #tabela-botoes button {
+  border: none;
+  background-color: transparent;
+  color: var(--cor-primaria);
+  padding: 0;
+  font-size: 1.2rem;
+}
+#tabela #tabela-botoes button i {
+  margin: 0 0.2rem;
 }
 
 .claims th, td, dd, dt {
@@ -58,7 +77,6 @@
     margin-bottom: 0.5em;
   }
 }
-/*mobile*/
 @media (max-width: 767.98px) {
   .tabela {
     display: inline-flex;

@@ -33,17 +33,7 @@
     --cor-botao-texto: black;
     --cor-botao-selecionado: rgba(200, 200, 200, 0.7);
     --cor-invertida-botao-texto: white;
+    --cor-foco: yellow;
 }
 
-html {
-    font-size: var(--tamanho-fonte-base);
 
-    @media (max-width: 767.98px) {
-        font-size: calc(var(--tamanho-fonte-base) * 0.75);
-    }
-}
-
-.tituloFormulario {
-  font-size: 1.3rem;
-  font-weight: bold;
-}
