@@ -21,7 +21,6 @@ public class ProjetosController : BaseController
     [HttpGet]
     public async Task<ActionResult> Index()
     {
-        ViewData["Title"] = "Formulário";
         try
         {
             return View(await api.GetProjetosAsync());
@@ -37,7 +36,6 @@ public class ProjetosController : BaseController
     [HttpGet]
     public async Task<ActionResult> Detalhes(long id)
     {
-        ViewData["Title"] = "Projeto";
         ViewData["Message"] = "";
         ViewData["url"] = Url.Action("Alterar", "Projetos", new { id });
         return View(await api.GetProjetoAsync(id));
@@ -46,7 +44,6 @@ public class ProjetosController : BaseController
     [HttpGet]
     public ActionResult Adicionar()
     {
-        ViewData["Title"] = "Novo Projeto";
         ViewData["Message"] = "Incluir novo projeto";
         return View(new ProjetosModel());
     }
@@ -77,7 +74,6 @@ public class ProjetosController : BaseController
     [HttpGet]
     public async Task<ActionResult> Alterar(long id)
     {
-        ViewData["Title"] = "Editar Projeto";
         ViewData["Message"] = "Editar informações do projeto";
         var model = await api.GetProjetoAsync(id);
         return View(model);
@@ -106,7 +102,6 @@ public class ProjetosController : BaseController
     [HttpGet]
     public async Task<ActionResult> Excluir(long id)
     {
-        ViewData["Title"] = "Excluir Projeto";
         ViewData["Message"] = "Exclusão do projeto";
         var model = await api.GetProjetoAsync(id);
         return View(model);
@@ -127,7 +122,6 @@ public class ProjetosController : BaseController
         }
         catch (Exception ex)
         {
-            ViewData["Title"] = "Excluir Projeto";
             ViewData["Message"] = "Exclusão do projeto"; 
             model = await api.GetProjetoAsync(model.id);
             ViewData["Erro"] = "Falha ao excluir o registro: " + ex.Message;

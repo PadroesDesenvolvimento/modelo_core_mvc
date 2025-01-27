@@ -14,37 +14,36 @@
     }
 }
 
-<div>
-    <p class="tituloFormulario">Usuário autenticado:</p>
-    <div class="usuarioInfo" role="region" aria-labelledby="Perfil">
-        <div>
-            <p>Nome: @ViewData["Nome"]</p>
-            @if (ViewData["Login"] != null)
-            {
-                <p>Login: @ViewData["Login"]</p>
-            }
-            @if (ViewData["Cpf"] != null)
-            {
-                <p>Identificação: @ViewData["Cpf"]</p>
-            }
-            @if (ViewData["Nascimento"] != null)
-            {
-                <p>Nascimento: @ViewData["Nascimento"]</p>
-            }
-        </div>
+<section role="status" aria-labelledby="autenticacaoTitulo">
+    <h1 id="autenticacaoTitulo" class="tituloFormulario">Usuário autenticado:</h1>
+    <div class="usuarioInfo" role="region" aria-labelledby="perfilTitulo" tabindex="0">
+        <h2 id="perfilTitulo">Informações do Perfil</h2>
+        <p id="nomeUsuario">Nome: @ViewData["Nome"]</p>
+        @if (ViewData["Login"] != null)
+        {
+            <p id="loginUsuario">Login: @ViewData["Login"]</p>
+        }
+        @if (ViewData["Cpf"] != null)
+        {
+            <p id="cpfUsuario">Identificação: @ViewData["Cpf"]</p>
+        }
+        @if (ViewData["Nascimento"] != null)
+        {
+            <p id="nascimentoUsuario">Nascimento: @ViewData["Nascimento"]</p>
+        }
     </div>
     @if (!string.IsNullOrEmpty(jwt))
     {
-        <h3>jwt:</h3>
+        <h2 id="jwtTitulo">JWT:</h2>
         <div class="card">
             @jwt
         </div>
     }
     @if (!string.IsNullOrEmpty(ViewData["token"].ToString()))
     {
-        <h3>jwt:</h3>
+        <h3 id="jwtTokenTitulo">JWT:</h3>
         <div class="card">
             @ViewData["token"]
         </div>
     }
-</div>
+</section>

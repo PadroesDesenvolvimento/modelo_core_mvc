@@ -72,6 +72,7 @@
     align-items: center;
     height: 1.6rem;
     width: 1.6rem;
+    border: none;
     border-radius: 0.8rem;
     cursor: pointer;
     color: var(--cor-invertida-texto);
@@ -88,13 +89,13 @@
     text-align: center;
 }
 
+#cabecalhoDesktop {
+    display: block;
+    margin: 0;
+}
+
 //desktop
 @media (min-width: 767.99px) {
-    #cabecalhoDesktop {
-        display: block;
-        margin: 0;
-    }
-
     #fundoBrasaoMobile,
     #tituloSefaz,
     #cabecalhoMobile,
@@ -157,6 +158,8 @@
         font-size: 2rem;
         cursor: pointer;
         color: var(--cor-invertida-texto);
+        background-color: transparent;
+        border: none;
     }
 
     .fundoBrasao {

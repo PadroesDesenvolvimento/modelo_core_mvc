@@ -2,6 +2,7 @@
     color: var(--cor-primaria-texto);
     width: 100%;
     padding: 0 0.2em 0 0;
+    margin-top: 0.5rem;
     border: none;
     overflow-y: auto;
     max-height: calc(79vh - var(--desconto));
@@ -16,8 +17,41 @@
     tbody {
         max-height: calc(79vh - var(--desconto));
     }
-}
 
+    .coluna-botoes {
+        width: 7rem;
+    }
+
+    #tabela-botoes {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+
+        button {
+            border: none;
+            background-color: transparent;
+            color: var(--cor-primaria);
+            padding: 0;
+            font-size: 1.2rem;
+
+            i {
+                margin: 0 0.2rem;
+            }
+        }
+
+        .tabela-botao-alterar {
+            color: var(--cor-apoio-verde);
+        }
+
+        .tabela-botao-consultar {
+            color: var(--cor-primaria);
+        }
+
+        .tabela-botao-excluir {
+            color: var(--cor-apoio-vermelho);
+        }
+    }
+}
 
 .claims th, td, dd, dt {
     text-align: left;
@@ -53,6 +87,7 @@
     color: var(--cor-primaria);
 }
 
+//desktop
 @media (min-width: 767.98px) {
     .tabela {
         th, dt {
@@ -66,7 +101,7 @@
     }
 }
 
-/*mobile*/
+//mobile
 @media (max-width: 767.98px) {
     .tabela {
         display: inline-flex;
