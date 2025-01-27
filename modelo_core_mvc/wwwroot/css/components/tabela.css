@@ -34,6 +34,15 @@
 #tabela #tabela-botoes button i {
   margin: 0 0.2rem;
 }
+#tabela #tabela-botoes .tabela-botao-alterar {
+  color: var(--cor-apoio-verde);
+}
+#tabela #tabela-botoes .tabela-botao-consultar {
+  color: var(--cor-primaria);
+}
+#tabela #tabela-botoes .tabela-botao-excluir {
+  color: var(--cor-apoio-vermelho);
+}
 
 .claims th, td, dd, dt {
   text-align: left;

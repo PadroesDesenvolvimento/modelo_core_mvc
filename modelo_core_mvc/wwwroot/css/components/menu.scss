@@ -1,9 +1,5 @@
 #menuLateral {
     margin-top: var(--margem-superior-menu);
-
-    li {
-        padding: 0.2rem 0.5rem;
-    }
 }
 
 .botaoMenu {
@@ -15,7 +11,7 @@
     font-size: 0.75rem;
     color: var(--cor-menu-invertida-texto);
     line-height: var(--altura-botao-menu);
-    margin: 0;
+    margin: 0.5rem 0;
     padding-left: 0.61rem;
     background-color: transparent;
     border: none;
@@ -37,12 +33,7 @@
         }
     }
 
-    &:focus {
-        outline: 3px solid var(--cor-foco);
-        outline-offset: 0;
-    }
-
-    em {
+    i {
         margin: 0 1em;
         font-size: 1.25em;
         text-align: center;
@@ -55,8 +46,9 @@
     width: 100%;
     background-color: transparent;
     border-radius: 5px;
-    margin: 7px 0 4px 0;
+    margin: 0.4rem 0 0.2rem 0;
     transition: background-color 0.3s;
+    padding: 0 0.3rem;
 }
 
 #menuPopup {
@@ -132,7 +124,7 @@
             text-align: center;
             padding: 0.3rem 0 0 0;
 
-            em {
+            i {
                 margin-top: 0.1rem;
                 font-size: 1.2rem;
                 width: auto;
@@ -160,6 +152,8 @@
 
     #itensPopup {
         display: block;
+        margin: 0.4rem 0 0.2rem 0;
+        padding: 0 0.3rem;
     }
 
     .botaoMenu {

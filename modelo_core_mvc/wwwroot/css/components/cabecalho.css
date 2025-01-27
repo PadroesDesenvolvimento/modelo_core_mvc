@@ -84,11 +84,12 @@
   text-align: center;
 }
 
+#cabecalhoDesktop {
+  display: block;
+  margin: 0;
+}
+
 @media (min-width: 767.99px) {
-  #cabecalhoDesktop {
-    display: block;
-    margin: 0;
-  }
   #fundoBrasaoMobile,
   #tituloSefaz,
   #cabecalhoMobile,

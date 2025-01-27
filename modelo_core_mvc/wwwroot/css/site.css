@@ -37,10 +37,20 @@ dd {
 }
 
 /*Alteracao de configuracoes de terceiros*/
-:focus,
-.btn:focus {
-  outline: 3px solid var(--cor-foco);
-  outline-offset: 2px;
+.form-control {
+  background-color: #ffffff;
+  border: 1px solid gray;
+  color: #000000;
+}
+
+.control-label {
+  color: #000000;
+}
+
+:focus-visible,
+.btn:focus-visible {
+  outline: 1px solid var(--cor-foco);
+  outline-offset: 1px;
 }
 
 li, dt, dd {

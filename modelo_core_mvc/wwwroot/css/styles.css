@@ -78,10 +78,20 @@ dd {
 }
 
 /*Alteracao de configuracoes de terceiros*/
-:focus,
-.btn:focus {
-  outline: 3px solid var(--cor-foco);
-  outline-offset: 2px;
+.form-control {
+  background-color: #ffffff;
+  border: 1px solid gray;
+  color: #000000;
+}
+
+.control-label {
+  color: #000000;
+}
+
+:focus-visible,
+.btn:focus-visible {
+  outline: 1px solid var(--cor-foco);
+  outline-offset: 1px;
 }
 
 li, dt, dd {
@@ -1358,9 +1368,6 @@ li, dt, dd {
 #menuLateral {
   margin-top: var(--margem-superior-menu);
 }
-#menuLateral li {
-  padding: 0.2rem 0.5rem;
-}
 
 .botaoMenu {
   display: flex;
@@ -1371,7 +1378,7 @@ li, dt, dd {
   font-size: 0.75rem;
   color: var(--cor-menu-invertida-texto);
   line-height: var(--altura-botao-menu);
-  margin: 0;
+  margin: 0.5rem 0;
   padding-left: 0.61rem;
   background-color: transparent;
   border: none;
@@ -1389,11 +1396,7 @@ li, dt, dd {
 .botaoMenu:hover span, .botaoMenu:hover em, .botaoMenu:focus span, .botaoMenu:focus em, .botaoMenu.selecionado span, .botaoMenu.selecionado em {
   color: var(--cor-primaria);
 }
-.botaoMenu:focus {
-  outline: 3px solid var(--cor-foco);
-  outline-offset: 0;
-}
-.botaoMenu em {
+.botaoMenu i {
   margin: 0 1em;
   font-size: 1.25em;
   text-align: center;
@@ -1405,8 +1408,9 @@ li, dt, dd {
   width: 100%;
   background-color: transparent;
   border-radius: 5px;
-  margin: 7px 0 4px 0;
+  margin: 0.4rem 0 0.2rem 0;
   transition: background-color 0.3s;
+  padding: 0 0.3rem;
 }
 
 #menuPopup {
@@ -1471,7 +1475,7 @@ li, dt, dd {
     text-align: center;
     padding: 0.3rem 0 0 0;
   }
-  #painelLateral.recolhido #menuLateral .botaoMenu em {
+  #painelLateral.recolhido #menuLateral .botaoMenu i {
     margin-top: 0.1rem;
     font-size: 1.2rem;
     width: auto;
@@ -1492,6 +1496,8 @@ li, dt, dd {
   }
   #itensPopup {
     display: block;
+    margin: 0.4rem 0 0.2rem 0;
+    padding: 0 0.3rem;
   }
   .botaoMenu {
     text-align: center;
@@ -1590,11 +1596,12 @@ li, dt, dd {
   text-align: center;
 }
 
+#cabecalhoDesktop {
+  display: block;
+  margin: 0;
+}
+
 @media (min-width: 767.99px) {
-  #cabecalhoDesktop {
-    display: block;
-    margin: 0;
-  }
   #fundoBrasaoMobile,
   #tituloSefaz,
   #cabecalhoMobile,
@@ -1692,6 +1699,15 @@ li, dt, dd {
 }
 #tabela #tabela-botoes button i {
   margin: 0 0.2rem;
+}
+#tabela #tabela-botoes .tabela-botao-alterar {
+  color: var(--cor-apoio-verde);
+}
+#tabela #tabela-botoes .tabela-botao-consultar {
+  color: var(--cor-primaria);
+}
+#tabela #tabela-botoes .tabela-botao-excluir {
+  color: var(--cor-apoio-vermelho);
 }
 
 .claims th, td, dd, dt {
