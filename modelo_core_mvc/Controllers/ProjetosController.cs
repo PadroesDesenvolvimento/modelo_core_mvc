@@ -102,7 +102,6 @@ public class ProjetosController : BaseController
     [HttpGet]
     public async Task<ActionResult> Excluir(long id)
     {
-        ViewData["Message"] = "Exclusão do projeto";
         var model = await api.GetProjetoAsync(id);
         return View(model);
     }
@@ -122,7 +121,6 @@ public class ProjetosController : BaseController
         }
         catch (Exception ex)
         {
-            ViewData["Message"] = "Exclusão do projeto"; 
             model = await api.GetProjetoAsync(model.id);
             ViewData["Erro"] = "Falha ao excluir o registro: " + ex.Message;
             return View(model);
