@@ -65,7 +65,6 @@
                 <button id="botaoExpandir"
                         title="Botao para expandir ou recolher o menu (<alt @(estaRecolhido ? "." : ",")>)"
                         aria-label="Botão para expandir ou recolher o menu (<alt @(estaRecolhido ? "." : ",")>)"
-                        accesskey=@(estaRecolhido ? "." : ",")
                         onclick="alternarClasse(['painelLateral', 'iconeExpandir', 'iconeRecolher'],'recolhido'); atualizarAtributosBotaoExpandir()">
                     <span id="iconeExpandir" class="@(!estaRecolhido ? "recolhido" : "")">
                         <i class="fas fa-angle-right"></i>
@@ -101,11 +100,10 @@
                 </div>
 
                 <div id="topoDaPagina"
-                     title="Voltar ao topo da página (Alt T)"
-                     aria-label="Voltar ao topo da página (Alt T)"
+                     title="Voltar ao topo da página"
+                     aria-label="Voltar ao topo da página"
                      role="button">
-                    <a href="#"
-                       accesskey="t">
+                    <a href="#">
                         Topo da página
                     </a>
                 </div>

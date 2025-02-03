@@ -39,11 +39,11 @@ function atualizarBotoesZoom() {
         const ariaLabel = button.getAttribute('aria-label');
         const zoomValue = Math.round(valores[valorMudanca] * 100);
         button.title = `${ariaLabel} - ${zoomValue}%`;
-        if (button.id == "aumentarLetra") {
-            button.disabled = (valorMudanca == 5)
+        if (button.classList.contains("aumentarLetra")) {
+            button.disabled = (valorMudanca == 5);
         }
-        if (button.id == "diminuirLetra") {
-            button.disabled = (valorMudanca == 0)
+        if (button.classList.contains("diminuirLetra")) {
+            button.disabled = (valorMudanca == 0);
         }
         if (button.disabled) {
             button.classList.add('disabled');

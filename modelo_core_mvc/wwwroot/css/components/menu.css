@@ -36,7 +36,7 @@
   width: 0.81rem;
 }
 
-#itensNav {
+.itensNav {
   display: block;
   width: 100%;
   background-color: transparent;
@@ -73,10 +73,10 @@
 #menuPopup .botaoMenu:hover, #menuPopup .botaoMenu:focus, #menuPopup .botaoMenu.selecionado {
   background-color: var(--cor-fundo-hover-popup);
 }
-#menuPopup #itensNav {
+#menuPopup .itensNav {
   display: none;
 }
-#menuPopup #itensPopup {
+#menuPopup .itensPopup {
   display: block;
   margin: 0;
   width: 100%;
@@ -85,7 +85,7 @@
   line-height: normal;
 }
 
-#iniciaisPopup {
+.iniciaisPopup {
   font-size: 0.7rem;
   font-style: normal;
 }
@@ -98,7 +98,7 @@
 }
 
 @media (min-width: 767.99px) {
-  #menuLateral #itensPopup {
+  #menuLateral .itensPopup {
     display: none;
   }
   #painelLateral.recolhido #menuLateral .botaoMenu {
@@ -124,10 +124,10 @@
 }
 @media (max-width: 767.98px) {
   #menuPopup,
-  #botaoPopup {
+  .botaoPopup {
     display: none;
   }
-  #itensPopup {
+  .itensPopup {
     display: block;
     margin: 0.4rem 0 0.2rem 0;
     padding: 0 0.3rem;
