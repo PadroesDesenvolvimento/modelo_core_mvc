@@ -82,19 +82,10 @@ document.addEventListener('keydown', function (event) {
     if (event.altKey) {
         switch (event.key) {
             case '1':
-                irParaElemento('botoesAcessibilidade');
-                break;
-            case '2':
                 irParaElemento('itensNav');
                 break;
-            case '3':
-                alternarPopup();
-                break;
-            case '4':
+            case '2':
                 irParaElemento('conteudo');
-                break;
-            case '5':
-                irParaElemento('tabela');
                 break;
         }
     }
@@ -119,6 +110,13 @@ function irParaElemento(id) {
         const elementoVisivel = Array.from(elementos).find(el => el.offsetParent !== null);
         if (elementoVisivel) {
             elementoVisivel.focus();
+            const painelPrincipal = document.getElementById('painelPrincipal');
+            if (painelPrincipal) {
+                painelPrincipal.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
         }
         else {
             console.error(`Elemento ${id} nao esta visivel.`);

@@ -31,11 +31,11 @@ public class BreadcrumbActionFilter : ActionFilterAttribute
     private List<Breadcrumb> ConfigureBreadcrumb(ActionExecutedContext context)
     {
         var breadcrumbList = new List<Breadcrumb>();
-        var homeControllerName = "Home";
+        var homeControllerName = "Inicio";
 
         breadcrumbList.Add(new Breadcrumb
         {
-            Text = "Home",
+            Text = "Início",
             Action = "Index",
             Controller = homeControllerName, // Change this controller name to match your Home Controller.
             Active = true

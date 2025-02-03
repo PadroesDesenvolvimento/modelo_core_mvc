@@ -20,19 +20,20 @@ public class HomeController : BaseController
 
     public IActionResult Index()
     {
-        ViewData["Title"] = "Sefaz-SP";
         return View();
     }
 
     public IActionResult Privacidade()
     {
-        ViewData["Title"] = "Privacidade";
         return View();
     }
 
     public IActionResult Contato()
     {
-        ViewData["Title"] = "Contato";
+        return View();
+    }
+    public IActionResult Acessibilidade()
+    {
         return View();
     }
 
