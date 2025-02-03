@@ -20,20 +20,24 @@ public class HomeController : BaseController
 
     public IActionResult Index()
     {
+        ViewData["Title"] = "Página incial";
         return View();
     }
 
     public IActionResult Privacidade()
     {
+        ViewData["Title"] = "Privacidade";
         return View();
     }
 
     public IActionResult Contato()
     {
+        ViewData["Title"] = "Contato";
         return View();
     }
     public IActionResult Acessibilidade()
     {
+        ViewData["Title"] = "Acessibilidade";
         return View();
     }
 

@@ -90,7 +90,7 @@ dd {
 
 :focus-visible,
 .btn:focus-visible {
-  outline: 1px solid var(--cor-foco);
+  outline: 2px solid var(--cor-foco);
   outline-offset: 1px;
 }
 
@@ -448,13 +448,13 @@ li, dt, dd {
   background-color: #000;
 }
 
-.color-blind #botaoPopup {
+.color-blind .botaoPopup {
   color: white;
   background-color: #000;
 }
 
-.color-blind #botaoPopup:hover,
-.color-blind #botaoPopup:focus {
+.color-blind .botaoPopup:hover,
+.color-blind .botaoPopup:focus {
   background-color: #000;
   color: #fff;
 }
@@ -649,15 +649,15 @@ li, dt, dd {
   color: #fff !important;
 }
 
-.color-blind #barraAcessibilidade div {
+.color-blind .barraAcessibilidade div {
   background-color: #000;
 }
 
-.color-blind #barraAcessibilidade #atalhosDocumento a {
+.color-blind .barraAcessibilidade #atalhosDocumento a {
   color: white;
 }
 
-.color-blind #barraAcessibilidade #atalhosDocumento span {
+.color-blind .barraAcessibilidade #atalhosDocumento span {
   color: #000;
   background-color: yellow;
 }
@@ -1222,13 +1222,13 @@ li, dt, dd {
     box-shadow: none !important;
   }
 }
-#barraAcessibilidade {
+.barraAcessibilidade {
   position: relative;
   display: block;
   width: 100%;
   height: var(--altura-barraAcessibilidade);
 }
-#barraAcessibilidade button {
+.barraAcessibilidade button {
   background-color: var(--cor-fundo);
   color: var(--cor-primaria-texto);
   width: 1.25rem;
@@ -1238,25 +1238,25 @@ li, dt, dd {
   padding: 0;
   transition: background-color 0.3s, border-color 0.3s;
 }
-#barraAcessibilidade button svg {
+.barraAcessibilidade button svg {
   fill: var(--cor-primaria-texto);
 }
-#barraAcessibilidade button span {
+.barraAcessibilidade button span {
   text-align: center;
   font-size: 0.8rem;
   margin: 0;
 }
-#barraAcessibilidade button:hover {
+.barraAcessibilidade button:hover {
   background-color: var(--cor-apoio-cinza-claro);
 }
-#barraAcessibilidade button.disabled {
+.barraAcessibilidade button.disabled {
   border-color: var(--cor-apoio-cinza-claro);
   background-color: var(--cor-fundo);
 }
-#barraAcessibilidade button.disabled span {
+.barraAcessibilidade button.disabled span {
   color: var(--cor-apoio-cinza-claro);
 }
-#barraAcessibilidade #exibirLibras {
+.barraAcessibilidade .exibirLibras {
   background-image: url("https://dev-cdn-caeeh2eyhmh6cbd4.z01.azurefd.net/v01/img/vlibras.png");
   background-size: cover;
   background-position: center;
@@ -1264,7 +1264,7 @@ li, dt, dd {
 }
 
 @media (max-width: 767.98px) {
-  #barraAcessibilidade {
+  .barraAcessibilidade {
     order: -1;
   }
 }
@@ -1403,7 +1403,7 @@ li, dt, dd {
   width: 0.81rem;
 }
 
-#itensNav {
+.itensNav {
   display: block;
   width: 100%;
   background-color: transparent;
@@ -1440,10 +1440,10 @@ li, dt, dd {
 #menuPopup .botaoMenu:hover, #menuPopup .botaoMenu:focus, #menuPopup .botaoMenu.selecionado {
   background-color: var(--cor-fundo-hover-popup);
 }
-#menuPopup #itensNav {
+#menuPopup .itensNav {
   display: none;
 }
-#menuPopup #itensPopup {
+#menuPopup .itensPopup {
   display: block;
   margin: 0;
   width: 100%;
@@ -1452,7 +1452,7 @@ li, dt, dd {
   line-height: normal;
 }
 
-#iniciaisPopup {
+.iniciaisPopup {
   font-size: 0.7rem;
   font-style: normal;
 }
@@ -1465,7 +1465,7 @@ li, dt, dd {
 }
 
 @media (min-width: 767.99px) {
-  #menuLateral #itensPopup {
+  #menuLateral .itensPopup {
     display: none;
   }
   #painelLateral.recolhido #menuLateral .botaoMenu {
@@ -1491,10 +1491,10 @@ li, dt, dd {
 }
 @media (max-width: 767.98px) {
   #menuPopup,
-  #botaoPopup {
+  .botaoPopup {
     display: none;
   }
-  #itensPopup {
+  .itensPopup {
     display: block;
     margin: 0.4rem 0 0.2rem 0;
     padding: 0 0.3rem;
@@ -1510,7 +1510,7 @@ li, dt, dd {
     margin: 0.7rem 1rem;
   }
 }
-#tituloCabecalho {
+.tituloCabecalho {
   display: flex;
   flex-direction: row;
   height: var(--altura-Titulo-Desktop);
@@ -1522,23 +1522,23 @@ li, dt, dd {
   border-style: none;
 }
 
-#tituloApp {
+.tituloApp {
   display: block;
   flex-grow: 1;
   color: var(--cor-primaria);
   transition: opacity 0.3s;
   align-items: center;
 }
-#tituloApp h1 {
+.tituloApp h1 {
   font-size: 1.2rem;
   margin: 0;
 }
-#tituloApp h2 {
+.tituloApp h2 {
   font-size: 0.8rem;
   margin: 0;
 }
 
-#tituloMobile {
+.tituloMobile {
   color: var(--cor-primaria);
   margin-left: 0.5em;
   text-align: right;
@@ -1574,7 +1574,7 @@ li, dt, dd {
   transition: opacity 0.3s;
 }
 
-#botaoPopup {
+.botaoPopup {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1586,11 +1586,11 @@ li, dt, dd {
   color: var(--cor-invertida-texto);
   background-color: var(--cor-apoio-vermelho);
 }
-#botaoPopup.dropdown-toggle::after {
+.botaoPopup.dropdown-toggle::after {
   display: none;
 }
 
-#usuarioAutenticado {
+.usuarioAutenticado {
   font-size: 0.7rem;
   margin: 0.5em 0.5em 0 0;
   text-align: center;
@@ -1602,10 +1602,10 @@ li, dt, dd {
 }
 
 @media (min-width: 767.99px) {
-  #fundoBrasaoMobile,
-  #tituloSefaz,
+  .fundoBrasaoMobile,
+  .tituloSefaz,
   #cabecalhoMobile,
-  #botaoHamburguinho {
+  .botaoHamburguinho {
     display: none;
   }
 }
@@ -1613,8 +1613,8 @@ li, dt, dd {
   #cabecalhoDesktop,
   #brasaoPainel,
   #fundoBrasaoDesktop,
-  #botaoPopup,
-  #tituloApp {
+  .botaoPopup,
+  .tituloApp {
     display: none;
   }
   .painelCabecalho {
@@ -1622,35 +1622,35 @@ li, dt, dd {
     flex: 1;
     flex-grow: 1;
   }
-  #tituloCabecalho {
+  .tituloCabecalho {
     background-color: var(--cor-primaria);
     padding: 0.5rem 1rem 0.5rem 0;
     justify-content: space-between;
     box-shadow: none;
     border: none;
   }
-  #tituloMobile {
+  .tituloMobile {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
-  #tituloSefaz,
-  #usuarioAutenticado {
+  .tituloSefaz,
+  .usuarioAutenticado {
     display: block;
     color: var(--cor-fundo);
     transition: opacity 0.3s;
     margin: 0;
     text-align: left;
   }
-  #tituloSefaz {
+  .tituloSefaz {
     font-size: 1rem;
     line-height: 1;
     font-weight: 500;
   }
-  #usuarioAutenticado {
+  .usuarioAutenticado {
     font-size: 0.6rem;
   }
-  #botaoHamburguinho {
+  .botaoHamburguinho {
     display: block;
     font-size: 2rem;
     cursor: pointer;

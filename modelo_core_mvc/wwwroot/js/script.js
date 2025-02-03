@@ -28,9 +28,8 @@ function atualizarAtributosBotaoExpandir() {
     var painelLateral = document.getElementById('painelLateral');
     var estaRecolhido = painelLateral.classList.contains('recolhido');
 
-    botao.title = "Botao para expandir ou recolher o menu (<alt " + (estaRecolhido ? "." : ",") + ">)";
-    botao.setAttribute('aria-label', "Botao para expandir ou recolher o menu (<alt " + (estaRecolhido ? "." : ",") + ">)");
-    botao.accessKey = estaRecolhido ? "." : ",";
+    botao.title = "Botao para expandir ou recolher o menu";
+    botao.setAttribute('aria-label', "Botao para expandir ou recolher o menu");
 }
 
 function _aguarde(mostrar = true) {
@@ -77,19 +76,6 @@ function _selecionar() {
         });
     });
 }
-
-document.addEventListener('keydown', function (event) {
-    if (event.altKey) {
-        switch (event.key) {
-            case '1':
-                irParaElemento('itensNav');
-                break;
-            case '2':
-                irParaElemento('conteudo');
-                break;
-        }
-    }
-});
 
 function alternarPopup() {
     var menuPopup = document.getElementById('menuPopup');

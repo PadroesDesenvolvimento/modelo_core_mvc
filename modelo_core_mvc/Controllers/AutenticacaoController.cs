@@ -28,6 +28,7 @@ public class AutenticacaoController : BaseController
     [Authorize]
     public async Task<IActionResult> Entrar()
     {
+        ViewData["Title"] = "Entrar";
         var token = "";
         if (User.Identity.IsAuthenticated)
         {

@@ -324,13 +324,13 @@
     background-color: #000;
 }
 
-.color-blind #botaoPopup {
+.color-blind .botaoPopup {
     color: white;
     background-color: #000;
 }
 
-.color-blind #botaoPopup:hover,
-.color-blind #botaoPopup:focus {
+.color-blind .botaoPopup:hover,
+.color-blind .botaoPopup:focus {
     background-color: #000;
     color: #fff;
 }
@@ -525,15 +525,15 @@
     color: #fff !important;
 }
 
-.color-blind #barraAcessibilidade div {
+.color-blind .barraAcessibilidade div {
     background-color: #000;
 }
 
-.color-blind #barraAcessibilidade #atalhosDocumento a {
+.color-blind .barraAcessibilidade #atalhosDocumento a {
     color: white;
 }
 
-.color-blind #barraAcessibilidade #atalhosDocumento span {
+.color-blind .barraAcessibilidade #atalhosDocumento span {
     color: #000;
     background-color: yellow;
 }

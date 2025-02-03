@@ -1,4 +1,4 @@
-#tituloCabecalho {
+.tituloCabecalho {
     display: flex;
     flex-direction: row;
     height: var(--altura-Titulo-Desktop);
@@ -10,7 +10,7 @@
     border-style: none;
 }
 
-#tituloApp {
+.tituloApp {
     display: block;
     flex-grow: 1;
     color: var(--cor-primaria);
@@ -28,7 +28,7 @@
     }
 }
 
-#tituloMobile {
+.tituloMobile {
     color: var(--cor-primaria);
     margin-left: 0.5em;
     text-align: right;
@@ -66,7 +66,7 @@
     }
 }
 
-#botaoPopup {
+.botaoPopup {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,7 +83,7 @@
     }
 }
 
-#usuarioAutenticado {
+.usuarioAutenticado {
     font-size: 0.7rem;
     margin: 0.5em 0.5em 0 0;
     text-align: center;
@@ -96,10 +96,10 @@
 
 //desktop
 @media (min-width: 767.99px) {
-    #fundoBrasaoMobile,
-    #tituloSefaz,
+    .fundoBrasaoMobile,
+    .tituloSefaz,
     #cabecalhoMobile,
-    #botaoHamburguinho {
+    .botaoHamburguinho {
         display: none;
     }
 }
@@ -109,8 +109,8 @@
     #cabecalhoDesktop,
     #brasaoPainel,
     #fundoBrasaoDesktop,
-    #botaoPopup,
-    #tituloApp {
+    .botaoPopup,
+    .tituloApp {
         display: none;
     }
 
@@ -120,7 +120,7 @@
         flex-grow: 1;
     }
 
-    #tituloCabecalho {
+    .tituloCabecalho {
         background-color: var(--cor-primaria);
         padding: 0.5rem 1rem 0.5rem 0;
         justify-content: space-between;
@@ -128,14 +128,14 @@
         border: none;
     }
 
-    #tituloMobile {
+    .tituloMobile {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
 
-    #tituloSefaz,
-    #usuarioAutenticado {
+    .tituloSefaz,
+    .usuarioAutenticado {
         display: block;
         color: var(--cor-fundo);
         transition: opacity 0.3s;
@@ -143,17 +143,17 @@
         text-align: left;
     }
 
-    #tituloSefaz {
+    .tituloSefaz {
         font-size: 1rem;
         line-height: 1;
         font-weight: 500;
     }
 
-    #usuarioAutenticado {
+    .usuarioAutenticado {
         font-size: 0.6rem;
     }
 
-    #botaoHamburguinho {
+    .botaoHamburguinho {
         display: block;
         font-size: 2rem;
         cursor: pointer;

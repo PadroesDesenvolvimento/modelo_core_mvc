@@ -41,7 +41,7 @@
     }
 }
 
-#itensNav {
+.itensNav {
     display: block;
     width: 100%;
     background-color: transparent;
@@ -83,11 +83,11 @@
         }
     }
 
-    #itensNav {
+    .itensNav {
         display: none;
     }
 
-    #itensPopup {
+    .itensPopup {
         display: block;
         margin: 0;
         width: 100%;
@@ -98,7 +98,7 @@
     }
 }
 
-#iniciaisPopup {
+.iniciaisPopup {
     font-size: 0.7rem;
     font-style: normal;
 }
@@ -112,7 +112,7 @@
 
 // Desktop
 @media (min-width: 767.99px) {
-    #menuLateral #itensPopup {
+    #menuLateral .itensPopup {
         display: none;
     }
 
@@ -146,11 +146,11 @@
 //Mobile
 @media (max-width: 767.98px) {
     #menuPopup,
-    #botaoPopup {
+    .botaoPopup {
         display: none;
     }
 
-    #itensPopup {
+    .itensPopup {
         display: block;
         margin: 0.4rem 0 0.2rem 0;
         padding: 0 0.3rem;
