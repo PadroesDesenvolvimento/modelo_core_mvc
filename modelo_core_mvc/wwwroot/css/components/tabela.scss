@@ -1,4 +1,4 @@
-#tabela {
+.tabela {
     color: var(--cor-primaria-texto);
     width: 100%;
     padding: 0 0.2em 0 0;
@@ -51,6 +51,11 @@
             color: var(--cor-apoio-vermelho);
         }
     }
+}
+
+.barraCabecalhoFormulario {
+    display: flex;
+    justify-content: right;
 }
 
 .claims th, td, dd, dt {
