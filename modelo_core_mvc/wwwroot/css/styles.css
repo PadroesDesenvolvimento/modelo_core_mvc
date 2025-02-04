@@ -1530,11 +1530,11 @@ li, dt, dd {
   transition: opacity 0.3s;
   align-items: center;
 }
-.tituloApp h1 {
+.tituloApp .nomeApp {
   font-size: 1.2rem;
   margin: 0;
 }
-.tituloApp h2 {
+.tituloApp .moduloApp {
   font-size: 0.8rem;
   margin: 0;
 }
@@ -1644,7 +1644,7 @@ li, dt, dd {
     text-align: left;
   }
   .tituloSefaz {
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1;
     font-weight: 500;
   }
@@ -1665,7 +1665,7 @@ li, dt, dd {
     padding: 0 17px 0 10px;
   }
 }
-#tabela {
+.tabela {
   color: var(--cor-primaria-texto);
   width: 100%;
   padding: 0 0.2em 0 0;
@@ -1674,41 +1674,46 @@ li, dt, dd {
   overflow-y: auto;
   max-height: calc(79vh - var(--desconto));
 }
-#tabela td, #tabela th {
+.tabela td, .tabela th {
   border: 1px solid #DDD;
   padding: 0.2em 1em;
   height: auto;
   margin: 0.2em 0;
 }
-#tabela tbody {
+.tabela tbody {
   max-height: calc(79vh - var(--desconto));
 }
-#tabela .coluna-botoes {
+.tabela .coluna-botoes {
   width: 7rem;
 }
-#tabela .tabela-botoes {
+.tabela .tabela-botoes {
   padding: 0;
   display: flex;
   justify-content: center;
 }
-#tabela .tabela-botoes button {
+.tabela .tabela-botoes button {
   border: none;
   background-color: transparent;
   color: var(--cor-primaria);
   padding: 0;
   font-size: 1.2rem;
 }
-#tabela .tabela-botoes button i {
+.tabela .tabela-botoes button i {
   margin: 0 0.2rem;
 }
-#tabela .tabela-botoes .tabela-botao-alterar {
+.tabela .tabela-botoes .tabela-botao-alterar {
   color: var(--cor-apoio-verde);
 }
-#tabela .tabela-botoes .tabela-botao-consultar {
+.tabela .tabela-botoes .tabela-botao-consultar {
   color: var(--cor-primaria);
 }
-#tabela .tabela-botoes .tabela-botao-excluir {
+.tabela .tabela-botoes .tabela-botao-excluir {
   color: var(--cor-apoio-vermelho);
+}
+
+.barraCabecalhoFormulario {
+  display: flex;
+  justify-content: right;
 }
 
 .claims th, td, dd, dt {
@@ -1813,6 +1818,15 @@ li, dt, dd {
 .btn:hover, .btn:focus {
   color: var(--cor-primaria-texto);
   background-color: var(--cor-botao-selecionado);
+}
+
+.btn-regular {
+  display: flex;
+  align-items: center;
+  color: var(--cor-secundaria);
+  fill: var(--cor-secundaria);
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
 }
 
 #_aguarde {

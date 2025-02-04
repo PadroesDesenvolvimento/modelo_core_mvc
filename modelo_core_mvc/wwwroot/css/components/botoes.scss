@@ -32,3 +32,12 @@
         background-color: var(--cor-botao-selecionado);
     }
 }
+
+.btn-regular {
+    display: flex;
+    align-items: center;
+    color: var(--cor-secundaria);
+    fill: var(--cor-secundaria);
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}

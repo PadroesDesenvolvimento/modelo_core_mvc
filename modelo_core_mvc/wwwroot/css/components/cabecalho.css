@@ -17,11 +17,11 @@
   transition: opacity 0.3s;
   align-items: center;
 }
-.tituloApp h1 {
+.tituloApp .nomeApp {
   font-size: 1.2rem;
   margin: 0;
 }
-.tituloApp h2 {
+.tituloApp .moduloApp {
   font-size: 0.8rem;
   margin: 0;
 }
@@ -131,7 +131,7 @@
     text-align: left;
   }
   .tituloSefaz {
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1;
     font-weight: 500;
   }
