@@ -15,7 +15,7 @@
   flex-direction: column;
   transition: all 0.3s ease;
   overflow: auto;
-  height: 100vh;
+  height: var(--altura-painelPrincipal);
 }
 
 #painelConteudo {
@@ -54,7 +54,7 @@
   #painelPrincipal {
     padding: 0;
     margin: 0 0 1rem 0;
-    height: 90vh;
+    height: calc(var(--altura-painelPrincipal) * 0.8);
   }
   #painelPrincipal.oculto {
     display: none;

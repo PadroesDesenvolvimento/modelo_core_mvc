@@ -1,6 +1,7 @@
 let valorMudanca = 0;
 let valores = [1, 1.1, 1.3, 1.5, 1.75, 1.9]
 let desconto = [13, 18, 26, 32, 37.3, 39.8]
+let alturaPainelPrincipal = [100, 90, 77, 67, 57, 53];
 let contrastState = "false";
 
 function setCookie(name, value, days = 7) {
@@ -18,6 +19,10 @@ function alterarZoom() {
     else if (valorMudanca > 5) { valorMudanca = 5 }
     setCookie("valorMudanca", valorMudanca, 7);
     document.documentElement.style.setProperty('--desconto', desconto[valorMudanca] + 'em');
+    let valorAltura = alturaPainelPrincipal[valorMudanca];
+    document.documentElement.style.setProperty('--altura-painelPrincipal', valorAltura + 'vh');
+    const valorAtual = getComputedStyle(document.documentElement).getPropertyValue('--altura-painelPrincipal');
+
     document.getElementsByTagName("body").item(0).style.setProperty('zoom', valores[valorMudanca]);
 
     atualizarBotoesZoom()
