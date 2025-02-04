@@ -17,35 +17,35 @@ else
             Adicionar
         </button>
 
-        <table id="tabela" tabindex="-1" class="table">
+        <table id="tabela" class="table">
             <thead>
                 <tr>
-                    <th>
+                    <th scope="col">
                         @Html.DisplayNameFor(model => model.id)
                     </th>
-                    <th>
+                    <th scope="col">
                         @Html.DisplayNameFor(model => model.nome)
                     </th>
-                    <th>
+                    <th scope="col">
                         @Html.DisplayNameFor(model => model.descricao)
-                    </th>
-                    <th class="coluna-botoes"></th>
+                    </th scope="col">
+                    <th class="coluna-botoes" scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td tabindex="0">
+                        <td>
                             @Html.DisplayFor(modelItem => item.id)
                         </td>
-                        <td tabindex="0">
+                        <td>
                             @Html.DisplayFor(modelItem => item.nome)
                         </td>
-                        <td tabindex="0">
+                        <td>
                             @Html.DisplayFor(modelItem => item.descricao)
                         </td>
-                        <td id="tabela-botoes" class="coluna-botoes">
+                        <td class="coluna-botoes tabela-botoes">
                             <button class="tabela-botao-alterar" title="Alterar" aria-label="Alterar" onclick="location.href='@Url.Action("Alterar", new { id = item.id })'">
                                 <i aria-hidden="true" class="fas fa-edit"></i>
                             </button>

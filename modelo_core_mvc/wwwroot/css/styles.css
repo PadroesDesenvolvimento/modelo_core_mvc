@@ -13,6 +13,7 @@
   --altura-botao-menu-recolhido: 3.75rem;
   --altura-barraAcessibilidade: 2rem;
   --altura-Titulo-Desktop: 3.5rem;
+  --altura-painelPrincipal: 100vh;
   --margem-superior-menu: 3.7rem;
   --desconto: 13rem;
   --cor-primaria: #17629e;
@@ -1170,7 +1171,7 @@ li, dt, dd {
   flex-direction: column;
   transition: all 0.3s ease;
   overflow: auto;
-  height: 100vh;
+  height: var(--altura-painelPrincipal);
 }
 
 #painelConteudo {
@@ -1209,7 +1210,7 @@ li, dt, dd {
   #painelPrincipal {
     padding: 0;
     margin: 0 0 1rem 0;
-    height: 90vh;
+    height: calc(var(--altura-painelPrincipal) * 0.8);
   }
   #painelPrincipal.oculto {
     display: none;
@@ -1685,28 +1686,28 @@ li, dt, dd {
 #tabela .coluna-botoes {
   width: 7rem;
 }
-#tabela #tabela-botoes {
+#tabela .tabela-botoes {
   padding: 0;
   display: flex;
   justify-content: center;
 }
-#tabela #tabela-botoes button {
+#tabela .tabela-botoes button {
   border: none;
   background-color: transparent;
   color: var(--cor-primaria);
   padding: 0;
   font-size: 1.2rem;
 }
-#tabela #tabela-botoes button i {
+#tabela .tabela-botoes button i {
   margin: 0 0.2rem;
 }
-#tabela #tabela-botoes .tabela-botao-alterar {
+#tabela .tabela-botoes .tabela-botao-alterar {
   color: var(--cor-apoio-verde);
 }
-#tabela #tabela-botoes .tabela-botao-consultar {
+#tabela .tabela-botoes .tabela-botao-consultar {
   color: var(--cor-primaria);
 }
-#tabela #tabela-botoes .tabela-botao-excluir {
+#tabela .tabela-botoes .tabela-botao-excluir {
   color: var(--cor-apoio-vermelho);
 }
 
