@@ -2,17 +2,17 @@
 using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using modelo_core_mvc.ProjetosApi;
 using modelo_core_mvc.Errors;
+using modelo_core_mvc.HttpClients;
 
 namespace modelo_core_mvc.Controllers;
 
 public class HomeController : BaseController
 {
     private readonly IConfiguration configuration;
-    private readonly ProjetosApiClient api;
+    private readonly FormularioApiClient api;
 
-    public HomeController(IConfiguration Configuration, ProjetosApiClient Api)
+    public HomeController(IConfiguration Configuration, FormularioApiClient Api)
     {
         configuration = Configuration;
         api = Api;
@@ -47,7 +47,7 @@ public class HomeController : BaseController
         ViewData["Message"] = "Sobre essa aplicação";
         ViewData["status"] = await api.GetStatusAsync();
         ViewData["conexao"] = await api.GetConexaoAsync();
-        ViewData["EnderecoAPI"] = configuration["apiendereco:projetos"];
+        ViewData["EnderecoAPI"] = configuration["apiendereco:formulario"];
 
         return View();
     }

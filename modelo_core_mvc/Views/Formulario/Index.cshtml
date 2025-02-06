@@ -1,5 +1,5 @@
 ﻿@using modelo_core_mvc.Models;
-@model IEnumerable<ProjetosModel>
+@model IEnumerable<FormularioModel>
 
 <h1 id="titulo-formulario">Formulário de manutenção de dados</h1>
 @if (Model is null)
@@ -12,7 +12,7 @@ else
         <div class="barraCabecalhoFormulario">
             <button class="btn btn-regular mr-1"
                     aria-label="Adicionar novo projeto"
-                    onclick="location.href='@Url.Action("Adicionar", "Projetos")'">
+                    onclick="location.href='@Url.Action("Adicionar", "Formulario")'">
                 <i class="fas fa-plus"> </i>
                 <span>Adicionar</span>
             </button>

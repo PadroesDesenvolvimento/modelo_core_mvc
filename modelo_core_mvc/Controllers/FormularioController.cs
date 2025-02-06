@@ -2,17 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using modelo_core_mvc.ProjetosApi;
 using System;
+using modelo_core_mvc.HttpClients;
 
 namespace modelo_core_mvc.Controllers;
 
 [Authorize]
-public class ProjetosController : BaseController
+public class FormularioController : BaseController
 {
-    private readonly ProjetosApiClient api;
+    private readonly FormularioApiClient api;
 
-    public ProjetosController(ProjetosApiClient Api)
+    public FormularioController(FormularioApiClient Api)
     {
         api = Api;
     }
@@ -24,7 +24,7 @@ public class ProjetosController : BaseController
         ViewData["Title"] = "Tabela de dados";
         try
         {
-            return View(await api.GetProjetosAsync());
+            return View(await api.GetFormularioAsync());
         }
         catch (Exception ex)
         {
@@ -39,7 +39,7 @@ public class ProjetosController : BaseController
     {
         ViewData["Title"] = "Detalhes";
         ViewData["Message"] = "";
-        ViewData["url"] = Url.Action("Alterar", "Projetos", new { id });
+        ViewData["url"] = Url.Action("Alterar", "Formulario", new { id });
         return View(await api.GetProjetoAsync(id));
     }
 
@@ -47,13 +47,13 @@ public class ProjetosController : BaseController
     public ActionResult Adicionar()
     {
         ViewData["Title"] = "Adicionar";
-        ViewData["Message"] = "Incluir novo projeto";
-        return View(new ProjetosModel());
+        ViewData["Message"] = "Incluir novo registro";
+        return View(new FormularioModel());
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Adicionar(ProjetosModel model)
+    public async Task<ActionResult> Adicionar(FormularioModel model)
     {
         if (ModelState.IsValid)
         {
@@ -85,7 +85,7 @@ public class ProjetosController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Alterar(ProjetosModel model)
+    public async Task<ActionResult> Alterar(FormularioModel model)
     {
         if (ModelState.IsValid)
         {
@@ -112,7 +112,7 @@ public class ProjetosController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Excluir(ProjetosModel model)
+    public async Task<ActionResult> Excluir(FormularioModel model)
     {
         try
         {
