@@ -1,0 +1,34 @@
+﻿<div aria-label="Paginação">
+    <div class="flex-column flex-md-row pagination gap-3 justify-content-md-end">
+        <div class="d-flex align-items-md-center gap-md-3">
+            <div class="mt-md-1"> Número de registros: <b>100</b></div>
+            <div>
+                <div>
+                    <span aria-hidden="true">Itens por página:</span>
+                    <select aria-label="Itens por página" name="form-control" class="itens-pagina">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-md-center gap-md-3">
+            <div> Página <span class="contagem">1</span> de 50</div>
+            <div class="d-flex">
+                <div class="page-item">
+                    <button class="page-link d-flex align-items-center subtracao" aria-label="retroceder página">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" /></svg>
+                    </button>
+                </div>
+                <div class="page-item">
+                    <button class="page-link d-flex align-items-center adicao" aria-label="avançar página">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
