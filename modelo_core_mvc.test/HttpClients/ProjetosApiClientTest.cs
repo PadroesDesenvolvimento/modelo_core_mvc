@@ -1,22 +1,22 @@
-﻿using modelo_core_mvc.ProjetosApi;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Moq;
 using Moq.Protected;
 using System.Net;
 using SefazLib;
 using modelo_core_mvc.Models;
+using modelo_core_mvc.HttpClients;
 
 namespace modelo_core_mvc.test.HttpClients;
 
-public class ProjetosApiClientTest
+public class FormularioApiClientTest
 {
     private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler;
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
     private readonly Mock<IdentityConfig> _mockIdentityConfig;
-    private readonly ProjetosApiClient _apiClient;
+    private readonly FormularioApiClient _apiClient;
 
-    public ProjetosApiClientTest()
+    public FormularioApiClientTest()
     {
         // Carregar a configuração da aplicação
         var configurationBuilder = new ConfigurationBuilder()
@@ -31,8 +31,8 @@ public class ProjetosApiClientTest
         // Configurar o mock de IdentityConfig
         _mockIdentityConfig = new Mock<IdentityConfig>(_configuration);
 
-        // Configurar o ProjetosApiClient
-        _apiClient = new ProjetosApiClient(_httpClient, _configuration, _mockIdentityConfig.Object);
+        // Configurar o FormularioApiClient
+        _apiClient = new FormularioApiClient(_httpClient, _configuration, _mockIdentityConfig.Object);
     }
 
     [Fact]
@@ -64,10 +64,10 @@ public class ProjetosApiClientTest
     }
 
     [Fact]
-    public async Task GetProjetosAsync_ReturnsListOfProjetos()
+    public async Task GetFormularioAsync_ReturnsListOfRegistros()
     {
         // Arrange
-        var projetosJson = "[{\"id\":1,\"nome\":\"Projeto Teste 1\",\"descricao\":\"Descrição do projeto 1\"}, {\"id\":2,\"nome\":\"Projeto Teste 2\",\"descricao\":\"Descrição do projeto 2\"}]";
+        var registrosJson = "[{\"id\":1,\"nome\":\"Projeto Teste 1\",\"descricao\":\"Descrição do projeto 1\"}, {\"id\":2,\"nome\":\"Projeto Teste 2\",\"descricao\":\"Descrição do projeto 2\"}]";
         _mockHttpMessageHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 "SendAsync",
@@ -77,11 +77,11 @@ public class ProjetosApiClientTest
             .ReturnsAsync(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(projetosJson)
+                Content = new StringContent(registrosJson)
             });
 
         // Act
-        var result = await _apiClient.GetProjetosAsync();
+        var result = await _apiClient.GetFormularioAsync();
 
         // Assert
         Assert.NotNull(result);
@@ -92,7 +92,7 @@ public class ProjetosApiClientTest
     public async Task PostProjetoAsync_CreatesProjeto()
     {
         // Arrange
-        var projeto = new ProjetosModel { id = 1, nome = "Novo Projeto", descricao = "Descrição do novo projeto" };
+        var projeto = new FormularioModel { id = 1, nome = "Novo Projeto", descricao = "Descrição do novo projeto" };
         _mockHttpMessageHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 "SendAsync",
@@ -120,7 +120,7 @@ public class ProjetosApiClientTest
     public async Task PutProjetoAsync_UpdatesProjeto()
     {
         // Arrange
-        var projeto = new ProjetosModel { id = 1, nome = "Projeto Atualizado", descricao = "Descrição atualizada do projeto" };
+        var projeto = new FormularioModel { id = 1, nome = "Projeto Atualizado", descricao = "Descrição atualizada do projeto" };
         _mockHttpMessageHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 "SendAsync",

@@ -9,7 +9,7 @@ namespace modelo_core_mvc.Models;
 
 [ExcludeFromCodeCoverage]
 
-public class ProjetosModel
+public class FormularioModel
 {
     [Display(Name = "Cód")]
     public long id { get; set; }
@@ -17,14 +17,14 @@ public class ProjetosModel
     public string nome { get; set; }
     [Display(Name = "Descrição")]
     public string descricao { get; set; }
-    public ProjetosModel(long Id, string Nome, string Descricao)
+    public FormularioModel(long Id, string Nome, string Descricao)
     {
         id = Id;
         nome = Nome;
         descricao = Descricao;
     }
 
-    public ProjetosModel()
+    public FormularioModel()
     {
 
     }
@@ -34,13 +34,13 @@ public class ProjetosModel
         return new StringContent(JsonConvert.SerializeObject(this), Encoding.UTF8, "application/json");
     }
 
-    public ProjetosModel ToModel(string ProjetoJson)
+    public FormularioModel ToModel(string ProjetoJson)
     {
-        return JsonConvert.DeserializeObject<ProjetosModel>(ProjetoJson);
+        return JsonConvert.DeserializeObject<FormularioModel>(ProjetoJson);
     }
 
-    public IEnumerable<ProjetosModel> ToList(string ProjetoJson)
+    public IEnumerable<FormularioModel> ToList(string ProjetoJson)
     {
-        return JsonConvert.DeserializeObject<IEnumerable<ProjetosModel>>(ProjetoJson);
+        return JsonConvert.DeserializeObject<IEnumerable<FormularioModel>>(ProjetoJson);
     }
 }

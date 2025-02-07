@@ -1,5 +1,5 @@
 ﻿@using modelo_core_mvc.Models;
-@model IEnumerable<ProjetosModel>
+@model IEnumerable<FormularioModel>
 
 <h1 id="titulo-formulario">Formulário de manutenção de dados</h1>
 @if (Model is null)
@@ -8,17 +8,19 @@
 }
 else
 {
-    <section id="formulario" role="doc-form" aria-labelledby="titulo-formulario">
+    <section id="formulario" aria-labelledby="titulo-formulario">
         <div class="barraCabecalhoFormulario">
             <button class="btn btn-regular mr-1"
                     aria-label="Adicionar novo projeto"
-                    onclick="location.href='@Url.Action("Adicionar", "Projetos")'">
+                    aria-live="polite"
+                    onclick="location.href='@Url.Action("Adicionar", "Formulario")'">
                 <i class="fas fa-plus"> </i>
                 <span>Adicionar</span>
             </button>
         </div>
 
         <table class="table tabela">
+            <caption class="visually-hidden">Tabela de projetos</caption>
             <thead>
                 <tr>
                     <th scope="col">
@@ -30,7 +32,7 @@ else
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.descricao)
                     </th scope="col">
-                    <th class="coluna-botoes" scope="col"></th>
+                    <th class="coluna-botoes" scope="col" aria-label="Botões de ação: Editar, Consultar e Excluir"></th>
                 </tr>
             </thead>
             <tbody>
@@ -46,14 +48,23 @@ else
                         <td>
                             @Html.DisplayFor(modelItem => item.descricao)
                         </td>
-                        <td class="coluna-botoes tabela-botoes">
-                            <button class="tabela-botao-alterar" title="Alterar" aria-label="Alterar" onclick="location.href='@Url.Action("Alterar", new { id = item.id })'">
+                        <td class="tabela-botoes coluna-botoes">
+                            <button class="btn-focus tabela-botao-alterar" 
+                                    title="Alterar @item.nome" 
+                                    aria-label="Alterar @item.nome" 
+                                    onclick="location.href='@Url.Action("Alterar", new { id = item.id })'">
                                 <i aria-hidden="true" class="fas fa-edit"></i>
                             </button>
-                            <button class="tabela-botao-consultar" title="Ver detalhes" aria-label="Ver detalhes" onclick="location.href='@Url.Action("Detalhes", new { id = item.id })'">
+                            <button class="btn-focus tabela-botao-consultar" 
+                                    title="Ver detalhes de @item.nome" 
+                                    aria-label="Ver detalhes de @item.nome" 
+                                    onclick="location.href='@Url.Action("Detalhes", new { id = item.id })'">
                                 <i aria-hidden="true" class="fas fa-info-circle"></i>
                             </button>
-                            <button class="tabela-botao-excluir" title="Excluir" aria-label="Excluir" onclick="location.href='@Url.Action("Excluir", new { id = item.id })'">
+                            <button class="btn-focus tabela-botao-excluir" 
+                                    title="Excluir @item.nome" 
+                                    aria-label="Excluir @item.nome" 
+                                    onclick="location.href='@Url.Action("Excluir", new { id = item.id })'">
                                 <i aria-hidden="true" class="fas fa-trash-alt"></i>
                             </button>
                         </td>
@@ -61,5 +72,6 @@ else
                 }
             </tbody>
         </table>
+        <partial name="_Paginacao" />
     </section>
 }

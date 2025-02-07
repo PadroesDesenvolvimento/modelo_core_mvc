@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using modelo_core_mvc.ProjetosApi;
 using System;
 using System.Linq;
 using SefazLib;
+using modelo_core_mvc.HttpClients;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
@@ -63,7 +63,7 @@ switch (Configuration["identity:type"])
 #endregion
 
 services.AddSingleton<IdentityConfig>();
-services.AddHttpClient<ProjetosApiClient>();
+services.AddHttpClient<FormularioApiClient>();
 
 var app = builder.Build();
 

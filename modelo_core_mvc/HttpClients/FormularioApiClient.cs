@@ -8,9 +8,9 @@ using SefazLib;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace modelo_core_mvc.ProjetosApi;
+namespace modelo_core_mvc.HttpClients;
 
-public class ProjetosApiClient
+public class FormularioApiClient
 {
     private readonly IConfiguration configuration;
     private readonly IdentityConfig identityConfig;
@@ -19,30 +19,30 @@ public class ProjetosApiClient
     public HttpClient httpClient { get; set; }
 
     [ExcludeFromCodeCoverage]
-    public ProjetosApiClient(HttpClient HttpClient, IConfiguration Configuration, IdentityConfig IdentityConfig)
+    public FormularioApiClient(HttpClient HttpClient, IConfiguration Configuration, IdentityConfig IdentityConfig)
     {
         configuration = Configuration;
         identityConfig = IdentityConfig;
         httpClient = HttpClient;
         httpClient.DefaultRequestHeaders.Authorization = identityConfig.AuthenticationHeader();
-        httpClient.BaseAddress = new System.Uri(configuration["apiendereco:projetos"]);
+        httpClient.BaseAddress = new Uri(configuration["apiendereco:formulario"]);
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
     //Consultar
-    public async Task<ProjetosModel> GetProjetoAsync(long id)
+    public async Task<FormularioModel> GetProjetoAsync(long id)
     {
         var resposta = await httpClient.GetAsync($"Projetos/{id}");
         resposta.EnsureSuccessStatusCode();
-        return new ProjetosModel().ToModel(await resposta.Content.ReadAsStringAsync());
+        return new FormularioModel().ToModel(await resposta.Content.ReadAsStringAsync());
     }
 
     //Listar todos
-    public async Task<IEnumerable<ProjetosModel>> GetProjetosAsync()
+    public async Task<IEnumerable<FormularioModel>> GetFormularioAsync()
     {
         var resposta = await httpClient.GetAsync($"Projetos");
         resposta.EnsureSuccessStatusCode();
-        return new ProjetosModel().ToList(await resposta.Content.ReadAsStringAsync());
+        return new FormularioModel().ToList(await resposta.Content.ReadAsStringAsync());
     }
 
     //Verificar api
@@ -85,14 +85,14 @@ public class ProjetosApiClient
     }
 
     //Incluir
-    public async Task PostProjetoAsync(ProjetosModel projeto)
+    public async Task PostProjetoAsync(FormularioModel projeto)
     {
         var resposta = await httpClient.PostAsync("Projetos", projeto.ToJson());
         resposta.EnsureSuccessStatusCode();
     }
 
     //Alterar
-    public async Task PutProjetoAsync(ProjetosModel projeto)
+    public async Task PutProjetoAsync(FormularioModel projeto)
     {
         var id = projeto.id;
         var resposta = await httpClient.PutAsync($"Projetos/{id}", projeto.ToJson());
