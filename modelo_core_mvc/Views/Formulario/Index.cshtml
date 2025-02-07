@@ -48,14 +48,23 @@ else
                         <td>
                             @Html.DisplayFor(modelItem => item.descricao)
                         </td>
-                        <td class="coluna-botoes tabela-botoes">
-                            <button class="btn-focus tabela-botao-alterar" title="Alterar" aria-label="Alterar" onclick="location.href='@Url.Action("Alterar", new { id = item.id })'">
+                        <td class="tabela-botoes coluna-botoes">
+                            <button class="btn-focus tabela-botao-alterar" 
+                                    title="Alterar @item.nome" 
+                                    aria-label="Alterar @item.nome" 
+                                    onclick="location.href='@Url.Action("Alterar", new { id = item.id })'">
                                 <i aria-hidden="true" class="fas fa-edit"></i>
                             </button>
-                            <button class="btn-focus tabela-botao-consultar" title="Ver detalhes" aria-label="Ver detalhes" onclick="location.href='@Url.Action("Detalhes", new { id = item.id })'">
+                            <button class="btn-focus tabela-botao-consultar" 
+                                    title="Ver detalhes de @item.nome" 
+                                    aria-label="Ver detalhes de @item.nome" 
+                                    onclick="location.href='@Url.Action("Detalhes", new { id = item.id })'">
                                 <i aria-hidden="true" class="fas fa-info-circle"></i>
                             </button>
-                            <button class="btn-focus tabela-botao-excluir" title="Excluir" aria-label="Excluir" onclick="location.href='@Url.Action("Excluir", new { id = item.id })'">
+                            <button class="btn-focus tabela-botao-excluir" 
+                                    title="Excluir @item.nome" 
+                                    aria-label="Excluir @item.nome" 
+                                    onclick="location.href='@Url.Action("Excluir", new { id = item.id })'">
                                 <i aria-hidden="true" class="fas fa-trash-alt"></i>
                             </button>
                         </td>

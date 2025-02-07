@@ -1684,9 +1684,6 @@ li, dt, dd {
 .tabela tbody {
   max-height: calc(79vh - var(--desconto));
 }
-.tabela .coluna-botoes {
-  width: 7rem;
-}
 .tabela .tabela-botoes {
   padding: 0;
   display: flex;
@@ -1710,6 +1707,10 @@ li, dt, dd {
 }
 .tabela .tabela-botoes .tabela-botao-excluir {
   color: var(--cor-apoio-vermelho);
+}
+.tabela .coluna-botoes {
+  width: 7rem;
+  border: none;
 }
 
 .barraCabecalhoFormulario {

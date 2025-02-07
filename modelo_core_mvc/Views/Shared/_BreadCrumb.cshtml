@@ -3,12 +3,12 @@
 @if (ViewBag.Breadcrumbs != null)
 {
     <nav id="navBreadcrumb" aria-label="Trilha de navegação">
-        <ol class="breadcrumb">
+        <div class="breadcrumb">
             @foreach (var breadcrumb in ViewBag.Breadcrumbs as List<Breadcrumb>)
             {
                 if (breadcrumb.Active)
                 {
-                    <li class="breadcrumb-item active" aria-current="page">
+                    <div class="breadcrumb-item active">
                         <a asp-action="@breadcrumb.Action" asp-controller="@breadcrumb.Controller" aria-label="Link para @breadcrumb.Text">
                             @if ((breadcrumb.Text == "Home") || (breadcrumb.Text == "Início"))
                             {
@@ -19,11 +19,11 @@
                                 @breadcrumb.Text
                             }
                         </a>
-                    </li>
+                    </div>
                 }
                 else
                 {
-                    <li class="breadcrumb-item" aria-current="page">
+                    <div class="breadcrumb-item">
                         @if ((breadcrumb.Text == "Home") || (breadcrumb.Text == "Início"))
                         {
                             <i class="fas fa-home" aria-label="Página inicial"></i>
@@ -32,9 +32,9 @@
                         {
                             @breadcrumb.Text
                         }
-                    </li>
+                    </div>
                 }
             }
-        </ol>
+        </div>
     </nav>
 }
