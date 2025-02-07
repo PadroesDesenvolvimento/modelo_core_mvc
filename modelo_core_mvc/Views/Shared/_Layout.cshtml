@@ -48,8 +48,7 @@
     </script>
 
     <div id="aplicacao" 
-         role="application"
-         tabindex="0">
+         role="application">
         <header id="cabecalhoMobile" class="painelCabecalho" aria-label="Cabeçalho Mobile">
             <partial name="_Cabecalho" />
         </header>
@@ -58,14 +57,14 @@
             <section id="painelLateral" role="region" class="oculto @(estaRecolhido ? "recolhido" : "")" aria-label="Painel Lateral">
                 <div id="brasaoPainel" role="group">
                     <div id="fundoBrasaoDesktop" class="fundoBrasao">
-                        <img class="brasao" src="https://devbsacdn.blob.core.windows.net/v01/img/BRASAO_GOV_SP_Original.svg" alt="Brasão do Estado de São Paulo">
+                        <img class="brasao" src="https://devbsacdn.blob.core.windows.net/v01/img/BRASAO_GOV_SP_Original.svg" alt="">
                     </div>
                     <span id="orgao">Secretaria da Fazenda e Planejamento</span>
                 </div>
+
                 <button id="botaoExpandir"
                         title="Botao para expandir ou recolher o menu (<alt @(estaRecolhido ? "." : ",")>)"
                         aria-label="Botão para expandir ou recolher o menu (<alt @(estaRecolhido ? "." : ",")>)"
-                            tabindex="-1"
                         onclick="alternarClasse(['painelLateral', 'iconeExpandir', 'iconeRecolher'],'recolhido'); atualizarAtributosBotaoExpandir()">
                     <span id="iconeExpandir" class="@(!estaRecolhido ? "recolhido" : "")">
                         <i class="fas fa-angle-right"></i>
@@ -75,7 +74,9 @@
                     </span>
                 </button>
 
-                <nav id="menuLateral" onclick="alternarClasse(['painelLateral', 'painelPrincipal'],'oculto',false)" aria-label="Menu Lateral">
+                <nav id="menuLateral" 
+                     onclick="alternarClasse(['painelLateral', 'painelPrincipal'],'oculto',false)" 
+                     aria-label="Menu Lateral">
                     <partial name="_ItensMenu" />
                 </nav>
             </section>
@@ -84,9 +85,9 @@
                 <header id="cabecalhoDesktop" class="painelCabecalho">
                     <partial name="_Cabecalho" />
                     <nav id="menuPopup"
-                         class="oculto"
+                         onmouseleave="alternarClasse(['menuPopup'],'oculto',true)"
                          aria-label="Menu Popup"
-                         onmouseleave="alternarClasse(['menuPopup'],'oculto',true)">
+                         class="oculto">
                         <partial name="_ItensMenu" />
                     </nav>
                 </header>
@@ -94,19 +95,18 @@
                 <div id="painelConteudo" role="region">
                     <partial name="_BreadCrumb" />
 
-                    <main id="conteudo" class="shadow" tabindex="5" aria-label="Conteúdo Principal">
+                    <main id="conteudo" class="shadow" aria-label="Conteúdo Principal">
                         @RenderBody()
-                    </main>
-                </div>
 
-                <div id="topoDaPagina"
-                     title="Voltar ao topo da página"
-                     aria-label="Voltar ao topo da página"
-                     tabindex="0"
-                     role="button">
-                    <a href="#">
-                        Topo da página
-                    </a>
+                        <div id="topoDaPagina"
+                             title="Voltar ao topo da página"
+                             aria-label="Voltar ao topo da página"
+                             role="button">
+                            <a href="#">
+                                Topo da página
+                            </a>
+                        </div>
+                    </main>
                 </div>
 
                 <div id="mensagemErro" role="alert" aria-label="Mensagem de Erro">
