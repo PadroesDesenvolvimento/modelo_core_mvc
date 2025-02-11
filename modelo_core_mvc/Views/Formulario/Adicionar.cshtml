@@ -7,16 +7,19 @@
     <form asp-action="Adicionar">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="nome" class="control-label"></label>
+            <label asp-for="nome" class="control-label">
+                @Html.DisplayNameFor(model => model.nome) <span class="text-danger">*</span>
+            </label>
             <input asp-for="nome" maxlength="20" required aria-required="true" class="form-control" />
             <span asp-validation-for="nome" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="descricao" class="control-label"></label>
+            <label asp-for="descricao" class="control-label">
+                @Html.DisplayNameFor(model => model.descricao) <span class="text-danger">*</span>
+            </label>
             <input asp-for="descricao" required aria-required="true" class="form-control" />
             <span asp-validation-for="descricao" class="text-danger"></span>
         </div>
         <partial name="_Botoes" model='new Tuple<string, string, string, string>("Salvar", "", "", "Cancelar")' />
     </form>
 </div>
-

@@ -20,7 +20,7 @@ public class HomeController : BaseController
 
     public IActionResult Index()
     {
-        ViewData["Title"] = "Página incial";
+        ViewData["Title"] = "Instruções – Aplicação Modelo";
         return View();
     }
 

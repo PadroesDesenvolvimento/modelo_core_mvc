@@ -21,7 +21,7 @@ public class FormularioController : BaseController
     [HttpGet]
     public async Task<ActionResult> Index()
     {
-        ViewData["Title"] = "Tabela de dados";
+        ViewData["Title"] = "Formulário – Manutenção de Dados";
         try
         {
             return View(await api.GetFormularioAsync());
