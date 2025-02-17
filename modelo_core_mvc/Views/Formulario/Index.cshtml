@@ -19,7 +19,7 @@ else
             </button>
         </div>
 
-        <table class="table tabela">
+        <table class="table tabela" tabindex="0">
             <caption class="visually-hidden">Tabela de projetos</caption>
             <thead>
                 <tr>
@@ -31,8 +31,10 @@ else
                     </th>
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.descricao)
-                    </th scope="col">
-                    <th class="coluna-botoes" scope="col" aria-label="Botões de ação: Editar, Consultar e Excluir"></th>
+                    </th>
+                    <th class="coluna-botoes" 
+                        scope="col" 
+                        aria-label="Botões de ação: Editar, Consultar e Excluir"></th>
                 </tr>
             </thead>
             <tbody>
@@ -72,6 +74,16 @@ else
                 }
             </tbody>
         </table>
-        <partial name="_Paginacao" />
+
+        @{
+            var paginacaoModel = new PaginacaoModel(
+            Convert.ToInt32(ViewData["numReg"] ?? 5),
+            Convert.ToInt32(ViewData["pagNum"] ?? 1),
+            Convert.ToString(ViewData["colName"] ?? null),
+            Convert.ToInt32(ViewData["totalRegistros"] ?? 0)
+            );
+        }
+        <partial name="_Paginacao" model="paginacaoModel" />
+
     </section>
 }

@@ -1,30 +1,56 @@
-﻿<div aria-label="Paginação">
+﻿@model PaginacaoModel
+
+<div class="paginacao" aria-label="Paginação">
     <div class="flex-column flex-md-row pagination gap-3 justify-content-md-end">
         <div class="d-flex align-items-md-center gap-md-3">
-            <div class="mt-md-1"> Número de registros: <b>100</b></div>
+            <div class="mt-md-1"> Número de registros: <b>@Model.TotalRegistros</b></div>
             <div>
                 <div>
                     <span aria-hidden="true">Itens por página:</span>
-                    <select aria-label="Itens por página" name="form-control" class="itens-pagina">
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                    <select aria-label="Itens por página" name="form-control" class="itens-pagina"
+                            onchange="window.location.href='@Url.Action("Index")?numReg=' + this.value + '&pagNum=@Model.PaginaAtual&colName=@Model.ColunaOrdenacao'">
+                        @foreach (var item in new[] { 5, 10, 25, 50, 100 })
+                        {
+                            <option value="@item" selected="@(item == Model.ItensPorPagina ? "selected" : null)">@item</option>
+                        }
                     </select>
                 </div>
             </div>
         </div>
+        <div class="d-flex align-items-md-center gap-md-3">
+            <div>
+                <span aria-hidden="true">Ordenar por:</span>
+                <select aria-label="Ordenar por" name="form-control" class="coluna-ordenacao"
+                        onchange="window.location.href='@Url.Action("Index")?numReg=@Model.ItensPorPagina&pagNum=@Model.PaginaAtual&colName=' + this.value + '&sortOrder=@Model.Ordenacao'">
+                    @foreach (var coluna in Model.ColunasOrdenacao)
+                    {
+                        <option value="@coluna" selected="@(coluna == Model.ColunaOrdenacao ? "selected" : null)">@Model.ColunasDisplayNames[coluna]</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <span aria-hidden="true">Ordem:</span>
+                <select aria-label="Ordem" name="form-control" class="ordem-ordenacao"
+                        onchange="window.location.href='@Url.Action("Index")?numReg=@Model.ItensPorPagina&pagNum=@Model.PaginaAtual&colName=@Model.ColunaOrdenacao&sortOrder=' + this.value">
+                    <option value="asc" selected="@(Model.Ordenacao == "asc" ? "selected" : null)">Ascendente</option>
+                    <option value="desc" selected="@(Model.Ordenacao == "desc" ? "selected" : null)">Descendente</option>
+                </select>
+            </div>
+        </div>
         <div class="d-flex justify-content-between align-items-md-center gap-md-3">
-            <div> Página <span class="contagem">1</span> de 50</div>
+            <div> Página <span class="contagem">@Model.PaginaAtual</span> de @Model.TotalPaginas</div>
             <div class="d-flex">
                 <div class="page-item">
-                    <button class="page-link d-flex align-items-center subtracao" aria-label="retroceder página">
+                    <button class="page-link d-flex align-items-center subtracao" aria-label="retroceder página"
+                            onclick="if (@Model.PaginaAtual > 1) location.href='@Url.Action("Index", new { numReg = @Model.ItensPorPagina, pagNum = @Model.PaginaAtual - 1, colName = @Model.ColunaOrdenacao, sortOrder = @Model.Ordenacao })'"
+                    @(Model.PaginaAtual == 1 ? "disabled" : "")>
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" /></svg>
                     </button>
                 </div>
                 <div class="page-item">
-                    <button class="page-link d-flex align-items-center adicao" aria-label="avançar página">
+                    <button class="page-link d-flex align-items-center adicao" aria-label="avançar página"
+                            onclick="if (@Model.PaginaAtual < @Model.TotalPaginas) location.href='@Url.Action("Index", new { numReg = @Model.ItensPorPagina, pagNum = @Model.PaginaAtual + 1, colName = @Model.ColunaOrdenacao, sortOrder = @Model.Ordenacao })'"
+                    @(Model.PaginaAtual == Model.TotalPaginas ? "disabled" : "")>
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" /></svg>
                     </button>
                 </div>

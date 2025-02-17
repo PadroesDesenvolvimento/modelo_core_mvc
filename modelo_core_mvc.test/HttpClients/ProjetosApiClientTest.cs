@@ -81,7 +81,7 @@ public class FormularioApiClientTest
             });
 
         // Act
-        var result = await _apiClient.GetFormularioAsync();
+        var result = await _apiClient.GetFormularioAsync(null, null, null);
 
         // Assert
         Assert.NotNull(result);

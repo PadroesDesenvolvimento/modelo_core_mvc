@@ -37,12 +37,21 @@ public class FormularioApiClient
         return new FormularioModel().ToModel(await resposta.Content.ReadAsStringAsync());
     }
 
-    //Listar todos
-    public async Task<IEnumerable<FormularioModel>> GetFormularioAsync()
+    //Listar 
+    public async Task<IEnumerable<FormularioModel>> GetFormularioAsync(int? numReg, int? pagNum, string colName)
     {
-        var resposta = await httpClient.GetAsync($"Projetos");
+        var query = $"Projetos?numReg={numReg}&pagNum={pagNum}&colName={colName}";
+        var resposta = await httpClient.GetAsync(query);
         resposta.EnsureSuccessStatusCode();
         return new FormularioModel().ToList(await resposta.Content.ReadAsStringAsync());
+    }
+
+    //Total de registros
+    public async Task<int> GetTotalRegistrosAsync()
+    {
+        var resposta = await httpClient.GetAsync("Projetos/numreg");
+        resposta.EnsureSuccessStatusCode();
+        return int.Parse(await resposta.Content.ReadAsStringAsync());
     }
 
     //Verificar api

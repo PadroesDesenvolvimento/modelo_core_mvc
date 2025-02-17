@@ -63,8 +63,8 @@
                 </div>
 
                 <button id="botaoExpandir"
-                        title="Botao para expandir ou recolher o menu (<alt @(estaRecolhido ? "." : ",")>)"
-                        aria-label="Botão para expandir ou recolher o menu (<alt @(estaRecolhido ? "." : ",")>)"
+                        title="Botao para expandir ou recolher o menu"
+                        aria-label="Botão para expandir ou recolher o menu"
                         onclick="alternarClasse(['painelLateral', 'iconeExpandir', 'iconeRecolher'],'recolhido'); atualizarAtributosBotaoExpandir()">
                     <span id="iconeExpandir" class="@(!estaRecolhido ? "recolhido" : "")">
                         <i class="fas fa-angle-right"></i>
@@ -95,7 +95,7 @@
                 <div id="painelConteudo" role="region">
                     <partial name="_BreadCrumb" />
 
-                    <main id="conteudo" class="shadow" aria-label="Conteúdo Principal">
+                    <main id="conteudo" tabindex="1" class="shadow" aria-label="Conteúdo Principal">
                         @RenderBody()
 
                         <div id="topoDaPagina"
