@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using modelo_core_mvc.HttpClients;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace modelo_core_mvc.Controllers;
 
@@ -19,12 +20,18 @@ public class FormularioController : BaseController
 
     [AllowAnonymous]
     [HttpGet]
-    public async Task<ActionResult> Index()
+    public async Task<ActionResult> Index(int? numReg = 5, int? pagNum = 1, string colName = null)
     {
         ViewData["Title"] = "Formulário – Manutenção de Dados";
         try
         {
-            return View(await api.GetFormularioAsync());
+            var projetos = await api.GetFormularioAsync(numReg, pagNum, colName);
+            var totalRegistros = await api.GetTotalRegistrosAsync();
+            ViewData["numReg"] = numReg;
+            ViewData["pagNum"] = pagNum;
+            ViewData["colName"] = colName;
+            ViewData["totalRegistros"] = totalRegistros;
+            return View(projetos);
         }
         catch (Exception ex)
         {
