@@ -38,9 +38,9 @@ public class FormularioApiClient
     }
 
     //Listar 
-    public async Task<IEnumerable<FormularioModel>> GetFormularioAsync(int? numReg, int? pagNum, string colName)
+    public async Task<IEnumerable<FormularioModel>> GetFormularioAsync(int? numReg, int? pagNum, string colName, string sortOrder)
     {
-        var query = $"Projetos?numReg={numReg}&pagNum={pagNum}&colName={colName}";
+        var query = $"Projetos?numReg={numReg}&pagNum={pagNum}&colName={colName}&sortOrder={sortOrder}";
         var resposta = await httpClient.GetAsync(query);
         resposta.EnsureSuccessStatusCode();
         return new FormularioModel().ToList(await resposta.Content.ReadAsStringAsync());

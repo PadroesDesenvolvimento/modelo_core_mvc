@@ -44,43 +44,45 @@
   width: 7rem;
   border: none;
 }
-
-.barraCabecalhoFormulario {
+.tabela .barraCabecalhoFormulario {
   display: flex;
   justify-content: right;
 }
-
-.claims th, td, dd, dt {
+.tabela .claims th, .tabela td, .tabela dd, .tabela dt {
   text-align: left;
   height: auto;
   border: none;
   margin: 0;
 }
-
-.claims dt {
+.tabela .claims dt {
   margin-top: 0.5em;
 }
-
-.formulario {
+.tabela .formulario {
   max-width: 50em;
 }
-
-.campoNumerico {
+.tabela .campoNumerico {
   text-align: right;
 }
-
-.campoTexto {
+.tabela .campoTexto {
   text-align: left;
   margin-left: 0.5em;
 }
-
-.align-middle {
+.tabela .align-middle {
   vertical-align: middle;
 }
-
-.control-label {
+.tabela .control-label {
   margin-left: 0.75em;
   color: var(--cor-primaria);
+}
+
+.paginacao {
+  font-size: 0.8rem;
+}
+.paginacao .page-link:disabled {
+  border-color: lightgray;
+}
+.paginacao .page-link:disabled svg {
+  color: lightgray;
 }
 
 @media (min-width: 767.98px) {
@@ -121,5 +123,8 @@
   }
   .formulario {
     max-width: 100%;
+  }
+  .paginacao {
+    font-size: 0.7rem;
   }
 }

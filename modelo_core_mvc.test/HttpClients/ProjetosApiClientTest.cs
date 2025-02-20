@@ -68,7 +68,7 @@ public class FormularioApiClientTest
     {
         // Arrange
         var registrosJson = "[{\"id\":1,\"nome\":\"Projeto Teste 1\",\"descricao\":\"Descrição do projeto 1\"}, {\"id\":2,\"nome\":\"Projeto Teste 2\",\"descricao\":\"Descrição do projeto 2\"}]";
-        var query = "Projetos?numReg=&pagNum=&colName=";
+        var query = "Projetos?numReg=&pagNum=&colName=&sortOrder=ASC";
         _mockHttpMessageHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 "SendAsync",
@@ -82,7 +82,7 @@ public class FormularioApiClientTest
             });
 
         // Act
-        var result = await _apiClient.GetFormularioAsync(null, null, null);
+        var result = await _apiClient.GetFormularioAsync(null, null, null, "ASC");
 
         // Assert
         Assert.NotNull(result);

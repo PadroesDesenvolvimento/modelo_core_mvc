@@ -80,6 +80,7 @@ else
             Convert.ToInt32(ViewData["numReg"] ?? 5),
             Convert.ToInt32(ViewData["pagNum"] ?? 1),
             Convert.ToString(ViewData["colName"] ?? null),
+            Convert.ToString(ViewData["sortOrder"] ?? ""),
             Convert.ToInt32(ViewData["totalRegistros"] ?? 0)
             );
         }
