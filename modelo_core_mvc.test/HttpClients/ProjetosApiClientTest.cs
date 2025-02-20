@@ -68,10 +68,11 @@ public class FormularioApiClientTest
     {
         // Arrange
         var registrosJson = "[{\"id\":1,\"nome\":\"Projeto Teste 1\",\"descricao\":\"Descrição do projeto 1\"}, {\"id\":2,\"nome\":\"Projeto Teste 2\",\"descricao\":\"Descrição do projeto 2\"}]";
+        var query = "Projetos?numReg=&pagNum=&colName=";
         _mockHttpMessageHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 "SendAsync",
-                ItExpr.Is<HttpRequestMessage>(req => req.Method == HttpMethod.Get && req.RequestUri == new Uri(_httpClient.BaseAddress!, "Projetos")),
+                ItExpr.Is<HttpRequestMessage>(req => req.Method == HttpMethod.Get && req.RequestUri == new Uri(_httpClient.BaseAddress!, query)),
                 ItExpr.IsAny<CancellationToken>()
             )
             .ReturnsAsync(new HttpResponseMessage
