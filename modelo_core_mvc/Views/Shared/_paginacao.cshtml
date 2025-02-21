@@ -8,7 +8,7 @@
                 <div>
                     <span aria-hidden="true">Itens por página:</span>
                     <select aria-label="Itens por página" name="form-control" class="itens-pagina"
-                            onchange="window.location.href='@Url.Action("Index")?numReg=' + this.value + '&pagNum=@Model.PaginaAtual&colName=@Model.ColunaOrdenacao'">
+                            onchange="window.location.href='@Url.Action("Index")?numReg=' + this.value + '&pagNum=@Model.PaginaAtual&colName=@Model.ColunaOrdenacao&sortOrder=@Model.Ordenacao'">
                         @foreach (var item in new[] { 5, 10, 25, 50, 100 })
                         {
                             <option value="@item" selected="@(item == Model.ItensPorPagina ? "selected" : null)">@item</option>
@@ -32,8 +32,8 @@
                 <span aria-hidden="true">Ordem:</span>
                 <select aria-label="Ordem" name="form-control" class="ordem-ordenacao"
                         onchange="window.location.href='@Url.Action("Index")?numReg=@Model.ItensPorPagina&pagNum=@Model.PaginaAtual&colName=@Model.ColunaOrdenacao&sortOrder=' + this.value">
-                    <option value="asc" selected="@(Model.Ordenacao == "asc" ? "selected" : null)">Ascendente</option>
-                    <option value="desc" selected="@(Model.Ordenacao == "desc" ? "selected" : null)">Descendente</option>
+                    <option value="ASC" selected="@(Model.Ordenacao == "ASC" ? "selected" : null)">Ascendente</option>
+                    <option value="DESC" selected="@(Model.Ordenacao == "DESC" ? "selected" : null)">Descendente</option>
                 </select>
             </div>
         </div>

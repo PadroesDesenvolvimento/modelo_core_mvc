@@ -7,8 +7,8 @@ public class PaginacaoModel
     public int PaginaAtual { get; set; }
     public string ColunaOrdenacao { get; set; }
     public int TotalRegistros { get; set; }
-    public int TotalPaginas => (int)Math.Ceiling((double)TotalRegistros / ItensPorPagina);
     public string Ordenacao { get; set; }
+    public int TotalPaginas => (int)Math.Ceiling((double)TotalRegistros / ItensPorPagina);
     public List<string> ColunasOrdenacao { get; set; } = new List<string> { "cd_projeto", "nm_projeto", "ds_projeto" };
     public Dictionary<string, string> ColunasDisplayNames { get; set; } = new Dictionary<string, string>
     {
@@ -17,11 +17,12 @@ public class PaginacaoModel
         { "ds_projeto", "Descrição" }
     };
 
-    public PaginacaoModel(int itensPorPagina, int paginaAtual, string colunaOrdenacao, int totalRegistros)
+    public PaginacaoModel(int itensPorPagina, int paginaAtual, string colunaOrdenacao, string ordenacao, int totalRegistros)
     {
         ItensPorPagina = itensPorPagina;
         PaginaAtual = paginaAtual;
         ColunaOrdenacao = colunaOrdenacao;
+        Ordenacao = ordenacao;
         TotalRegistros = totalRegistros;
     }
 }

@@ -20,16 +20,17 @@ public class FormularioController : BaseController
 
     [AllowAnonymous]
     [HttpGet]
-    public async Task<ActionResult> Index(int? numReg = 5, int? pagNum = 1, string colName = null)
+    public async Task<ActionResult> Index(int? numReg = 5, int? pagNum = 1, string colName = null, string sortOrder = null)
     {
         ViewData["Title"] = "Formulário – Manutenção de Dados";
         try
         {
-            var projetos = await api.GetFormularioAsync(numReg, pagNum, colName);
+            var projetos = await api.GetFormularioAsync(numReg, pagNum, colName, sortOrder);
             var totalRegistros = await api.GetTotalRegistrosAsync();
             ViewData["numReg"] = numReg;
             ViewData["pagNum"] = pagNum;
             ViewData["colName"] = colName;
+            ViewData["sortOrder"] = sortOrder;
             ViewData["totalRegistros"] = totalRegistros;
             return View(projetos);
         }

@@ -53,16 +53,6 @@
         border: none;
     }
 
-    .paginacao {
-        .page-link:disabled {
-            border-color: lightgray;
-
-            svg {
-                color: lightgray;
-            }
-        }
-    }
-
     .barraCabecalhoFormulario {
         display: flex;
         justify-content: right;
@@ -101,53 +91,72 @@
         margin-left: 0.75em;
         color: var(--cor-primaria);
     }
-    //desktop
-    @media (min-width: 767.98px) {
-        .tabela {
-            th, dt {
-                padding: 0.2em 1em;
-                margin: 0.2em 0;
-            }
-        }
+}
 
-        .form-control {
-            margin-bottom: 0.5em;
+.paginacao {
+    font-size: 0.8rem;
+
+    .page-link:disabled {
+        border-color: lightgray;
+
+        svg {
+            color: lightgray;
         }
     }
-    //mobile
-    @media (max-width: 767.98px) {
-        .tabela {
-            display: inline-flex;
-            flex-direction: column;
-            color: var(--cor-primaria-texto);
-            width: 100%;
-            padding: 0.5em;
-            border: none;
-        }
+}
 
-        .form-group {
-            padding: 0.5em 0;
-        }
-
+//desktop
+@media (min-width: 767.98px) {
+    .tabela {
         th, dt {
-            border: none;
-            background-color: var(--cor-invertida-texto);
-            color: var(--cor-primaria);
-            padding: 0.7em 0 0 0;
-            text-align: left;
-        }
-
-        td, dd {
-            border: 1px solid #DDD;
-            height: auto;
-            padding: 0.4em 0;
-        }
-
-        .control-label {
-            text-align: left;
-        }
-
-        .formulario {
-            max-width: 100%;
+            padding: 0.2em 1em;
+            margin: 0.2em 0;
         }
     }
+
+    .form-control {
+        margin-bottom: 0.5em;
+    }
+}
+
+//mobile
+@media (max-width: 767.98px) {
+    .tabela {
+        display: inline-flex;
+        flex-direction: column;
+        color: var(--cor-primaria-texto);
+        width: 100%;
+        padding: 0.5em;
+        border: none;
+    }
+
+    .form-group {
+        padding: 0.5em 0;
+    }
+
+    th, dt {
+        border: none;
+        background-color: var(--cor-invertida-texto);
+        color: var(--cor-primaria);
+        padding: 0.7em 0 0 0;
+        text-align: left;
+    }
+
+    td, dd {
+        border: 1px solid #DDD;
+        height: auto;
+        padding: 0.4em 0;
+    }
+
+    .control-label {
+        text-align: left;
+    }
+
+    .formulario {
+        max-width: 100%;
+    }
+
+    .paginacao {
+        font-size: 0.7rem;
+    }
+}
