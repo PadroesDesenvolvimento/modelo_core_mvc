@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using modelo_core_mvc.HttpClients;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Http;
 
 namespace modelo_core_mvc.Controllers;
 
@@ -20,18 +21,38 @@ public class FormularioController : BaseController
 
     [AllowAnonymous]
     [HttpGet]
-    public async Task<ActionResult> Index(int? numReg = 5, int? pagNum = 1, string colName = null, string sortOrder = null)
+    public async Task<ActionResult> Index(int? numReg, int? pagNum, string colName, string sortOrder)
     {
         ViewData["Title"] = "Formulário – Manutenção de Dados";
+
+        numReg = numReg ?? int.Parse(Request.Cookies["numReg"] ?? "5");
+        pagNum = pagNum ?? int.Parse(Request.Cookies["pagNum"] ?? "1");
+        colName = colName ?? Request.Cookies["colName"];
+        sortOrder = sortOrder ?? Request.Cookies["sortOrder"];
+
+        // Salvar os valores atuais nos cookies
+        Response.Cookies.Append("numReg", numReg.ToString(), new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict });
+        Response.Cookies.Append("pagNum", pagNum.ToString(), new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict });
+        Response.Cookies.Append("colName", colName ?? "", new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict });
+        Response.Cookies.Append("sortOrder", sortOrder ?? "", new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict });
+
         try
         {
-            var projetos = await api.GetFormularioAsync(numReg, pagNum, colName, sortOrder);
             var totalRegistros = await api.GetTotalRegistrosAsync();
+            int totalPaginas = (int)Math.Ceiling((double)totalRegistros / (double)numReg);
+            if (pagNum > totalPaginas)
+            {
+                pagNum = totalPaginas > 0 ? totalPaginas : 1;
+                Response.Cookies.Append("pagNum", pagNum.ToString(), new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict });
+            }
+            var projetos = await api.GetFormularioAsync(numReg, pagNum, colName, sortOrder);
+
             ViewData["numReg"] = numReg;
             ViewData["pagNum"] = pagNum;
             ViewData["colName"] = colName;
             ViewData["sortOrder"] = sortOrder;
             ViewData["totalRegistros"] = totalRegistros;
+
             return View(projetos);
         }
         catch (Exception ex)
