@@ -1747,10 +1747,12 @@ li, dt, dd {
   font-size: 0.8rem;
 }
 .paginacao .page-link:disabled {
-  border-color: lightgray;
-}
-.paginacao .page-link:disabled svg {
-  color: lightgray;
+  border: 1px solid #ccc;
+  color: #ccc;
+  background-color: #f7f7f7;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 @media (min-width: 767.98px) {

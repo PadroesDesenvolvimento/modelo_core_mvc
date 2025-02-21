@@ -97,11 +97,13 @@
     font-size: 0.8rem;
 
     .page-link:disabled {
-        border-color: lightgray;
-
-        svg {
-            color: lightgray;
-        }
+            border: 1px solid #ccc; 
+            color: #ccc; 
+            background-color: #f7f7f7; 
+            cursor: not-allowed; 
+            // Desabilitar efeitos visuais ao clicar ou focar
+            pointer-events: none;
+            opacity: 0.5; 
     }
 }
 
