@@ -28,14 +28,17 @@
                     }
                 </select>
             </div>
-            <div>
-                <span aria-hidden="true">Ordem:</span>
-                <select aria-label="Ordem" name="form-control" class="ordem-ordenacao"
-                        onchange="window.location.href='@Url.Action("Index")?numReg=@Model.ItensPorPagina&pagNum=@Model.PaginaAtual&colName=@Model.ColunaOrdenacao&sortOrder=' + this.value">
-                    <option value="ASC" selected="@(Model.Ordenacao == "ASC" ? "selected" : null)">Ascendente</option>
-                    <option value="DESC" selected="@(Model.Ordenacao == "DESC" ? "selected" : null)">Descendente</option>
-                </select>
-            </div>
+            @if (!string.IsNullOrEmpty(Model.ColunaOrdenacao) && Model.ColunaOrdenacao != "Sem ordenação")
+            {
+                <div>
+                    <span aria-hidden="true">Ordem:</span>
+                    <select aria-label="Ordem" name="form-control" class="ordem-ordenacao"
+                            onchange="window.location.href='@Url.Action("Index")?numReg=@Model.ItensPorPagina&pagNum=@Model.PaginaAtual&colName=@Model.ColunaOrdenacao&sortOrder=' + this.value">
+                        <option value="ASC" selected="@(Model.Ordenacao == "ASC" ? "selected" : null)">Ascendente</option>
+                        <option value="DESC" selected="@(Model.Ordenacao == "DESC" ? "selected" : null)">Descendente</option>
+                    </select>
+                </div>
+            }
         </div>
         <div class="d-flex justify-content-between align-items-md-center gap-md-3">
             <div> Página <span class="contagem">@Model.PaginaAtual</span> de @Model.TotalPaginas</div>
