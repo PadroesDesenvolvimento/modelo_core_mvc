@@ -1,61 +1,87 @@
+# Fortify Security Continuos Integration Gate
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+#trigger:
+#- main
+
+#pool:
+#  name: default
+
+#steps:
+#- script: echo Hello, world!
+#  displayName: 'Run a one-line script'
+
+#- script: |
+#    echo Add other tasks to build, test, and deploy your project.
+#    echo See https://aka.ms/yaml
+#  displayName: 'Run a multi-line script'
+
 trigger: none
 name: $(date:yyyyMMdd)$(rev:.r)
 
-variables:
-- group: 'Pipeline'
-
 stages:
-- stage: build
-  displayName: 'Criação dos artefatos'
+- stage: Build
   jobs:
   - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
     - job: Fortify
-      displayName: Analise de Segurança
+      displayName: 'Fortify Security Continuos Integration'
+
+      variables:
+      - group: Fortify-ScanCentral
+      - name: SSC_PROJECTNAME
+        value: 'ICT-modelo_core_mvc'
+      - name: SSC_PROJECTVERSION
+        value: 'master'
+      - name: newProject
+        value: 'true'
+
       pool:
         name: Fortify-SCA
+
       steps:
       - checkout: self
         clean: true
+
       - task: FortifyScanCentralSAST@7
         displayName: Fortify ScanCentral SAST Assessment
         inputs:
-          scanCentralCtrlUrl: https://ssc-fortify.intra.fazenda.sp.gov.br:8443/scancentral-ctrl
-          sscUrl: https://ssc-fortify.intra.fazenda.sp.gov.br:8443/ssc
-          sscCiToken: dae18f45-818b-4ffb-bbab-43d3ef144769
+          scanCentralCtrlUrl: 'https://ssc-fortify.intra.fazenda.sp.gov.br:8444/scancentral-ctrl'
+          scanCentralClientToken: '$(ScanCentral.ClientToken)'
+          sscUrl: 'https://ssc-fortify.intra.fazenda.sp.gov.br:8443/ssc'
+          sscCiToken: 'dae18f45-818b-4ffb-bbab-43d3ef144769'
           uploadToSSC: true
-          applicationName: ICT-modelo_core_mvc
-          applicationVersion: 'master '
+          applicationName: '$(SSC_PROJECTNAME)'
+          applicationVersion: '$(SSC_PROJECTVERSION)'
           buildFailureCriteria: '[fortify priority order]:critical [fortify priority order]:high'
-          buildTool: none
-          skipBuild: false
-          excludeDisabledProjects: false
-          includeTest: false
-          includeNodeModules: false
-          email: devsec_fortify@fazenda.sp.gov.br
+          buildTool: 'none'
+          email: 'devsec_fortify@fazenda.sp.gov.br'
           block: true
-          outputFile: ICT-modelo_core_mvc.fpr
-          logFile: ICT-modelo_core_mvc.log
+          outputFile: '$(SSC_PROJECTNAME).fpr'
+          logFile: '$(SSC_PROJECTNAME).log'
           overwrite: true
-          quiet: false
       - task: dependency-check-build-task@6
         displayName: Dependency Check
-        condition: succeededOrFailed()
         inputs:
-          projectName: ICT-modelo_core_mvc
-          scanPath: $(Agent.BuildDirectory)/s
-          format: HTML,JUNIT
-          failOnCVSS: 5
+          projectName: '$(SSC_PROJECTNAME)'
+          scanPath: '$(Pipeline.Workspace)/s'
+          format: 'HTML, JUNIT'
+          uploadReports: true
+          failOnCVSS: '6'
           warnOnCVSSViolation: true
           enableVerbose: true
-          additionalArguments: --disableOssIndex --disableNodeAudit --noupdate --exclude **/*.zip --exclude **/*.jar --disableCentral
-          localInstallPath: D:\dependency-check\
+          additionalArguments: '--disableOssIndex --disableNodeAudit --noupdate --exclude **/*.zip --exclude **/*.jar --disableCentral'
+          localInstallPath: 'D:\dependency-check\'
       - task: PublishTestResults@2
         displayName: Publish Test Results *junit.xml
-        condition: succeededOrFailed()
         inputs:
+          testResultsFormat: 'JUnit'
           testResultsFiles: '*junit.xml'
-          searchFolder: $(Common.TestResultsDirectory)\dependency-check\
-          testRunTitle: ICT-modelo_core_mvc
+          searchFolder: '$(Common.TestResultsDirectory)\dependency-check\'
+          testRunTitle: '$(SSC_PROJECTNAME)'
+
   - job: Build
     displayName: 'Build'
     pool:
