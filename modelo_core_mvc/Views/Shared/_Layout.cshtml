@@ -55,11 +55,9 @@
 
         <div id="painelAplicacao" role="region">
             <section id="painelLateral" role="region" class="oculto @(estaRecolhido ? "recolhido" : "")" aria-label="Painel Lateral">
-                <div id="brasaoPainel" role="group">
-                    <div id="fundoBrasaoDesktop" class="fundoBrasao">
-                        <img class="brasao" src="https://devbsacdn.blob.core.windows.net/v01/img/BRASAO_GOV_SP_Original.svg" alt="">
-                    </div>
-                    <span id="orgao">Secretaria da Fazenda e Planejamento</span>
+                <div class="brasaoPainel">
+                    <div class="fundoBrasao fundoBrasaoDesktop"></div>
+                    <span class="orgao">Secretaria da Fazenda e Planejamento</span>
                 </div>
 
                 <button id="botaoExpandir"
@@ -75,14 +73,13 @@
                 </button>
 
                 <nav id="menuLateral" 
-                     onclick="alternarClasse(['painelLateral', 'painelPrincipal'],'oculto',false)" 
                      aria-label="Menu Lateral">
                     <partial name="_ItensMenu" />
                 </nav>
             </section>
 
             <section id="painelPrincipal" role="group" class="@(estaRecolhido ? "recolhido" : "")">
-                <header id="cabecalhoDesktop" class="painelCabecalho">
+                <header class="painelCabecalho cabecalhoDesktop">
                     <partial name="_Cabecalho" />
                     <nav id="menuPopup"
                          onmouseleave="alternarClasse(['menuPopup'],'oculto',true)"
@@ -98,11 +95,8 @@
                     <main id="conteudo" tabindex="1" class="shadow" aria-label="Conteúdo Principal">
                         @RenderBody()
 
-                        <div id="topoDaPagina"
-                             title="Voltar ao topo da página"
-                             aria-label="Voltar ao topo da página"
-                             role="button">
-                            <a href="#">
+                        <div id="topoDaPagina">
+                            <a aria-label="Voltar ao topo da página" href="#">
                                 Topo da página
                             </a>
                         </div>

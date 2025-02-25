@@ -12,7 +12,7 @@
 #painelLateral.recolhido #botaoExpandir {
   margin-left: calc(var(--largura-menu-recolhido) - var(--largura-botaoExpandir) / 2);
 }
-#painelLateral.recolhido #orgao {
+#painelLateral.recolhido .orgao {
   display: none;
 }
 @media (max-width: 767.98px) {
