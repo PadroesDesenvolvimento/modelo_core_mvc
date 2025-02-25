@@ -34,12 +34,12 @@
     text-align: right;
 }
 
-#brasaoPainel {
+.brasaoPainel {
     display: flex;
     align-items: center;
     margin-top: 1.75rem;
 
-    #orgao {
+    .orgao {
         font-family: Verdana, sans-serif;
         font-size: 0.6875rem;
         padding-left: 0.63rem;
@@ -51,6 +51,7 @@
 
 .fundoBrasao {
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     background-color: var(--cor-menu-invertida-texto);
@@ -58,12 +59,10 @@
     width: 3.5rem;
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
-    padding: 0 17px 0 10px;
-
-    .brasao {
-        height: 85%;
-        transition: opacity 0.3s;
-    }
+    background-image: url('https://devbsacdn.blob.core.windows.net/v01/img/BRASAO_GOV_SP_Original.svg');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .botaoPopup {
@@ -89,7 +88,7 @@
     text-align: center;
 }
 
-#cabecalhoDesktop {
+.cabecalhoDesktop {
     display: block;
     margin: 0;
 }
@@ -106,9 +105,9 @@
 
 //mobile
 @media (max-width: 767.98px) {
-    #cabecalhoDesktop,
-    #brasaoPainel,
-    #fundoBrasaoDesktop,
+    .cabecalhoDesktop,
+    .brasaoPainel,
+    .fundoBrasaoDesktop,
     .botaoPopup,
     .tituloApp {
         display: none;
@@ -165,6 +164,5 @@
     .fundoBrasao {
         width: 3rem;
         height: 3rem;
-        padding: 0 17px 0 10px;
     }
 }

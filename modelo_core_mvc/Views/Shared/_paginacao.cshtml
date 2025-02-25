@@ -1,12 +1,12 @@
 ﻿@model PaginacaoModel
 
-<div class="paginacao" aria-label="Paginação">
+<nav class="paginacao" aria-label="Paginação">
     <div class="flex-column flex-md-row pagination gap-3 justify-content-md-end">
         <div class="d-flex align-items-md-center gap-md-3">
             <div class="mt-md-1"> Número de registros: <b>@Model.TotalRegistros</b></div>
             <div>
                 <div>
-                    <span aria-hidden="true">Itens por página:</span>
+                    <label>Itens por página:</label>
                     <select aria-label="Itens por página" name="form-control" class="itens-pagina"
                             onchange="window.location.href='@Url.Action("Index")?numReg=' + this.value + '&pagNum=@Model.PaginaAtual&colName=@Model.ColunaOrdenacao&sortOrder=@Model.Ordenacao'">
                         @foreach (var item in new[] { 5, 10, 25, 50, 100 })
@@ -41,7 +41,11 @@
             }
         </div>
         <div class="d-flex justify-content-between align-items-md-center gap-md-3">
-            <div> Página <span class="contagem">@Model.PaginaAtual</span> de @Model.TotalPaginas</div>
+            <div aria-current="page">
+                Página 
+                <span class="contagem">@Model.PaginaAtual</span>
+                de @Model.TotalPaginas
+            </div>
             <div class="d-flex">
                 <div class="page-item">
                     <button class="page-link d-flex align-items-center subtracao" aria-label="retroceder página"
@@ -60,4 +64,4 @@
             </div>
         </div>
     </div>
-</div>
+</nav>
